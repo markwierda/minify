@@ -23,7 +23,6 @@ namespace mini_spotify
         public MainWindow()
         {
             InitializeComponent();
-            //init
         }
     }
 }
