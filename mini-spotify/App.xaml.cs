@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,9 @@ namespace mini_spotify
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            
+        }
     }
 }
