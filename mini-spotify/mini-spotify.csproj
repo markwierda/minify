@@ -7,4 +7,14 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Controller\" />
+    <Folder Include="Model\" />
+    <Folder Include="Database\" />
+    <Folder Include="ImageResources\" />
+    <Folder Include="StyleResources\" />
+    <Folder Include="Properties\" />
+    <Folder Include="View\" />
+  </ItemGroup>
+
 </Project>
