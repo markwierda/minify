@@ -6,15 +6,15 @@ using System.Text;
 
 namespace mini_spotify.DAL.Entities
 {
-    public class Song
+    public class Stream
     {
         /// <summary>
-        /// The unique identifier (Primary Key)
+        /// The unique identifier
         /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public Song Song { get; set; }
     }
 }

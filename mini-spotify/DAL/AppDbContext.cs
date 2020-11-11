@@ -13,6 +13,11 @@ namespace mini_spotify.DAL
     {
         public DbSet<Song> Songs { get; set; }
 
+        public DbSet<Stream> Streams { get; set; }
+
+        public DbSet<User> Users { get; set; }
+
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) 
         {
 
@@ -24,6 +29,14 @@ namespace mini_spotify.DAL
             base.OnModelCreating(builder);
 
             builder.Entity<Song>();
+
+            builder.Entity<User>(user =>
+            {
+                user.HasIndex(ts => ts.UserName).IsUnique();
+            });
+
+            //builder.Entity<Stream>()
+            //        .HasOne(s => s.Song);
         }
         #endregion
     }

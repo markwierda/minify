@@ -14,7 +14,7 @@ namespace mini_spotify.DAL
         {
 
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            string con = "Server=(localdb)\\mssqllocaldb;Database=Spotify;Trusted_Connection=True;";// ConfigurationManager.ConnectionStrings["Dev"].ConnectionString;
+            string con = "Server=(localdb)\\MSSQLLocalDB;Database=Spotify;Trusted_Connection=True;";// ConfigurationManager.ConnectionStrings["Dev"].ConnectionString;
             builder.UseSqlServer(con, providerOptions => providerOptions.CommandTimeout(60))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
