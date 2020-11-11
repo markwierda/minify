@@ -14,7 +14,6 @@
     <Folder Include="ImageResources\" />
     <Folder Include="StyleResources\" />
     <Folder Include="Properties\" />
-    <Folder Include="View\" />
   </ItemGroup>
 
 </Project>

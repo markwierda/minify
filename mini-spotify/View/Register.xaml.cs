@@ -13,13 +13,25 @@ using System.Windows.Shapes;
 namespace mini_spotify.View
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for Register.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class Register : Window
     {
-        public Window1()
+        public Register()
         {
             InitializeComponent();
+        }
+
+        private void Register_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Cancel_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+            Close();
         }
     }
 }
