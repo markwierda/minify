@@ -76,31 +76,58 @@ namespace mini_spotify.DAL.Repositories
             return DbSet;
         }
 
+        /// <summary>
+        /// Updates the entity.
+        /// </summary>
+        /// <param name="entity">The updated entity</param>
         public virtual void Update(T entity)
         {
             Context.Entry(entity).State = EntityState.Modified;
         }
 
+        /// <summary>
+        /// Removes an entity.
+        /// </summary>
+        /// <param name="entity">The entity to be removed</param>
         public virtual void Remove(T entity)
         {
             DbSet.Remove(entity);
         }
 
+        /// <summary>
+        /// Removes the given entities.
+        /// </summary>
+        /// <param name="entities">The entities to be removed</param>
         public virtual void RemoveRange(params T[] entities)
         {
             DbSet.RemoveRange(entities);
         }
 
+        /// <summary>
+        /// Finds an entity based on the id.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the id </typeparam>
+        /// <param name="id"></param>
+        /// <returns>The entity found, or null</returns>
         public T Find<TKey>(TKey id)
         {
             return DbSet.Find(id);
         }
 
+
+        /// <summary>
+        /// Adds the given entities to the datatable.
+        /// </summary>
+        /// <param name="entities">the entities to be added</param>
         public void AddRange(params T[] entities)
         {
             DbSet.AddRange(entities);
         }
 
+        /// <summary>
+        /// Executes the changes made by the other methods of this class. 
+        /// </summary>
+        /// <returns>The number of state entries written to the database</returns>
         public virtual int SaveChanges()
         {
             return Context.SaveChanges();
