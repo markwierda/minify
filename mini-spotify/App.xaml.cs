@@ -21,9 +21,7 @@ namespace mini_spotify
     {
         public App()
         {
-            AppDbContext app = new AppDbContextFactory().CreateDbContext(null);
-            Repository<Song> songRepository = new Repository<Song>(app);
-            var songs = songRepository.GetAll();
+            
         }
     }
 }
