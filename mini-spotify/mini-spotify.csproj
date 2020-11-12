@@ -8,10 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ImageResources\megascale_m.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="ImageResources\megascale_m.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Controller\" />
     <Folder Include="Model\" />
     <Folder Include="Database\" />
-    <Folder Include="ImageResources\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 
