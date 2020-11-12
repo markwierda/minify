@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace mini_spotify.DAL.Migrations
+namespace mini_spotify.Dal.Migrations
 {
-    public partial class Init : Migration
+    public partial class InitialCreateMinifyDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,10 @@ namespace mini_spotify.DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Genre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Duration = table.Column<int>(type: "int", nullable: false),
+                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -52,6 +55,16 @@ namespace mini_spotify.DAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Songs",
+                columns: new[] { "Id", "Duration", "Genre", "Name", "Path" },
+                values: new object[] { new Guid("aa5ab627-3b64-4c22-9cc3-cca5fd57c896"), 5, "Classic", "Titanic", "." });
+
+            migrationBuilder.InsertData(
+                table: "Songs",
+                columns: new[] { "Id", "Duration", "Genre", "Name", "Path" },
+                values: new object[] { new Guid("8c9a9e88-b37f-4680-998c-853a67db4474"), 4, "Rap", "Low(feat. T-Pain", "." });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Streams_SongId",
