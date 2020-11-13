@@ -32,6 +32,8 @@ namespace mini_spotify.Controller
             //TO DO: check on values of required properties. 
             // For more information check the Acceptation Criteria.
 
+            user.PassWord = UserController.HashPassword(user.PassWord);
+
             _registerRepository.Add(user);
             _registerRepository.SaveChanges();
         }
