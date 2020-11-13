@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace mini_spotify.Dal.Migrations
+namespace mini_spotify.DAL.Migrations
 {
     public partial class InitialCreateMinifyDatabase : Migration
     {
@@ -64,7 +64,12 @@ namespace mini_spotify.Dal.Migrations
             migrationBuilder.InsertData(
                 table: "Songs",
                 columns: new[] { "Id", "Duration", "Genre", "Name", "Path" },
-                values: new object[] { new Guid("8c9a9e88-b37f-4680-998c-853a67db4474"), 4, "Rap", "Low(feat. T-Pain", "." });
+                values: new object[] { new Guid("475bdd5f-e90d-4666-ae70-f13ea292ab7f"), 4, "Rap", "Low(feat. T-Pain", "." });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "FirstName", "LastName", "PassWord", "UserName" },
+                values: new object[] { new Guid("aa5ab627-3b64-5d22-8cc3-cca5fd57c896"), "s1140207@student.windesheim.nl", "Ronald", "Haan", "Test123", "1140207" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Streams_SongId",

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mini_spotify.DAL;
 
-namespace mini_spotify.Dal.Migrations
+namespace mini_spotify.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -52,7 +52,7 @@ namespace mini_spotify.Dal.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8c9a9e88-b37f-4680-998c-853a67db4474"),
+                            Id = new Guid("475bdd5f-e90d-4666-ae70-f13ea292ab7f"),
                             Duration = 4,
                             Genre = "Rap",
                             Name = "Low(feat. T-Pain",
@@ -105,6 +105,17 @@ namespace mini_spotify.Dal.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("aa5ab627-3b64-5d22-8cc3-cca5fd57c896"),
+                            Email = "s1140207@student.windesheim.nl",
+                            FirstName = "Ronald",
+                            LastName = "Haan",
+                            PassWord = "Test123",
+                            UserName = "1140207"
+                        });
                 });
 
             modelBuilder.Entity("mini_spotify.DAL.Entities.Stream", b =>

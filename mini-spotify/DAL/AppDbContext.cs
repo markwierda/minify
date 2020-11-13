@@ -40,8 +40,16 @@ namespace mini_spotify.DAL
                 new Song() { Id = Guid.NewGuid(), Name = "Low(feat. T-Pain", Duration = 4, Genre = "Rap", Path = "." },
             };
 
+            User[] users = new User[]
+            {
+                new User() {Id = new Guid("{aa5ab627-3b64-5d22-8cc3-cca5fd57c896}"), Email = "s1140207@student.windesheim.nl", FirstName = "Ronald", LastName="Haan", PassWord="Test123", UserName="1140207" },
+                new User() {Id = new Guid("{aa5ab653-3b62-5e22-5cc3-cca5fd57c846}"), Email = "s1121300@student.windesheim.nl", FirstName = "Ali", LastName="Alkhalil", PassWord="Password", UserName="1121300" },
+                //new User() {Id = Guid.NewGuid()}
+            };
 
             builder.Entity<Song>().HasData(songs);
+            builder.Entity<User>().HasData(users);
+
 
 
         }

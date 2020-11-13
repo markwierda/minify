@@ -1,4 +1,6 @@
-﻿using System;
+﻿using mini_spotify.Controller;
+using mini_spotify.DAL;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,9 +19,13 @@ namespace mini_spotify.View
     /// </summary>
     public partial class Login : Window
     {
+        private readonly LoginController loginController;
+
         public Login()
         {
             InitializeComponent();
+            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
+            loginController = new LoginController(context);
         }
 
         private void Create_Account_Button_click(object sender, RoutedEventArgs e)
@@ -31,7 +37,12 @@ namespace mini_spotify.View
 
         private void Login_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            
+           
+           
+         
+           
+            
         }
     }
 }
