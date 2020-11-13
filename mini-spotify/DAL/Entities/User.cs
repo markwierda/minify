@@ -8,14 +8,8 @@ using System.Text;
 
 namespace mini_spotify.DAL.Entities
 {
-    public class User
+    public class User : BaseEntity
     {
-        /// <summary>
-        /// The unique identifier (Primary Key)
-        /// </summary>
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
-
         [Required]
         public string UserName { get; set; }
 
