@@ -7,11 +7,7 @@ namespace mini_spotify.Controller
 {
     public class PasswordHashController
     {
-        //“salt” is a random bit of data added to the data being hashed.
-        //The salt is then stored along with the hash of the combined password + salt.
-
-
-        public static void Main(string[] args)
+        /*public static void Main(string[] args)
         {
             Console.Write("Enter a password: ");
             string password = Console.ReadLine();
@@ -32,6 +28,6 @@ namespace mini_spotify.Controller
                 iterationCount: 10000,
                 numBytesRequested: 256 / 8));
             Console.WriteLine($"Hashed: {hashed}");
-        }
+        }*/
     }
 }
