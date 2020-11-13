@@ -35,5 +35,15 @@ namespace mini_spotify.Controller
             _registerRepository.Add(user);
             _registerRepository.SaveChanges();
         }
+
+        public User Get(Guid randomId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<User> GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
