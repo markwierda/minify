@@ -54,7 +54,7 @@ namespace UnitTests
         {
             // Assemble
 
-            string username = "MijnUniekeUsernam";
+            string username = "1140207";
             string password = "Test123";
 
             // Act
@@ -70,7 +70,7 @@ namespace UnitTests
         {
             // Assemble
 
-            string username = "MijnUniekeUsernam";
+            string username = "1140207";
             string password = "tess123";
 
             // Act

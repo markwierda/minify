@@ -11,11 +11,12 @@ namespace UnitTests
     public class UserControllerTest
     {
         private readonly string testPassword = "Test!123";
-        private readonly string testPasswordHashed = "p+eUD89OFO/VOk+Ca1Qq+0w1pyp8A6maF/u/gQrH+Icp3GQp";
+        private string testPasswordHashed;
 
         [SetUp]
         public void Setup()
         {
+            testPasswordHashed = UserController.HashPassword(testPassword);
         }
 
         [Test]

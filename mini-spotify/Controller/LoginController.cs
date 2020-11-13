@@ -33,7 +33,7 @@ namespace mini_spotify.Controller
             // check if password is valid
            foreach(User user  in _userRepository.GetAll())
            {
-                if(user.UserName == username && user.PassWord == password)
+                if (user.UserName == username && UserController.ValidatePassword(password, user.PassWord))
                 {
                     return true;
                 }
