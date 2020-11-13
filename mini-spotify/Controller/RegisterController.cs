@@ -1,11 +1,15 @@
-﻿using System;
+﻿using mini_spotify.DAL;
+using mini_spotify.DAL.Entities;
+using mini_spotify.DAL.Repositories;
+
+using System;
 using System.Collections.Generic;
 using System.Security.Policy;
 using System.Text;
 
 namespace mini_spotify.Controller
 {
-    public class Register
+    public class RegisterController
     {
         private readonly Repository<User> _registerRepository;
 
