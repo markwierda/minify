@@ -107,8 +107,7 @@ namespace mini_spotify.Controller
             var hasSpecialChar = new Regex(@"(?=.*[*.!@$%^&(){}[]:;<>,.?\/~_+-=|\])");
 
             // return true or false
-            //return hasLenght.IsMatch(password) && hasNumber.IsMatch(password) && hasSpecialChar.IsMatch(password);
-            return hasSpecialChar.IsMatch(password);
+            return hasLenght.IsMatch(password) && hasNumber.IsMatch(password) && hasSpecialChar.IsMatch(password);
         }
     }
 }
