@@ -22,7 +22,7 @@ namespace mini_spotify.View
             InitializeComponent();
         }
 
-        private void Register_Label_Click(object sender, RoutedEventArgs e)
+        private void Create_Account_Button_click(object sender, RoutedEventArgs e)
         {
             Register register = new Register();
             register.Show();
@@ -32,11 +32,6 @@ namespace mini_spotify.View
         private void Login_Button_Click(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        private void Cancel_Button_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
         }
     }
 }
