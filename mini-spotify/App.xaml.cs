@@ -2,7 +2,7 @@
 
 using mini_spotify.DAL;
 using mini_spotify.DAL.Entities;
-using mini_spotify.DAL.Repositories;
+
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -21,7 +21,10 @@ namespace mini_spotify
     {
         public App()
         {
-            
+            AppDbContext app = new AppDbContextFactory().CreateDbContext(null);
+            var songs = app.Songs as IQueryable<Song>;
+            var list = songs.ToList();
+            var a = 1;
         }
     }
 }
