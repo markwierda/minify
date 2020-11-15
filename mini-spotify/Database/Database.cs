@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace mini_spotify.Controller
+namespace mini_spotify.Database
 {
-    class Controller
+    class Database
     {
     }
 }
