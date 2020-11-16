@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mini_spotify.DAL;
 
-namespace mini_spotify.DAL.Migrations
+namespace mini_spotify.Dal.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -40,6 +40,24 @@ namespace mini_spotify.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Songs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("aa5ab627-3b64-4c22-9cc3-cca5fd57c896"),
+                            Duration = 5,
+                            Genre = "Classic",
+                            Name = "Titanic",
+                            Path = "."
+                        },
+                        new
+                        {
+                            Id = new Guid("8c9a9e88-b37f-4680-998c-853a67db4474"),
+                            Duration = 4,
+                            Genre = "Rap",
+                            Name = "Low(feat. T-Pain",
+                            Path = "."
+                        });
 
                     b.HasData(
                         new
