@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mini_spotify.DAL;
 
-namespace mini_spotify.Dal.Migrations
+namespace mini_spotify.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201113144301_InitialCreateMinifyDatabase")]
+    partial class InitialCreateMinifyDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,24 +42,6 @@ namespace mini_spotify.Dal.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Songs");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("aa5ab627-3b64-4c22-9cc3-cca5fd57c896"),
-                            Duration = 5,
-                            Genre = "Classic",
-                            Name = "Titanic",
-                            Path = "."
-                        },
-                        new
-                        {
-                            Id = new Guid("8c9a9e88-b37f-4680-998c-853a67db4474"),
-                            Duration = 4,
-                            Genre = "Rap",
-                            Name = "Low(feat. T-Pain",
-                            Path = "."
-                        });
 
                     b.HasData(
                         new

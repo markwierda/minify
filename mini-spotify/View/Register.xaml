@@ -1,0 +1,33 @@
+﻿<Window x:Class="mini_spotify.View.Register"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mini_spotify.View"
+        mc:Ignorable="d"
+        Title="Register" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="733"/>
+            <ColumnDefinition Width="22"/>
+        </Grid.ColumnDefinitions>
+        <TextBox Name="tBox_First_name" HorizontalAlignment="Left" Margin="139,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="26" Grid.Column="3"/>
+        <Label Content="First name&#xD;&#xA;" HorizontalAlignment="Left" Margin="139,32,0,0" VerticalAlignment="Top" Width="127" Grid.Column="3" Height="42"/>
+        <Label Content="Last name&#xD;&#xA;" HorizontalAlignment="Left" Margin="284,29,0,0" VerticalAlignment="Top" Width="133" Grid.Column="3" Height="42"/>
+        <TextBox Name="tBox_Last_Name" HorizontalAlignment="Left" Margin="284,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126" Height="26" Grid.Column="3"/>
+        <Label Content="Username" HorizontalAlignment="Left" Margin="139,89,0,0" VerticalAlignment="Top" Grid.Column="3" Height="26" Width="63"/>
+        <TextBox Name="tBox_Username" HorizontalAlignment="Left" Margin="139,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="3" Height="23"/>
+        <Label Content="Email" HorizontalAlignment="Left" Margin="139,143,0,0" VerticalAlignment="Top" Width="120" Grid.Column="3" Height="26"/>
+        <TextBox Name="tBox_Email" HorizontalAlignment="Left" Margin="139,173,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="271" Grid.Column="3" Height="23"/>
+        <Label Content="Password" HorizontalAlignment="Left" Margin="139,196,0,0" VerticalAlignment="Top" Width="69" Grid.Column="3" Height="26"/>
+        <Button Content="Register" HorizontalAlignment="Left" Margin="135,362,0,0" VerticalAlignment="Top" Width="68" Click="Register_Button_Click" Grid.Column="3" Height="20"/>
+        <Button Content="Cancel" HorizontalAlignment="Center" Margin="0,362,0,0" VerticalAlignment="Top" Width="66" Grid.Column="3" Height="20" Click="Cancel_Button_Click"/>
+        <PasswordBox Name="tBox_Password" HorizontalAlignment="Left" Margin="140,228,0,0" VerticalAlignment="Top" Width="120" Height="25" Grid.Column="3"/>
+        <Label Content="Confirm password" Grid.Column="3" HorizontalAlignment="Left" Margin="140,258,0,0" VerticalAlignment="Top" Width="107"/>
+        <PasswordBox Name="tBox_Confirm_Password" Grid.Column="3" HorizontalAlignment="Left" Margin="140,289,0,0" VerticalAlignment="Top" Width="120" Height="25"/>
+
+    </Grid>
+</Window>
