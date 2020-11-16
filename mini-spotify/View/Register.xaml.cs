@@ -37,45 +37,51 @@ namespace mini_spotify.View
             string password = tBox_Password.Password;
             string confirmPassword = tBox_Confirm_Password.Password;
 
+            // errors standard false
+            bool errors = false;
+
             // check if firstName is null or empty
             if (firstName.IsNullOrEmpty())
             {
                 FirstNameErrorMessage.Visibility = Visibility.Visible;
-                return;
+                errors = true;
             }
 
             // check if username is not unique
             if (!_controller.IsUniqueUsername(username))
             {
                 UsernameErrorMessage.Visibility = Visibility.Visible;
-                return;
+                errors = true;
             }
 
             // check if email is not valid
             if (!_controller.IsValidEmail(email))
             {
                 EmailErrorMessage.Visibility = Visibility.Visible;
-                return;
+                errors = true;
             }
 
             // check if password does not equals confirmPassword
             if (!_controller.PasswordEqualsConfirmPassword(password, confirmPassword))
             {
                 PasswordEqualsErrorMessage.Visibility = Visibility.Visible;
-                return;
+                errors = true;
             }
 
             // check if password is not valid
             if (!_controller.IsValidPassword(password))
             {
                 PasswordErrorMessage.Visibility = Visibility.Visible;
-                return;
+                errors = true;
             }
 
-            // add new user
-            _controller.Add(
-                new User(username, email, firstName, lastName, password)
-            );
+            // add a new user if there are no errors
+            if (!errors)
+            {
+                _controller.Add(
+                     new User(username, email, firstName, lastName, password)
+                );
+            }
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
