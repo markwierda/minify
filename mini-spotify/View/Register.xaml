@@ -27,11 +27,11 @@
                 </StackPanel>
             </Border>
             <StackPanel>
-                <Label Name="UsernameErrorMessage" Visibility="Hidden" Foreground="White" HorizontalAlignment="Center" Margin="5" Content="Username must be unique."/>
-                <Label Name="EmailErrorMessage" Visibility="Hidden" Foreground="White" HorizontalAlignment="Center" Margin="5" Content="Email address must be valid."/>
-                <Label Name="FirstNameErrorMessage" Visibility="Hidden" Foreground="White" HorizontalAlignment="Center" Margin="5" Content="First name cannot be empty."/>
-                <Label Name="PasswordEqualsErrorMessage" Visibility="Hidden" Foreground="White" HorizontalAlignment="Center" Margin="5" Content="Passwords do not match."/>
-                <Label Name="PasswordErrorMessage" Visibility="Hidden" Foreground="White" HorizontalAlignment="Center" Margin="5" Content="Password must contain 8 characters with 1 special character and one number."/>
+                <Label Name="UsernameErrorMessage" Visibility="Hidden" Foreground="Red" HorizontalAlignment="Center" Margin="5" Content="Username must be unique."/>
+                <Label Name="EmailErrorMessage" Visibility="Hidden" Foreground="Red" HorizontalAlignment="Center" Margin="5" Content="Email address must be valid."/>
+                <Label Name="FirstNameErrorMessage" Visibility="Hidden" Foreground="Red" HorizontalAlignment="Center" Margin="5" Content="First name cannot be empty."/>
+                <Label Name="PasswordEqualsErrorMessage" Visibility="Hidden" Foreground="Red" HorizontalAlignment="Center" Margin="5" Content="Passwords do not match."/>
+                <Label Name="PasswordErrorMessage" Visibility="Hidden" Foreground="Red" HorizontalAlignment="Center" Margin="5" Content="Password must contain 8 characters with 1 special character and one number."/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Margin="15 20" HorizontalAlignment="Left" Content="Register" Style="{StaticResource MaterialDesignFlatButton}" Background="#FF993FC3" Foreground="White" Click="Register_Button_Click"></Button>

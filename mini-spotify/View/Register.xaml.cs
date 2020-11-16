@@ -33,35 +33,35 @@ namespace mini_spotify.View
             // check if username is not unique
             if (!_controller.IsUniqueUsername(username))
             {
-                // TODO: set error message
+                UsernameErrorMessage.Visibility = Visibility.Visible;
                 return;
             }
 
             // check if email is not valid
             if (!_controller.IsValidEmail(email))
             {
-                // TODO: set error message
+                EmailErrorMessage.Visibility = Visibility.Visible;
                 return;
             }
 
             // check if firstName is null or empty
             if (firstName.IsNullOrEmpty())
             {
-                // TODO: set error message
+                FirstNameErrorMessage.Visibility = Visibility.Visible;
                 return;
             }
 
-            // check if password does not equels confirmPassword
+            // check if password does not equals confirmPassword
             if (!_controller.PasswordEqualsConfirmPassword(password, confirmPassword))
             {
-                // TODO: set error message
+                PasswordEqualsErrorMessage.Visibility = Visibility.Visible;
                 return;
             }
 
             // check if password is not valid
             if (!_controller.IsValidPassword(password))
             {
-                // TODO: set error message
+                PasswordErrorMessage.Visibility = Visibility.Visible;
                 return;
             }
 

@@ -20,12 +20,12 @@
                 </StackPanel>
             </Border>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Margin="15 20" HorizontalAlignment="Left" Content="Login" Style="{StaticResource MaterialDesignFlatButton}" Background="#FF993FC3" Foreground="White"></Button>
+                <Button Margin="15 20" HorizontalAlignment="Left" Content="Login" Style="{StaticResource MaterialDesignFlatButton}" Background="#FF993FC3" Foreground="White" Click="Login_Button_Click"></Button>
                 <Button Margin="15 20" HorizontalAlignment="Right" Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Background="#FF993FC3" Foreground="White"></Button>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label HorizontalAlignment="Left" Content="Don't have an account?" Foreground="#DDFFFFFF"></Label>
-                <Label HorizontalAlignment="Right" Content="Register by clicking here" Foreground="#DDFFFFFF"></Label>
+                <Label HorizontalAlignment="Right" Content="Register by clicking here" Foreground="#DDFFFFFF" MouseDown="Create_Account_Button_click"></Label>
             </StackPanel>
         </StackPanel>
     </Grid>
