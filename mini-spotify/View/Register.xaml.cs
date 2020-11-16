@@ -22,6 +22,13 @@ namespace mini_spotify.View
 
         private void Register_Button_Click(object sender, RoutedEventArgs e)
         {
+            //set error messages on hidden
+            UsernameErrorMessage.Visibility = Visibility.Hidden;
+            EmailErrorMessage.Visibility = Visibility.Hidden;
+            FirstNameErrorMessage.Visibility = Visibility.Hidden;
+            PasswordEqualsErrorMessage.Visibility = Visibility.Hidden;
+            PasswordErrorMessage.Visibility = Visibility.Hidden;
+
             // get values from register form
             string username = tBox_Username.Text;
             string email = tBox_Email.Text;
@@ -29,6 +36,13 @@ namespace mini_spotify.View
             string lastName = tBox_Last_Name.Text;
             string password = tBox_Password.Password;
             string confirmPassword = tBox_Confirm_Password.Password;
+
+            // check if firstName is null or empty
+            if (firstName.IsNullOrEmpty())
+            {
+                FirstNameErrorMessage.Visibility = Visibility.Visible;
+                return;
+            }
 
             // check if username is not unique
             if (!_controller.IsUniqueUsername(username))
@@ -41,13 +55,6 @@ namespace mini_spotify.View
             if (!_controller.IsValidEmail(email))
             {
                 EmailErrorMessage.Visibility = Visibility.Visible;
-                return;
-            }
-
-            // check if firstName is null or empty
-            if (firstName.IsNullOrEmpty())
-            {
-                FirstNameErrorMessage.Visibility = Visibility.Visible;
                 return;
             }
 
