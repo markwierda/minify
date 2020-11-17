@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mini_spotify.DAL;
 
 namespace mini_spotify.Dal.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201112143431_InitialCreateMinifyDatabase")]
+    partial class InitialCreateMinifyDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,24 +55,6 @@ namespace mini_spotify.Dal.Migrations
                         new
                         {
                             Id = new Guid("8c9a9e88-b37f-4680-998c-853a67db4474"),
-                            Duration = 4,
-                            Genre = "Rap",
-                            Name = "Low(feat. T-Pain",
-                            Path = "."
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("aa5ab627-3b64-4c22-9cc3-cca5fd57c896"),
-                            Duration = 5,
-                            Genre = "Classic",
-                            Name = "Titanic",
-                            Path = "."
-                        },
-                        new
-                        {
-                            Id = new Guid("52f5aab5-e89e-497c-94a9-01b2961e5f27"),
                             Duration = 4,
                             Genre = "Rap",
                             Name = "Low(feat. T-Pain",
@@ -123,26 +107,6 @@ namespace mini_spotify.Dal.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("aa5ab627-3b64-5d22-8cc3-cca5fd57c896"),
-                            Email = "s1140207@student.windesheim.nl",
-                            FirstName = "Ronald",
-                            LastName = "Haan",
-                            PassWord = "tA1EvGT0VPo6QDf+dPQmyyEv/KD5WaXaz721lSIAgImosSUv",
-                            UserName = "1140207"
-                        },
-                        new
-                        {
-                            Id = new Guid("aa5ab653-3b62-5e22-5cc3-cca5fd57c846"),
-                            Email = "s1121300@student.windesheim.nl",
-                            FirstName = "Ali",
-                            LastName = "Alkhalil",
-                            PassWord = "xDpX3fbWOO4pkXV0FcNJMVhiyo3z83XdjWajl1FgGtl3Em7r",
-                            UserName = "1121300"
-                        });
                 });
 
             modelBuilder.Entity("mini_spotify.DAL.Entities.Stream", b =>

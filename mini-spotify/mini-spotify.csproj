@@ -21,8 +21,11 @@
   <ItemGroup>
     <Folder Include="Database\" />
     <Folder Include="ImageResources\" />
-    <Folder Include="StyleResources\" />
     <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
   </ItemGroup>
 
 </Project>
