@@ -19,6 +19,11 @@
                     <PasswordBox Margin="5" Style="{StaticResource MaterialDesignPasswordBox}"/>
                 </StackPanel>
             </Border>
+            <Border Name="Errors" Background="#FDDD92FF" Margin="10 20" CornerRadius="10" Visibility="Collapsed">
+                <StackPanel>
+                    <Label Name="LoginErrorMessage" Visibility="Hidden" Foreground="Red" HorizontalAlignment="Center" Margin="5" Content="Invalid credentials"/>
+                </StackPanel>
+            </Border>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Margin="15 20" HorizontalAlignment="Left" Content="Login" Style="{StaticResource MaterialDesignFlatButton}" Background="#FF993FC3" Foreground="White" Click="Login_Button_Click"></Button>
                 <Button Margin="15 20" HorizontalAlignment="Right" Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Background="#FF993FC3" Foreground="White" Click="Cancel_Button_Click"></Button>

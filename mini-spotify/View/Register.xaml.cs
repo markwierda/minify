@@ -23,11 +23,11 @@ namespace mini_spotify.View
         private void Register_Button_Click(object sender, RoutedEventArgs e)
         {
             //set error messages on hidden
-            UsernameErrorMessage.Visibility = Visibility.Hidden;
-            EmailErrorMessage.Visibility = Visibility.Hidden;
-            FirstNameErrorMessage.Visibility = Visibility.Hidden;
-            PasswordEqualsErrorMessage.Visibility = Visibility.Hidden;
-            PasswordErrorMessage.Visibility = Visibility.Hidden;
+            UsernameErrorMessage.Visibility = Visibility.Collapsed;
+            EmailErrorMessage.Visibility = Visibility.Collapsed;
+            FirstNameErrorMessage.Visibility = Visibility.Collapsed;
+            PasswordEqualsErrorMessage.Visibility = Visibility.Collapsed;
+            PasswordErrorMessage.Visibility = Visibility.Collapsed;
 
             // get values from register form
             string username = tBox_Username.Text;
@@ -75,12 +75,16 @@ namespace mini_spotify.View
                 errors = true;
             }
 
-            // add a new user if there are no errors
+            // add a new user if there are no errors else show errors
             if (!errors)
             {
                 _controller.Add(
                      new User(username, email, firstName, lastName, password)
                 );
+            }
+            else
+            {
+                Errors.Visibility = Visibility.Visible;
             }
         }
 
