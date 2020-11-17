@@ -1,20 +1,14 @@
 ﻿using Castle.Core.Internal;
-using Microsoft.EntityFrameworkCore;
 using mini_spotify.DAL;
 using mini_spotify.DAL.Entities;
 using mini_spotify.DAL.Repositories;
 using mini_spotify.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
 
 namespace mini_spotify.Controller
 {
     public class LoginController
     {
         private readonly Repository<User> _userRepository;
-
 
         /// <summary>
         /// create a user repository with the context
@@ -70,9 +64,6 @@ namespace mini_spotify.Controller
 
             return false;        
         }
-
-
-
-        }
-
     }
+}
+
