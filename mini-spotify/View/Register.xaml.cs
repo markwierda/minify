@@ -82,7 +82,10 @@ namespace mini_spotify.View
                      new User(username, email, firstName, lastName, password)
                 );
 
-                // TODO: Login user, close registration form and open/redirect to overview page
+                // TODO: Display success message
+                Login login = new Login();
+                login.Show();
+                Close();
             }
             else
             {
