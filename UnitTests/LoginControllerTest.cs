@@ -129,5 +129,35 @@ namespace UnitTests
             // Assert
             Assert.IsFalse(LoginResults);
         }
+        [Test]
+        public void TryLogin_Successfully()
+        {
+            // Assemble
+
+            string username = "1140207";
+            string password = "Test123";
+
+            // Act
+            var LoginResults = _loginController.TryLogin(username, password);
+
+
+            // Assert
+            Assert.IsTrue(LoginResults);
+        }
+        [Test]
+        public void TryLogin_UnSuccessfully()
+        {
+            // Assemble
+
+            string username = "Ronald";
+            string password = "Pasord";
+
+            // Act
+            var LoginResults = _loginController.TryLogin(username, password);
+
+
+            // Assert
+            Assert.IsFalse(LoginResults);
+        }
     }
 }
