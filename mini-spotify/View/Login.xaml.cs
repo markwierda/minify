@@ -34,5 +34,9 @@ namespace mini_spotify.View
 
         }
 
+        private void Cancel_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
