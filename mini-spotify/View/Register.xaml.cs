@@ -81,6 +81,8 @@ namespace mini_spotify.View
                 _controller.Add(
                      new User(username, email, firstName, lastName, password)
                 );
+
+                // TODO: Login user, close registration form and open/redirect to overview page
             }
             else
             {
