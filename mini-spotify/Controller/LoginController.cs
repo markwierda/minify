@@ -3,9 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using mini_spotify.DAL;
 using mini_spotify.DAL.Entities;
 using mini_spotify.DAL.Repositories;
+using mini_spotify.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 
 namespace mini_spotify.Controller
 {
@@ -14,14 +16,41 @@ namespace mini_spotify.Controller
         private readonly Repository<User> _userRepository;
 
 
-        // create a user repository with the context
-        public LoginController(AppDbContext context) {
-
+        /// <summary>
+        /// create a user repository with the context
+        /// </summary>
+        /// <param name="context">The database contexzt</param>       
+        public LoginController(AppDbContext context) 
+        {
             _userRepository = new Repository<User>(context);
-
-
         }
 
+        /// <summary>
+        /// Tries to login in with the given credentials.
+        /// </summary>
+        /// <param name="username">The username of the user</param>
+        /// <param name="password">the password of the user</param>
+        /// <returns>True, when the credentials are correct corresponding with the credentials in the database, False otherwise</returns>
+        public bool TryLogin(string username, string password) 
+        {
+            if(Validation(username, password) && !AppData.LoggedIn)
+            {
+                AppData.LoggedIn = true;
+                User user = _userRepository.FindOneBy(u => u.UserName == username);
+                AppData.Id = user.Id;
+
+                return true;
+            }
+
+            return false;   
+        }
+
+        /// <summary>
+        /// It validate the credintials
+        /// </summary>
+        /// <param name="username">The username of the user</param>
+        /// <param name="password">the password of the user</param>
+        /// <returns>True, when the credentials are correct corresponding with the credentials in the database, False otherwise</returns>
         public bool Validation(string username, string password)
         {
             // check if username is null or empty
