@@ -3,6 +3,7 @@
 using mini_spotify.DAL;
 using mini_spotify.DAL.Entities;
 using mini_spotify.DAL.Repositories;
+using mini_spotify.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -21,7 +22,7 @@ namespace mini_spotify
     {
         public App()
         {
-            
+            AppData.Initialize();
         }
     }
 }
