@@ -1,10 +1,5 @@
 ﻿using mini_spotify.Controller;
-using mini_spotify.DAL;
-using mini_spotify.DAL.Entities;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace UnitTests
 {
