@@ -11,7 +11,7 @@ namespace mini_spotify.View
     /// </summary>
     public partial class Register : Window
     {
-        private RegisterController _controller;
+        private readonly RegisterController _controller;
 
         public Register()
         {
