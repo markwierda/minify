@@ -44,10 +44,16 @@ namespace mini_spotify.View
             if (loginController.TryLogin(username, password))
             {
                 // TODO: Display overview
+                Overview overview = new Overview();
+                overview.Show();
+                this.Close();
             }
             else
             {
                 // TODO: Display error message
+              
+                MessageBox.Show("Wrong username or password please try again", "Error");
+                
             }
 
 
