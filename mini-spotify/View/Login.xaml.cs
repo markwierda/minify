@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using mini_spotify.Controller;
+using mini_spotify.DAL;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace mini_spotify.View
 {
@@ -17,12 +9,16 @@ namespace mini_spotify.View
     /// </summary>
     public partial class Login : Window
     {
+        private readonly LoginController loginController;
+
         public Login()
         {
             InitializeComponent();
+            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
+            loginController = new LoginController(context);
         }
 
-        private void Register_Label_Click(object sender, RoutedEventArgs e)
+        private void Create_Account_Button_click(object sender, RoutedEventArgs e)
         {
             Register register = new Register();
             register.Show();
@@ -31,12 +27,30 @@ namespace mini_spotify.View
 
         private void Login_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            //Username && Wachtwoord ophalen van het formulier
+            string username = Username.Text;
+            string password = Password.Password;
+            //Die gegevens valideren && TryLogin aanroepen
+            if (loginController.TryLogin(username, password))
+            {
+                // TODO: Display overview
+            }
+            else
+            {
+                Messages.Visibility = Visibility.Visible;
+                LoginErrorMessage.Visibility = Visibility.Visible;
+            }
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        public void OnRegister()
+        {
+            Messages.Visibility = Visibility.Visible;
+            RegisteredMessage.Visibility = Visibility.Visible;
         }
     }
 }

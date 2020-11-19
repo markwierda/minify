@@ -6,17 +6,23 @@
         xmlns:local="clr-namespace:mini_spotify.View"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Login" Height="auto" Width="450" HorizontalAlignment="Center" VerticalAlignment="Center" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Cursor="Arrow" Background="#FF821BB2">
+        Title="Login" Height="800" Width="600" HorizontalAlignment="Center" VerticalAlignment="Center" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Cursor="Arrow" Background="#FF821BB2">
 
-    <Grid Height="585">
+    <Grid Height="auto">
         <StackPanel Margin="50">
             <Image Source="\ImageResources\megascale_m.png" Width="100" Height="100"/>
-            <Border Background="#FDB53CEC" Margin="10 20" CornerRadius="10">
+            <Border Background="#FDBF60EA" Margin="10 20" CornerRadius="5">
                 <StackPanel Margin="40">
                     <Label Foreground="White" HorizontalAlignment="Center" Margin="5" Content="Username"/>
-                    <TextBox Margin="5" Style="{StaticResource MaterialDesignTextBox}" Background="Transparent"/>
+                    <TextBox x:Name="Username" Margin="5" Style="{StaticResource MaterialDesignTextBox}" Background="Transparent"/>
                     <Label HorizontalAlignment="Center" Margin="5" Content="Password" Foreground="#DDFFFFFF"></Label>
-                    <PasswordBox Margin="5" Style="{StaticResource MaterialDesignPasswordBox}"/>
+                    <PasswordBox x:Name="Password" Margin="5" Style="{StaticResource MaterialDesignPasswordBox}"/>
+                </StackPanel>
+            </Border>
+            <Border Name="Messages" Background="#FDDD92FF" Margin="10 20" CornerRadius="10" Visibility="Collapsed">
+                <StackPanel>
+                    <Label Name="LoginErrorMessage" Visibility="Hidden" Foreground="Red" HorizontalAlignment="Center" Margin="5" Content="Invalid credentials"/>
+                    <Label Name="RegisteredMessage" Visibility="Hidden" Foreground="Green" HorizontalAlignment="Center" Margin="5" Content="Successfully registered"/>
                 </StackPanel>
             </Border>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -25,7 +31,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label HorizontalAlignment="Left" Content="Don't have an account?" Foreground="#DDFFFFFF"></Label>
-                <Label HorizontalAlignment="Right" Content="Register by clicking here" Foreground="#DDFFFFFF" MouseDown="Register_Label_Click"></Label>
+                <Label HorizontalAlignment="Right" Content="Register by clicking here" Foreground="#DDFFFFFF" MouseDown="Create_Account_Button_click"></Label>
             </StackPanel>
         </StackPanel>
     </Grid>

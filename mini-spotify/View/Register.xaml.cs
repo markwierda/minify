@@ -1,16 +1,8 @@
-﻿using mini_spotify.Controller;
+﻿using Castle.Core.Internal;
+using mini_spotify.Controller;
 using mini_spotify.DAL;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using mini_spotify.DAL.Entities;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace mini_spotify.View
 {
@@ -19,28 +11,85 @@ namespace mini_spotify.View
     /// </summary>
     public partial class Register : Window
     {
+        private readonly RegisterController _controller;
+
         public Register()
         {
-            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
             InitializeComponent();
-            RegisterConntroller.Initialize(context);
+            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
+            _controller = new RegisterController(context);
         }
 
         private void Register_Button_Click(object sender, RoutedEventArgs e)
         {
+            //set error messages on hidden
+            UsernameErrorMessage.Visibility = Visibility.Collapsed;
+            EmailErrorMessage.Visibility = Visibility.Collapsed;
+            FirstNameErrorMessage.Visibility = Visibility.Collapsed;
+            PasswordEqualsErrorMessage.Visibility = Visibility.Collapsed;
+            PasswordErrorMessage.Visibility = Visibility.Collapsed;
+
             // get values from register form
-            string firstName = tBox_First_name.Text;
-            string lastName = tBox_Last_Name.Text;
             string username = tBox_Username.Text;
             string email = tBox_Email.Text;
+            string firstName = tBox_First_name.Text;
+            string lastName = tBox_Last_Name.Text;
             string password = tBox_Password.Password;
             string confirmPassword = tBox_Confirm_Password.Password;
 
-            // validate values, if true then create a new user
-            if (RegisterConntroller.Validate(firstName, lastName, username, email, password, confirmPassword))
+            // errors standard false
+            bool errors = false;
+
+            // check if firstName is null or empty
+            if (firstName.IsNullOrEmpty())
             {
-                Console.WriteLine("huh");
-                // TODO: call create function here
+                FirstNameErrorMessage.Visibility = Visibility.Visible;
+                errors = true;
+            }
+
+            // check if username is not unique
+            if (!_controller.IsUniqueUsername(username))
+            {
+                UsernameErrorMessage.Visibility = Visibility.Visible;
+                errors = true;
+            }
+
+            // check if email is not valid
+            if (!_controller.IsValidEmail(email))
+            {
+                EmailErrorMessage.Visibility = Visibility.Visible;
+                errors = true;
+            }
+
+            // check if password does not equals confirmPassword
+            if (!_controller.PasswordEqualsConfirmPassword(password, confirmPassword))
+            {
+                PasswordEqualsErrorMessage.Visibility = Visibility.Visible;
+                errors = true;
+            }
+
+            // check if password is not valid
+            if (!_controller.IsValidPassword(password))
+            {
+                PasswordErrorMessage.Visibility = Visibility.Visible;
+                PasswordErrorMessage2.Visibility = Visibility.Visible;
+                errors = true;
+            }
+
+            // add a new user if there are no errors else show errors
+            if (!errors)
+            {
+                _controller.Add(
+                     new User(username, email, firstName, lastName, password)
+                );
+                Login login = new Login();
+                login.Show();
+                login.OnRegister();
+                Close();
+            }
+            else
+            {
+                Errors.Visibility = Visibility.Visible;
             }
         }
 
