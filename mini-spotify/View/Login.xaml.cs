@@ -37,7 +37,8 @@ namespace mini_spotify.View
             }
             else
             {
-                // TODO: Display error message
+                Messages.Visibility = Visibility.Visible;
+                LoginErrorMessage.Visibility = Visibility.Visible;
             }
         }
 
