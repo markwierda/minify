@@ -1,16 +1,6 @@
 ﻿using mini_spotify.Controller;
 using mini_spotify.DAL;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace mini_spotify.View
 {
@@ -43,24 +33,26 @@ namespace mini_spotify.View
             //Die gegevens valideren && TryLogin aanroepen
             if (loginController.TryLogin(username, password))
             {
-                // TODO: Display overview
                 Overview overview = new Overview();
                 overview.Show();
-                this.Close();
+                Close();
             }
             else
             {
-                // TODO: Display error message
-              
-                MessageBox.Show("Wrong username or password please try again", "Error");
-                
+                Messages.Visibility = Visibility.Visible;
+                LoginErrorMessage.Visibility = Visibility.Visible;
             }
-
-
-
-
         }
 
-       
+        private void Cancel_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        public void OnRegister()
+        {
+            Messages.Visibility = Visibility.Visible;
+            RegisteredMessage.Visibility = Visibility.Visible;
+        }
     }
 }

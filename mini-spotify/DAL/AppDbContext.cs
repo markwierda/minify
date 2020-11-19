@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using mini_spotify.Controller;
 using mini_spotify.DAL.Entities;
-
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -42,9 +41,9 @@ namespace mini_spotify.DAL
 
             User[] users = new User[]
             {
-                new User() {Id = new Guid("{aa5ab627-3b64-5d22-8cc3-cca5fd57c896}"), Email = "s1140207@student.windesheim.nl", FirstName = "Ronald", LastName="Haan", PassWord=UserController.HashPassword("Test123"), UserName="1140207" },
-                new User() {Id = new Guid("{aa5ab653-3b62-5e22-5cc3-cca5fd57c846}"), Email = "s1121300@student.windesheim.nl", FirstName = "Ali", LastName="Alkhalil", PassWord=UserController.HashPassword("Password"), UserName="1121300" },
-                //new User() {Id = Guid.NewGuid()}
+                new User() { Id = new Guid("{aa5ab627-3b64-5d22-8cc3-cca5fd57c896}"), Email = "s1140207@student.windesheim.nl", FirstName = "Ronald", LastName="Haan", PassWord=UserController.HashPassword("Test123"), UserName="1140207" },
+                new User() { Id = new Guid("{aa5ab653-3b62-5e22-5cc3-cca5fd57c846}"), Email = "s1121300@student.windesheim.nl", FirstName = "Ali", LastName="Alkhalil", PassWord=UserController.HashPassword("Password"), UserName="1121300" },
+                new User() { Id = Guid.NewGuid(), Email="Test@user.com", FirstName = "test", LastName = "User", PassWord = UserController.HashPassword("Test123"), UserName = "testuser" }
             };
 
             builder.Entity<Song>().HasData(songs);
