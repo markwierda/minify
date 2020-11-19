@@ -72,6 +72,7 @@ namespace mini_spotify.View
             if (!_controller.IsValidPassword(password))
             {
                 PasswordErrorMessage.Visibility = Visibility.Visible;
+                PasswordErrorMessage2.Visibility = Visibility.Visible;
                 errors = true;
             }
 

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:mini_spotify.View"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Register" Height="800" Width="600" Background="#FF821BB2" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" RenderTransformOrigin="0.5,0.5">
+        Title="Register" Height="1000" Width="600" Background="#FF821BB2" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" RenderTransformOrigin="0.5,0.5">
     <Grid>
         <StackPanel Margin="50">
             <Image Source="\ImageResources\megascale_m.png" Width="100" Height="100"/>
@@ -36,7 +36,8 @@
                     <Label Name="EmailErrorMessage" Visibility="Hidden" Foreground="Red" HorizontalAlignment="Center" Margin="5" Content="Email address must be valid."/>
                     <Label Name="FirstNameErrorMessage" Visibility="Hidden" Foreground="Red" HorizontalAlignment="Center" Margin="5" Content="First name cannot be empty."/>
                     <Label Name="PasswordEqualsErrorMessage" Visibility="Hidden" Foreground="Red" HorizontalAlignment="Center" Margin="5" Content="Passwords do not match."/>
-                    <Label Name="PasswordErrorMessage" Visibility="Hidden" Foreground="Red" HorizontalAlignment="Center" Margin="5" Content="Password must contain 8 characters with 1 special character and one number."/>
+                    <Label Name="PasswordErrorMessage" Visibility="Hidden" Foreground="Red" HorizontalAlignment="Center" Margin="5" Content="Password must contain 8 characters with"/>
+                    <Label Name="PasswordErrorMessage2" Visibility="Hidden" Foreground="Red" HorizontalAlignment="Center" Margin="5" Content="1 special character and one number."/>
                 </StackPanel>
             </Border>
         </StackPanel>
