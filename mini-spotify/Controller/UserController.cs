@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace mini_spotify.Controller
 {
     public class UserController
     {
-        public UserController()
-        {
-
-        }
-
         public static string HashPassword(string password)
         {
             //Create the salt value with a cryptographic PRNG:
@@ -57,5 +50,4 @@ namespace mini_spotify.Controller
             return true;
         }
     }
-
 }

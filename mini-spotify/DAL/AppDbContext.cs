@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using mini_spotify.Controller;
 using mini_spotify.DAL.Entities;
-
 using System;
 using System.Collections.Generic;
 using System.Configuration;
