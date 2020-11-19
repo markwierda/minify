@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 using mini_spotify.DAL.Entities;
-
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Text;
 
 namespace mini_spotify.DAL
 {
@@ -28,15 +23,22 @@ namespace mini_spotify.DAL
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Song>();
 
             builder.Entity<User>(user =>
             {
                 user.HasIndex(ts => ts.UserName).IsUnique();
             });
 
-            //builder.Entity<Stream>()
-            //        .HasOne(s => s.Song);
+            Song[] songs = new Song[]
+            {
+                new Song() { Id = new Guid("{aa5ab627-3b64-4c22-9cc3-cca5fd57c896}"), Name = "Titanic", Duration = 5, Genre = "Classic", Path = "." },
+                new Song() { Id = Guid.NewGuid(), Name = "Low(feat. T-Pain", Duration = 4, Genre = "Rap", Path = "." },
+            };
+
+
+            builder.Entity<Song>().HasData(songs);
+
+
         }
         #endregion
     }

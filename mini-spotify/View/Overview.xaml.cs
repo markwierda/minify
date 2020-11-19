@@ -13,11 +13,11 @@ using System.Windows.Shapes;
 namespace mini_spotify.View
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for Overview.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class Overview : Window
     {
-        public Window1()
+        public Overview()
         {
             InitializeComponent();
         }
