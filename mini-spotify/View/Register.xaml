@@ -23,6 +23,7 @@
                     <Label HorizontalAlignment="Center" Margin="5" Content="Password*" Foreground="#DDFFFFFF"></Label>
                     <PasswordBox Name="tBox_Password" Margin="5" Style="{StaticResource MaterialDesignPasswordBox}"/>
                     <Label HorizontalAlignment="Center" Margin="5" Content="Confirm password*" Foreground="#DDFFFFFF"></Label>
+                    <Label HorizontalAlignment="Center" Margin="5" Content="1 special character, 1 number and 8 characters long" Foreground="#DDFFFFFF"></Label>
                     <PasswordBox Name="tBox_Confirm_Password" Margin="5" Style="{StaticResource MaterialDesignPasswordBox}"/>
                 </StackPanel>
             </Border>
