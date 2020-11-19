@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mini_spotify.DAL;
 
-namespace mini_spotify.Dal.Migrations
+namespace mini_spotify.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -52,25 +52,7 @@ namespace mini_spotify.Dal.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8c9a9e88-b37f-4680-998c-853a67db4474"),
-                            Duration = 4,
-                            Genre = "Rap",
-                            Name = "Low(feat. T-Pain",
-                            Path = "."
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("aa5ab627-3b64-4c22-9cc3-cca5fd57c896"),
-                            Duration = 5,
-                            Genre = "Classic",
-                            Name = "Titanic",
-                            Path = "."
-                        },
-                        new
-                        {
-                            Id = new Guid("52f5aab5-e89e-497c-94a9-01b2961e5f27"),
+                            Id = new Guid("1e072a96-8e09-4cd1-8834-b2326cf3062e"),
                             Duration = 4,
                             Genre = "Rap",
                             Name = "Low(feat. T-Pain",
@@ -105,6 +87,7 @@ namespace mini_spotify.Dal.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
@@ -131,7 +114,7 @@ namespace mini_spotify.Dal.Migrations
                             Email = "s1140207@student.windesheim.nl",
                             FirstName = "Ronald",
                             LastName = "Haan",
-                            PassWord = "tA1EvGT0VPo6QDf+dPQmyyEv/KD5WaXaz721lSIAgImosSUv",
+                            PassWord = "z0baP7W/1IjRaZu91Ik5KbxhjvPgdaN5mo0rOOYvQ81/Ybfe",
                             UserName = "1140207"
                         },
                         new
@@ -140,8 +123,17 @@ namespace mini_spotify.Dal.Migrations
                             Email = "s1121300@student.windesheim.nl",
                             FirstName = "Ali",
                             LastName = "Alkhalil",
-                            PassWord = "xDpX3fbWOO4pkXV0FcNJMVhiyo3z83XdjWajl1FgGtl3Em7r",
+                            PassWord = "Z4BYDHHzYvaD4zo/OVv9yQats/+uVV6HdFp8xvvz1Ip4Dt+i",
                             UserName = "1121300"
+                        },
+                        new
+                        {
+                            Id = new Guid("45f3ddef-5288-47b5-832c-e03c92008c32"),
+                            Email = "Test@user.com",
+                            FirstName = "test",
+                            LastName = "User",
+                            PassWord = "abPnBhX0g3hVVOvTyQADucwZv1DgaPzXZ8MSib2wpC7dzYvM",
+                            UserName = "testuser"
                         });
                 });
 
