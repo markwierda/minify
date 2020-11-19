@@ -1,51 +1,106 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using mini_spotify.Controller;
+﻿using mini_spotify.Controller;
 using mini_spotify.DAL;
-using mini_spotify.DAL.Entities;
-
 using NUnit.Framework;
 
 namespace UnitTests
 {
     public class RegisterControllerTest
     {
-        private RegisterController _registerController;
-        private Guid testId;
+        private RegisterController _controller;
 
         [SetUp]
         public void Setup()
         {
             AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
-            _registerController = new RegisterController(context);
-            testId = new Guid("{aa5ab627-3b64-4c22-9cc3-cca5fd57c896}");
+            _controller = new RegisterController(context);
         }
 
         [Test]
-        public void GetAll_NotNull()
+        public void IsUniqueUsername_Return_IsTrue()
         {
-            List<User> users = _registerController.GetAll();
+            // create username
+            string username = "uniqueunittestuser";
 
-            Assert.NotNull(users);
+            // validate username, outcome should be true
+            bool result = _controller.IsUniqueUsername(username);
+            Assert.IsTrue(result);
         }
 
         [Test]
-        public void Find__Random_Id_IsNull()
+        public void IsUniqueUsername_Return_IsFalse()
         {
-            Guid randomId = new Guid();
-            User user = _registerController.Get(randomId);
+            // create username
+            string username = "testuser";
 
-            Assert.IsNull(user);
+            // validate username, outcome should be false
+            bool result = _controller.IsUniqueUsername(username);
+            Assert.IsFalse(result);
         }
 
         [Test]
-        public void Find_Rerturn_IsNotNull()
+        public void IsValidEmail_Return_IsTrue()
         {
-            User user = _registerController.Get(testId);
+            // create email
+            string email = "test@unittest.com";
 
-            Assert.IsNotNull(user);
+            // validate email, outcome should be true
+            bool result = _controller.IsValidEmail(email);
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void IsValidEmail_Return_IsFalse()
+        {
+            // create email
+            string email = "test";
+
+            // validate email, outcome should be false
+            bool result = _controller.IsValidEmail(email);
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void PasswordEqualsConfirmPassword_Return_IsTrue()
+        {
+            // create matching passwords
+            string password = "Welcome01!";
+            string confirmPassword = "Welcome01!";
+
+            // check if passwords are equal, outcome should be true
+            Assert.IsTrue(_controller.PasswordEqualsConfirmPassword(password, confirmPassword));
+        }
+
+        [Test]
+        public void PasswordEqualsConfirmPassword_Return_IsFalse()
+        {
+            // create matching passwords
+            string password = "Welcome01!";
+            string confirmPassword = "Welcome02!";
+
+            // check if passwords are equal, outcome should be false
+            Assert.IsFalse(_controller.PasswordEqualsConfirmPassword(password, confirmPassword));
+        }
+
+        [Test]
+        public void IsValidPassword_Return_IsTrue()
+        {
+            // create password
+            string password = "Welcome01!";
+
+            // validate password, outcome should be true
+            bool result = _controller.IsValidPassword(password);
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void IsValidPassword_Return_IsFalse()
+        {
+            // create password
+            string password = "test";
+
+            // validate password, outcome should be false
+            bool result = _controller.IsValidPassword(password);
+            Assert.IsFalse(result);
         }
     }
 }

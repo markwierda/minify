@@ -35,12 +35,24 @@ namespace mini_spotify.View
             {
                 Overview overview = new Overview();
                 overview.Show();
-                this.Close();
+                Close();
             }
             else
-            {              
-                MessageBox.Show("Wrong username or password please try again", "Error");
+            {
+                Messages.Visibility = Visibility.Visible;
+                LoginErrorMessage.Visibility = Visibility.Visible;
             }
+        }
+
+        private void Cancel_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        public void OnRegister()
+        {
+            Messages.Visibility = Visibility.Visible;
+            RegisteredMessage.Visibility = Visibility.Visible;
         }
     }
 }
