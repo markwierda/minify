@@ -33,5 +33,16 @@ namespace mini_spotify.View
         {
 
         }
+
+        private void Cancel_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        public void OnRegister()
+        {
+            Messages.Visibility = Visibility.Visible;
+            RegisteredMessage.Visibility = Visibility.Visible;
+        }
     }
 }
