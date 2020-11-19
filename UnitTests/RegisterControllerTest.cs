@@ -67,7 +67,7 @@ namespace UnitTests
             string confirmPassword = "Welcome01!";
 
             // check if passwords are equal, outcome should be true
-            Assert.IsTrue(password.Equals(confirmPassword));
+            Assert.IsTrue(_controller.PasswordEqualsConfirmPassword(password, confirmPassword));
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace UnitTests
             string confirmPassword = "Welcome02!";
 
             // check if passwords are equal, outcome should be false
-            Assert.IsFalse(password.Equals(confirmPassword));
+            Assert.IsFalse(_controller.PasswordEqualsConfirmPassword(password, confirmPassword));
         }
 
         [Test]

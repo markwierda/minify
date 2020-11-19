@@ -11,7 +11,7 @@ namespace mini_spotify.View
     /// </summary>
     public partial class Register : Window
     {
-        private RegisterController _controller;
+        private readonly RegisterController _controller;
 
         public Register()
         {
@@ -85,8 +85,6 @@ namespace mini_spotify.View
                 login.Show();
                 login.OnRegister();
                 Close();
-                //login.RegisteredMessage.Visibility = Visibility.Visible;
-                //login.Messages.Visibility = Visibility.Visible;
             }
             else
             {

@@ -9,7 +9,7 @@ namespace mini_spotify.Controller
 {
     public class RegisterController
     {
-        private Repository<User> _userRepository;
+        private readonly Repository<User> _userRepository;
 
         // create a user repository with the context
         public RegisterController(AppDbContext context)
@@ -51,7 +51,7 @@ namespace mini_spotify.Controller
                                       RegexOptions.None, TimeSpan.FromMilliseconds(200));
 
                 // Examines the domain part of the email and normalizes it.
-                string DomainMapper(Match match)
+                static string DomainMapper(Match match)
                 {
                     // Use IdnMapping class to convert Unicode domain names.
                     var idn = new IdnMapping();
