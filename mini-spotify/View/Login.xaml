@@ -14,9 +14,9 @@
             <Border Background="#FDBF60EA" Margin="10 20" CornerRadius="5">
                 <StackPanel Margin="40">
                     <Label Foreground="White" HorizontalAlignment="Center" Margin="5" Content="Username"/>
-                    <TextBox Margin="5" Style="{StaticResource MaterialDesignTextBox}" Background="Transparent"/>
+                    <TextBox x:Name="Username" Margin="5" Style="{StaticResource MaterialDesignTextBox}" Background="Transparent"/>
                     <Label HorizontalAlignment="Center" Margin="5" Content="Password" Foreground="#DDFFFFFF"></Label>
-                    <PasswordBox Margin="5" Style="{StaticResource MaterialDesignPasswordBox}"/>
+                    <PasswordBox x:Name="Password" Margin="5" Style="{StaticResource MaterialDesignPasswordBox}"/>
                 </StackPanel>
             </Border>
             <Border Name="Messages" Background="#FDDD92FF" Margin="10 20" CornerRadius="10" Visibility="Collapsed">

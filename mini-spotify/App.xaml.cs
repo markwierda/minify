@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using mini_spotify.Model;
+using System.Windows;
 
 namespace mini_spotify
 {
@@ -9,7 +10,7 @@ namespace mini_spotify
     {
         public App()
         {
-            
+            AppData.Initialize();
         }
     }
 }

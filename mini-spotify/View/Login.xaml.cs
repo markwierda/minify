@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using mini_spotify.Controller;
+using mini_spotify.DAL;
+using System.Windows;
 
 namespace mini_spotify.View
 {
@@ -7,9 +9,13 @@ namespace mini_spotify.View
     /// </summary>
     public partial class Login : Window
     {
+        private readonly LoginController loginController;
+
         public Login()
         {
             InitializeComponent();
+            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
+            loginController = new LoginController(context);
         }
 
         private void Create_Account_Button_click(object sender, RoutedEventArgs e)
@@ -21,7 +27,19 @@ namespace mini_spotify.View
 
         private void Login_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            //Username && Wachtwoord ophalen van het formulier
+            string username = Username.Text;
+            string password = Password.Password;
+            //Die gegevens valideren && TryLogin aanroepen
+            if (loginController.TryLogin(username, password))
+            {
+                // TODO: Display overview
+            }
+            else
+            {
+                Messages.Visibility = Visibility.Visible;
+                LoginErrorMessage.Visibility = Visibility.Visible;
+            }
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using mini_spotify.DAL;
 using System;
 
-namespace mini_spotify.Dal.Migrations
+namespace mini_spotify.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -50,7 +50,7 @@ namespace mini_spotify.Dal.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8c9a9e88-b37f-4680-998c-853a67db4474"),
+                            Id = new Guid("1e072a96-8e09-4cd1-8834-b2326cf3062e"),
                             Duration = 4,
                             Genre = "Rap",
                             Name = "Low(feat. T-Pain",
@@ -85,6 +85,7 @@ namespace mini_spotify.Dal.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
@@ -103,6 +104,35 @@ namespace mini_spotify.Dal.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("aa5ab627-3b64-5d22-8cc3-cca5fd57c896"),
+                            Email = "s1140207@student.windesheim.nl",
+                            FirstName = "Ronald",
+                            LastName = "Haan",
+                            PassWord = "z0baP7W/1IjRaZu91Ik5KbxhjvPgdaN5mo0rOOYvQ81/Ybfe",
+                            UserName = "1140207"
+                        },
+                        new
+                        {
+                            Id = new Guid("aa5ab653-3b62-5e22-5cc3-cca5fd57c846"),
+                            Email = "s1121300@student.windesheim.nl",
+                            FirstName = "Ali",
+                            LastName = "Alkhalil",
+                            PassWord = "Z4BYDHHzYvaD4zo/OVv9yQats/+uVV6HdFp8xvvz1Ip4Dt+i",
+                            UserName = "1121300"
+                        },
+                        new
+                        {
+                            Id = new Guid("45f3ddef-5288-47b5-832c-e03c92008c32"),
+                            Email = "Test@user.com",
+                            FirstName = "test",
+                            LastName = "User",
+                            PassWord = "abPnBhX0g3hVVOvTyQADucwZv1DgaPzXZ8MSib2wpC7dzYvM",
+                            UserName = "testuser"
+                        });
                 });
 
             modelBuilder.Entity("mini_spotify.DAL.Entities.Stream", b =>
