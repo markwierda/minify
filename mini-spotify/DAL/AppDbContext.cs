@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 using mini_spotify.DAL.Entities;
-
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Text;
 
 namespace mini_spotify.DAL
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-
-namespace mini_spotify.DAL.Entities
+﻿namespace mini_spotify.DAL.Entities
 {
     public class Song : BaseEntity
     {
