@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:mini_spotify.View"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Register" Height="auto" Width="450" Background="#FF821BB2" WindowStartupLocation="CenterScreen" SizeToContent="Height" ResizeMode="NoResize" WindowStyle="None" RenderTransformOrigin="0.5,0.5">
+        Title="Register" Height="800" Width="600" Background="#FF821BB2" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" RenderTransformOrigin="0.5,0.5">
     <Grid>
         <StackPanel Margin="50">
             <Image Source="\ImageResources\megascale_m.png" Width="100" Height="100"/>
@@ -26,6 +26,10 @@
                     <PasswordBox Name="tBox_Confirm_Password" Margin="5" Style="{StaticResource MaterialDesignPasswordBox}"/>
                 </StackPanel>
             </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Margin="15 20" HorizontalAlignment="Left" Content="Register" Style="{StaticResource MaterialDesignFlatButton}" Background="#FF993FC3" Foreground="White" Click="Register_Button_Click"></Button>
+                <Button Margin="15 20" HorizontalAlignment="Right" Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Background="#FF993FC3" Foreground="White" Click="Cancel_Button_Click"></Button>
+            </StackPanel>
             <Border Name="Errors" Background="#FDDD92FF" Margin="10 20" CornerRadius="10" Visibility="Collapsed">
                 <StackPanel>
                     <Label Name="UsernameErrorMessage" Visibility="Hidden" Foreground="Red" HorizontalAlignment="Center" Margin="5" Content="Username must be unique."/>
@@ -35,10 +39,6 @@
                     <Label Name="PasswordErrorMessage" Visibility="Hidden" Foreground="Red" HorizontalAlignment="Center" Margin="5" Content="Password must contain 8 characters with 1 special character and one number."/>
                 </StackPanel>
             </Border>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Margin="15 20" HorizontalAlignment="Left" Content="Register" Style="{StaticResource MaterialDesignFlatButton}" Background="#FF993FC3" Foreground="White" Click="Register_Button_Click"></Button>
-                <Button Margin="15 20" HorizontalAlignment="Right" Content="Cancel" Style="{StaticResource MaterialDesignFlatButton}" Background="#FF993FC3" Foreground="White" Click="Cancel_Button_Click"></Button>
-            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>

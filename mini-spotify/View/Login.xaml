@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:mini_spotify.View"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Login" Height="600" Width="450" HorizontalAlignment="Center" VerticalAlignment="Center" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Cursor="Arrow" Background="#FF821BB2">
+        Title="Login" Height="800" Width="600" HorizontalAlignment="Center" VerticalAlignment="Center" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Cursor="Arrow" Background="#FF821BB2">
 
-    <Grid Height="585">
+    <Grid Height="auto">
         <StackPanel Margin="50">
             <Image Source="\ImageResources\megascale_m.png" Width="100" Height="100"/>
             <Border Background="#FDBF60EA" Margin="10 20" CornerRadius="5">
@@ -19,9 +19,10 @@
                     <PasswordBox Margin="5" Style="{StaticResource MaterialDesignPasswordBox}"/>
                 </StackPanel>
             </Border>
-            <Border Name="Errors" Background="#FDDD92FF" Margin="10 20" CornerRadius="10" Visibility="Collapsed">
+            <Border Name="Messages" Background="#FDDD92FF" Margin="10 20" CornerRadius="10" Visibility="Collapsed">
                 <StackPanel>
                     <Label Name="LoginErrorMessage" Visibility="Hidden" Foreground="Red" HorizontalAlignment="Center" Margin="5" Content="Invalid credentials"/>
+                    <Label Name="RegisteredMessage" Visibility="Hidden" Foreground="Green" HorizontalAlignment="Center" Margin="5" Content="Successfully registered"/>
                 </StackPanel>
             </Border>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

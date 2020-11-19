@@ -81,6 +81,12 @@ namespace mini_spotify.View
                 _controller.Add(
                      new User(username, email, firstName, lastName, password)
                 );
+                Login login = new Login();
+                login.Show();
+                login.OnRegister();
+                Close();
+                //login.RegisteredMessage.Visibility = Visibility.Visible;
+                //login.Messages.Visibility = Visibility.Visible;
             }
             else
             {

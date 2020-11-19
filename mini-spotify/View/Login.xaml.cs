@@ -38,5 +38,11 @@ namespace mini_spotify.View
         {
             Close();
         }
+
+        public void OnRegister()
+        {
+            Messages.Visibility = Visibility.Visible;
+            RegisteredMessage.Visibility = Visibility.Visible;
+        }
     }
 }
