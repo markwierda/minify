@@ -27,16 +27,18 @@ namespace mini_spotify.View
 
         private void Login_Button_Click(object sender, RoutedEventArgs e)
         {
-            //Username && Wachtwoord ophalen van het formulier
+            // get username and password from page
             string username = Username.Text;
             string password = Password.Password;
-            //Die gegevens valideren && TryLogin aanroepen
+
+            // try to login with the values
             if (loginController.TryLogin(username, password))
             {
                 // TODO: Display overview
             }
             else
             {
+                // display error message
                 Messages.Visibility = Visibility.Visible;
                 LoginErrorMessage.Visibility = Visibility.Visible;
             }

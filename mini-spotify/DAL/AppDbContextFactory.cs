@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Text;
-
 namespace mini_spotify.DAL
 {
     public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
