@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using mini_spotify.Model;
 using System.Windows;
 
 namespace mini_spotify
@@ -13,5 +8,9 @@ namespace mini_spotify
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            AppData.Initialize();
+        }
     }
 }

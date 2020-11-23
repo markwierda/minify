@@ -1,0 +1,70 @@
+﻿using Castle.Core.Internal;
+using mini_spotify.DAL;
+using mini_spotify.DAL.Entities;
+using mini_spotify.DAL.Repositories;
+using mini_spotify.Model;
+
+namespace mini_spotify.Controller
+{
+    public class LoginController
+    {
+        private readonly Repository<User> _userRepository;
+
+        /// <summary>
+        /// create a user repository with the context
+        /// </summary>
+        /// <param name="context">The database contexzt</param>       
+        public LoginController(AppDbContext context) 
+        {
+            _userRepository = new Repository<User>(context);
+        }
+
+        /// <summary>
+        /// Tries to login in with the given credentials.
+        /// </summary>
+        /// <param name="username">The username of the user</param>
+        /// <param name="password">the password of the user</param>
+        /// <returns>True, when the credentials are correct corresponding with the credentials in the database, False otherwise</returns>
+        public bool TryLogin(string username, string password) 
+        {
+            if(Validation(username, password) && !AppData.LoggedIn)
+            {
+                AppData.LoggedIn = true;
+                User user = _userRepository.FindOneBy(u => u.UserName == username);
+                AppData.Id = user.Id;
+
+                return true;
+            }
+
+            return false;   
+        }
+
+        /// <summary>
+        /// It validate the credintials
+        /// </summary>
+        /// <param name="username">The username of the user</param>
+        /// <param name="password">the password of the user</param>
+        /// <returns>True, when the credentials are correct corresponding with the credentials in the database, False otherwise</returns>
+        public bool Validation(string username, string password)
+        {
+            // check if username is null or empty
+            if (username.IsNullOrEmpty())
+                return false;
+
+            // check if password is null or empty
+            if (password.IsNullOrEmpty())
+                return false;
+
+            // check if password is valid
+           foreach(User user  in _userRepository.GetAll())
+           {
+                if (user.UserName == username && UserController.ValidatePassword(password, user.PassWord))
+                {
+                    return true;
+                }
+           }
+
+            return false;        
+        }
+    }
+}
