@@ -37,24 +37,29 @@ namespace mini_spotify.DAL
             {
                 hitlistsongs
                     .HasKey(hs => hs.Id);
-
+                // create a unique constraint with the songid and hitlistid
                 hitlistsongs
                     .HasIndex(hs => new { hs.SongId, hs.HitlistId})
                     .IsUnique();
 
+                // create a one to many relation from hitlistSongs.Song to Song
                 hitlistsongs
                     .HasOne(hs => hs.Song)
                     .WithMany(s => s.Hitlists)
                     .HasForeignKey(hs => hs.SongId)
-                    .OnDelete(DeleteBehavior.Cascade);
+                    // When the relation is deleted, do not delete the song.
+                    .OnDelete(DeleteBehavior.Restrict);
 
+                // create a one to many relation from hitlistSongs.Hitlist to Hitlist
                 hitlistsongs
                     .HasOne(hs => hs.Hitlist)
                     .WithMany(hl => hl.Songs)
                     .HasForeignKey(hs => hs.HitlistId)
-                    .OnDelete(DeleteBehavior.Cascade);
-            });    
+                    // When the relation is deleted, do not delete the hitlist.
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
+            #region Seed
             Song[] songs = new Song[]
             {
                 new Song() { Id = new Guid("{aa5ab627-3b64-4c22-9cc3-cca5fd57c896}"), Name = "Titanic", Duration = new TimeSpan(0, 0, 4, 30), Genre = "Classic", Path = "." },
@@ -86,6 +91,7 @@ namespace mini_spotify.DAL
             builder.Entity<User>().HasData(users);
             builder.Entity<Hitlist>().HasData(hitlists);
             builder.Entity<HitlistSong>().HasData(hitlistSongs);
+            #endregion Seed
         }
         #endregion
     }
