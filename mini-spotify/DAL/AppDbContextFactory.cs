@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace mini_spotify.DAL
 {
@@ -7,11 +9,15 @@ namespace mini_spotify.DAL
     {
         public AppDbContext CreateDbContext(string[] args)
         {
+            var configbuilder = new ConfigurationBuilder()
+                        .SetBasePath(Directory.GetCurrentDirectory())
+                        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            IConfigurationRoot configuration = configbuilder.Build();
+
+
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-                           
-            string prod = "Server=127.0.0.1; database=Spotify; Integrated Security=False; User id=sa; Password=PieterBrouwer01!; ConnectRetryCount=0; MultipleActiveResultSets=True";
-            string local = "Server=(localdb)\\MSSQLLocalDB;Database=Spotify;Trusted_Connection=True;";// ConfigurationManager.ConnectionStrings["Dev"].ConnectionString;
-            builder.UseSqlServer(local, providerOptions => providerOptions.CommandTimeout(60))
+            string connectionString = configuration.GetConnectionString("Spotify-Database-local");
+            builder.UseSqlServer(connectionString, providerOptions => providerOptions.CommandTimeout(60))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
             return new AppDbContext(builder.Options);
