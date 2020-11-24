@@ -50,9 +50,11 @@ namespace mini_spotify.Controller
             // check if username is null or empty
             if (username.IsNullOrEmpty())
                 return false;
+
             // check if password is null or empty
             if (password.IsNullOrEmpty())
                 return false;
+
             // check if password is valid
            foreach(User user  in _userRepository.GetAll())
            {
@@ -66,4 +68,3 @@ namespace mini_spotify.Controller
         }
     }
 }
-

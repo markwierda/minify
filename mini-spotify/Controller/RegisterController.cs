@@ -83,6 +83,7 @@ namespace mini_spotify.Controller
             }
         }
 
+        // returns if password equals confirmPassword
         public bool PasswordEqualsConfirmPassword(string password, string confirmPassword)
         {
             return password.Equals(confirmPassword);
