@@ -7,7 +7,7 @@ namespace mini_spotify.DAL
 {
     public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
     {
-        public AppDbContext CreateDbContext(string[] args)
+        public AppDbContext CreateDbContext(string[] args = null)
         {
             var configbuilder = new ConfigurationBuilder()
                         .SetBasePath(Directory.GetCurrentDirectory())
