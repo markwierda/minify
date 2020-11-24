@@ -8,7 +8,7 @@
     <Grid>
         <Label Content="Playlist title" HorizontalAlignment="Left" Margin="80,65,0,0" VerticalAlignment="Top"/>
         <Label Content="Playlist descriptionn" HorizontalAlignment="Left" Margin="80,94,0,0" VerticalAlignment="Top" Visibility="Visible"/>
-        <Label Content="Created by User at dd/mm/yyyy - 32 songs, 1 hr 55 min" HorizontalAlignment="Left" Margin="80,123,0,0" VerticalAlignment="Top"/>
+        <Label Name="HitlistInfo" HorizontalAlignment="Left" Margin="80,123,0,0" VerticalAlignment="Top"/>
 
         <TextBlock Name="HitlistNoSongsMessage" HorizontalAlignment="Left" Margin="80,176,0,0" Text="This hitlist doesn't contain any songs yet" TextWrapping="Wrap" VerticalAlignment="Top"/>
 

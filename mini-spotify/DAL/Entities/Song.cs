@@ -1,4 +1,6 @@
-﻿namespace mini_spotify.DAL.Entities
+﻿using System;
+
+namespace mini_spotify.DAL.Entities
 {
     public class Song : BaseEntity
     {
@@ -6,7 +8,7 @@
 
         public string Genre { get; set; }
 
-        public int Duration { get; set; }
+        public TimeSpan Duration { get; set; }
 
         public string Path { get; set; }
     }
