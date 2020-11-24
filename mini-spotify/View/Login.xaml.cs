@@ -34,7 +34,7 @@ namespace mini_spotify.View
             // try to login with the values
             if (loginController.TryLogin(username, password))
             {
-                Overview overview = new Overview();
+                OverviewSongs overview = new OverviewSongs();
                 overview.Show();
                 Close();
             }
