@@ -5,8 +5,79 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:mini_spotify.View"
         mc:Ignorable="d"
-        Title="Overview" Height="450" Width="800">
-    <Grid>
-        
+        Title="Overview" Width="1410" Height="1005">
+    <!--Switch showgridlines to True to see lines-->
+    <Grid VerticalAlignment="Top" HorizontalAlignment="Left" ShowGridLines="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="94"/>
+            <ColumnDefinition Width="94"/>
+            <ColumnDefinition Width="94"/>
+            <ColumnDefinition Width="94"/>
+            <ColumnDefinition Width="94"/>
+            <ColumnDefinition Width="94"/>
+            <ColumnDefinition Width="94"/>
+            <ColumnDefinition Width="94"/>
+            <ColumnDefinition Width="94"/>
+            <ColumnDefinition Width="94"/>
+            <ColumnDefinition Width="94"/>
+            <ColumnDefinition Width="94"/>
+            <ColumnDefinition Width="94"/>
+            <ColumnDefinition Width="94"/>
+            <ColumnDefinition Width="94"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="67"/>
+            <RowDefinition Height="67"/>
+            <RowDefinition Height="67"/>
+            <RowDefinition Height="67"/>
+            <RowDefinition Height="67"/>
+            <RowDefinition Height="67"/>
+            <RowDefinition Height="67"/>
+            <RowDefinition Height="67"/>
+            <RowDefinition Height="67"/>
+            <RowDefinition Height="67"/>
+            <RowDefinition Height="67"/>
+            <RowDefinition Height="67"/>
+            <RowDefinition Height="67"/>
+            <RowDefinition Height="67"/>
+            <RowDefinition Height="67"/>
+        </Grid.RowDefinitions>
+
+        <!--<TextBlock FontSize="20" FontWeight="Bold" Grid.RowSpan="4" Grid.ColumnSpan="3" Grid.Row="0">2005 Products Shipped</TextBlock>
+        <TextBlock FontSize="12" FontWeight="Bold" Grid.Row="1" Grid.Column="0">Quarter 1</TextBlock>
+        <TextBlock FontSize="12" FontWeight="Bold" Grid.Row="1" Grid.Column="1">Quarter 2</TextBlock>
+        <TextBlock FontSize="12" FontWeight="Bold" Grid.Row="1" Grid.Column="2">Quarter 3</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="0">50000</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="1">100000</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="2">150000</TextBlock>
+        <TextBlock FontSize="16" FontWeight="Bold" Grid.ColumnSpan="3" Grid.Row="3">Total Units: 300000</TextBlock>-->
+        <StackPanel Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" Background="Red">
+            <!--Code for home and trending buttons-->
+        </StackPanel>
+        <StackPanel Grid.Column="3" Grid.RowSpan="3" Grid.ColumnSpan="9" Background="Blue">
+            <!--Code for search-->
+        </StackPanel>
+        <StackPanel Grid.Column="12" Grid.RowSpan="3" Grid.ColumnSpan="3" Background="Red">
+            <!--Code for showing username and logging out-->
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.RowSpan="9" Grid.ColumnSpan="3" Background="Green">
+            <!--Code for library and playlists-->
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="3" Grid.RowSpan="9" Grid.ColumnSpan="9" Background="LightBlue">
+            <!--Code for content-->
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="12" Grid.ColumnSpan="3" Grid.RowSpan="9" Background="Green">
+            <!--placeholder-->
+        </StackPanel>
+        <StackPanel Grid.Row="12" Grid.ColumnSpan="15" Grid.RowSpan="3" Background="Aqua">
+            <!--Placeholder for mediaplayer-->
+        </StackPanel>
     </Grid>
 </Window>
+
+<!-- Grid information
+    Define grid with columns and rows
+    Height and width is in pixels
+    Define multiple rows or columns by using Gird.Column/RowSpan respectively
+    Ex: Grid.ColumnSpan will take up 3 columns
+-->
