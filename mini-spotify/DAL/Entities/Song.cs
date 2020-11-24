@@ -8,6 +8,8 @@
 
         public int Duration { get; set; }
 
+        /*public string Artist { get; set; }*/
+
         public string Path { get; set; }
     }
 }

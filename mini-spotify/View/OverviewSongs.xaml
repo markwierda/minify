@@ -5,14 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:mini_spotify.View" xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="OverviewSongs" Height="450" Width="800" ResizeMode="NoResize" SizeToContent="WidthAndHeight" Topmost="False" 
-        WindowState="Normal" Icon="./ImageResourcees/megascale_m.png" MouseMove="Window_MouseMove">
+        Title="OverviewSongs" Height="450"  ResizeMode="NoResize" SizeToContent="WidthAndHeight" Topmost="False" 
+        Loaded="Window_Loaded">
     <Window.Resources>
-        <sys:String x:Key="strHelloAgain"> Hello Again</sys:String>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+        </Style>
     </Window.Resources>
-    <StackPanel Orientation="Vertical">
-        <TextBlock HorizontalAlignment="Center" TextWrapping="NoWrap" Text="Hello World" VerticalAlignment="Top" FontSize="40"/>
-        <TextBlock Text="{StaticResource strHelloAgain}" FontSize="40" HorizontalAlignment="Center"/>
-        <Button Content="Button"/>
-    </StackPanel>
+    <ListView Name="Songs" Margin="0,94,0,99" Background="White">
+        <ListView.View>
+            <GridView>
+                <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}" />
+                <GridViewColumn Header="Genre" Width="200" DisplayMemberBinding="{Binding Genre}" />
+                <!--<GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Artist}" />-->
+                <GridViewColumn Header="Duration" Width="200" DisplayMemberBinding="{Binding Duration}" />
+            </GridView>
+        </ListView.View>
+    </ListView>
 </Window>
