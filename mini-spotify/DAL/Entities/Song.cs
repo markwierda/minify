@@ -1,4 +1,6 @@
-﻿namespace mini_spotify.DAL.Entities
+﻿using System.Collections.Generic;
+
+namespace mini_spotify.DAL.Entities
 {
     public class Song : BaseEntity
     {
@@ -9,5 +11,7 @@
         public int Duration { get; set; }
 
         public string Path { get; set; }
+
+        public ICollection<HitlistSong> Hitlists { get; set; }
     }
 }

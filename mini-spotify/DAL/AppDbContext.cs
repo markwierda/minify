@@ -13,6 +13,10 @@ namespace mini_spotify.DAL
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Hitlist> Hitlists { get; set; }
+
+        public DbSet<HitlistSong> HitlistSongs { get; set; }
+
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) 
         {
@@ -24,11 +28,34 @@ namespace mini_spotify.DAL
         {
             base.OnModelCreating(builder);
 
-
             builder.Entity<User>(user =>
             {
                 user.HasIndex(ts => ts.UserName).IsUnique();
             });
+
+            builder.Entity<HitlistSong>(hitlistsongs =>
+            {
+                hitlistsongs
+                    .HasKey(hs => hs.Id);
+
+                hitlistsongs
+                    .HasIndex(hs => new { hs.SongId, hs.HitlistId})
+                    .IsUnique();
+
+                hitlistsongs
+                    .HasOne(hs => hs.Song)
+                    .WithMany(s => s.Hitlists)
+                    .HasForeignKey(hs => hs.SongId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                hitlistsongs
+                    .HasOne(hs => hs.Hitlist)
+                    .WithMany(hl => hl.Songs)
+                    .HasForeignKey(hs => hs.HitlistId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            
 
             Song[] songs = new Song[]
             {
