@@ -14,9 +14,15 @@ namespace mini_spotify.DAL
                         .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
             IConfigurationRoot configuration = configbuilder.Build();
 
+            string connectionStringName = configuration.GetSection("Environment")["IsDevelopment"] switch
+            {
+                "false" => "Spotify-Database-prod",
+                _ => "Spotify-Database-local"
+            };
+
+            string connectionString = configuration.GetConnectionString(connectionStringName);
 
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            string connectionString = configuration.GetConnectionString("Spotify-Database-local");
             builder.UseSqlServer(connectionString, providerOptions => providerOptions.CommandTimeout(60))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
