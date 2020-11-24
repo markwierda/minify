@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:mini_spotify.View"
         mc:Ignorable="d"
-        Title="Overview" Width="1410" Height="1005">
+        Loaded="Initialize"
+        Title="Overview" Width="1410" Height="1005" Background="#FFCF51FF">
     <!--Switch showgridlines to True to see lines-->
     <Grid VerticalAlignment="Top" HorizontalAlignment="Left" ShowGridLines="False">
         <Grid.ColumnDefinitions>
@@ -60,9 +61,17 @@
         <StackPanel Grid.Column="12" Grid.RowSpan="3" Grid.ColumnSpan="3" Background="Red">
             <!--Code for showing username and logging out-->
         </StackPanel>
-        <StackPanel Grid.Row="3" Grid.RowSpan="9" Grid.ColumnSpan="3" Background="Green">
-            <!--Code for library and playlists-->
-        </StackPanel>
+        <ScrollViewer VerticalScrollBarVisibility="auto" Grid.Row="3" Grid.RowSpan="9" Grid.ColumnSpan="3">
+            <StackPanel>
+                <ListView Name="HitlistMenu"  HorizontalAlignment="Stretch">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Hitlists" DisplayMemberBinding="{Binding Name}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+        </ScrollViewer>
         <StackPanel Grid.Row="3" Grid.Column="3" Grid.RowSpan="9" Grid.ColumnSpan="9" Background="LightBlue">
             <!--Code for content-->
         </StackPanel>
