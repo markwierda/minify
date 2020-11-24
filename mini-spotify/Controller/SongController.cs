@@ -12,20 +12,17 @@ namespace mini_spotify.Controller
     {
         private readonly Repository<Song> _songRepository;
 
+        // create a song repository with the context.
         public SongController(AppDbContext context)
         {
-            // create a song repository with the context.
             _songRepository = new Repository<Song>(context);
         }
 
+        // the getAll() method of Respository return an IQueryable. This is not what we want to return to the screen, 
+        // so we cast it to a list object
         public List<Song> GetAll()
         {
-            // the getAll() method of Respository return an IQueryable. This is not what we want to return to the screen, 
-            // so we cast it to a list object
-            var query = _songRepository
-                            .GetAll()
-                            .AsNoTracking();
-
+            var query = _songRepository.GetAll().AsNoTracking();
             return query.ToList();
 
         }
@@ -58,7 +55,6 @@ namespace mini_spotify.Controller
 
             //TO DO: check on values of required properties. 
             // For more information check the Acceptation Criteria.
-
             _songRepository.Add(song);
         }
     }
