@@ -53,14 +53,12 @@ namespace mini_spotify.DAL
                     .WithMany(hl => hl.Songs)
                     .HasForeignKey(hs => hs.HitlistId)
                     .OnDelete(DeleteBehavior.Cascade);
-            });
-
-            
+            });    
 
             Song[] songs = new Song[]
             {
-                new Song() { Id = new Guid("{aa5ab627-3b64-4c22-9cc3-cca5fd57c896}"), Name = "Titanic", Duration = 5, Genre = "Classic", Path = "." },
-                new Song() { Id = Guid.NewGuid(), Name = "Low(feat. T-Pain", Duration = 4, Genre = "Rap", Path = "." },
+                new Song() { Id = new Guid("{aa5ab627-3b64-4c22-9cc3-cca5fd57c896}"), Name = "Titanic", Duration = new TimeSpan(0, 0, 4, 30), Genre = "Classic", Path = "." },
+                new Song() { Id = Guid.NewGuid(), Name = "Low(feat. T-Pain)", Duration = new TimeSpan(0, 0, 4, 30), Genre = "Rap", Path = "." },
             };
 
             User[] users = new User[]
@@ -70,11 +68,24 @@ namespace mini_spotify.DAL
                 new User() { Id = Guid.NewGuid(), Email="Test@user.com", FirstName = "test", LastName = "User", PassWord = UserController.HashPassword("Test123"), UserName = "testuser" }
             };
 
+            Hitlist[] hitlists = new Hitlist[]
+            {
+                new Hitlist() { Id = new Guid("{aa4cb653-3c62-5e22-5cc3-cca5fd57c846}"), Title = "Unieke playlist", UserId = users[0].Id, Description = "Description"},
+                new Hitlist() { Id = Guid.NewGuid(), Title = "Unieke playlist", UserId = users[1].Id,  Description = "Description" },
+                new Hitlist() { Id = Guid.NewGuid(), Title = "HUH", UserId = users[2].Id, Description = "HUH"},
+            };
+
+            HitlistSong[] hitlistSongs = new HitlistSong[]
+            {
+                new HitlistSong { Id = Guid.NewGuid(), SongId = songs[0].Id, HitlistId = hitlists[0].Id },
+                new HitlistSong { Id = Guid.NewGuid(), SongId = songs[1].Id, HitlistId = hitlists[0].Id },
+                new HitlistSong { Id = Guid.NewGuid(), SongId = songs[0].Id, HitlistId = hitlists[1].Id },
+            };
+
             builder.Entity<Song>().HasData(songs);
             builder.Entity<User>().HasData(users);
-
-
-
+            builder.Entity<Hitlist>().HasData(hitlists);
+            builder.Entity<HitlistSong>().HasData(hitlistSongs);
         }
         #endregion
     }
