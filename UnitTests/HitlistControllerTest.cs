@@ -32,9 +32,17 @@ namespace UnitTests
         }
 
         [Test]
+        public void GetAll_Count_Greater_Than_Or_Equal_To_Zero()
+        {
+            List<Hitlist> hitlists = _hitlistController.GetAll();
+
+            Assert.GreaterOrEqual(hitlists.Count, 0);
+        }
+
+        [Test]
         public void Find__Random_Id_IsNull()
         {
-            Guid randomId = new Guid();
+            Guid randomId = Guid.NewGuid();
             Hitlist hitlist = _hitlistController.Get(randomId);
 
             Assert.IsNull(hitlist);
