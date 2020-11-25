@@ -23,9 +23,10 @@ namespace mini_spotify.DAL
             string connectionString = configuration.GetConnectionString(connectionStringName);
 
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseSqlServer(connectionString, providerOptions => providerOptions.CommandTimeout(60))
-                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
+            builder.UseSqlServer(connectionString, providerOptions => providerOptions.CommandTimeout(60))
+                           
+          
             return new AppDbContext(builder.Options);
         }
     }
