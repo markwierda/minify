@@ -21,6 +21,7 @@ namespace mini_spotify.View
 
         public void GetAllHitList()
         {
+            //TODO: Add a check if given list is empty
             List<Song> items = new List<Song>
             {
                 new Song() { Name = "John Doe", Genre = "Huh", Duration = 1, Path = "/path/to/song" },
@@ -52,6 +53,7 @@ namespace mini_spotify.View
             };
 
             HitlistMenu.ItemsSource = items;
+
         }
 
         private void btn_Add_Hitlist(object sender, RoutedEventArgs e)

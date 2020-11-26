@@ -66,14 +66,14 @@
                 <ListView Name="HitlistMenu"  HorizontalAlignment="Stretch">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Hitlists" DisplayMemberBinding="{Binding Name}/>
+                            <GridViewColumn Header="Hitlists" DisplayMemberBinding="{Binding Name}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
             </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Bottom">
-            <Button Height="67">Add hitlist</Button>
+            <Button Height="67" Click="btn_Add_Hitlist">Add hitlist</Button>
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.Column="3" Grid.RowSpan="9" Grid.ColumnSpan="9" Background="LightBlue">
             <!--Code for content-->
