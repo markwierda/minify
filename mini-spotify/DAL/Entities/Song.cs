@@ -13,8 +13,6 @@ namespace mini_spotify.DAL.Entities
 
         public TimeSpan Duration { get; set; }
 
-        /*public string Artist { get; set; }*/
-
         public string Path { get; set; }
 
         public ICollection<HitlistSong> Hitlists { get; set; }
