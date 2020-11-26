@@ -8,25 +8,28 @@ namespace mini_spotify.DAL
     public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
     {
         public AppDbContext CreateDbContext(string[] args = null)
-        {
-            var configbuilder = new ConfigurationBuilder()
-                        .SetBasePath(Directory.GetCurrentDirectory())
-                        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-            IConfigurationRoot configuration = configbuilder.Build();
-
-            string connectionStringName = configuration.GetSection("Environment")["IsDevelopment"] switch
-            {
-                "false" => "Spotify-Database-prod",
-                _ => "Spotify-Database-local"
-            };
-
-            string connectionString = configuration.GetConnectionString(connectionStringName);
-
+        {          
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-
-            builder.UseSqlServer(connectionString, providerOptions => providerOptions.CommandTimeout(60));
+            builder.UseSqlServer(GetConnectionString(), providerOptions => providerOptions.CommandTimeout(60))
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
             return new AppDbContext(builder.Options);
+        }
+
+        /// <summary>
+        /// Gets the connection string based on the environment setting in appsettings.json
+        /// </summary>
+        /// <returns>The connection string</returns>
+        public string GetConnectionString()
+        {
+            IConfigurationBuilder configbuilder = new ConfigurationBuilder()
+                       .SetBasePath(Directory.GetCurrentDirectory())
+                       .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            IConfigurationRoot configuration = configbuilder.Build();
+
+            string connectionStringName = configuration.GetSection("Environment")["IsDevelopment"] == "false" ? "Production" : "Development";
+
+            return configuration.GetConnectionString(connectionStringName);
         }
     }
 }

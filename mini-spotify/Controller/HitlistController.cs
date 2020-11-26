@@ -31,7 +31,36 @@ namespace mini_spotify.Controller
             {
                 query = query
                     .Include(hl => hl.User)
-                    .Include(hl => hl.Songs);
+                    .Include(hl => hl.Songs)
+                        .ThenInclude(s => s.Song);
+            }
+
+            return query.ToList();
+        }
+
+        /// <summary>
+        /// d
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="withRelations"></param>
+        /// <returns></returns>
+        public List<Hitlist> GetHitlistsByUserId(Guid userId, bool withRelations = false)
+        {
+            if(userId == Guid.Empty)
+            {
+                throw new ArgumentException(nameof(userId));
+            }
+
+            var query = _hitlistRepository
+                            .GetAll()
+                            .Where(x => x.UserId == userId);
+
+            if(withRelations)
+            {
+                query = query
+                    .Include(hl => hl.User)
+                    .Include(hl => hl.Songs)
+                        .ThenInclude(s => s.Song);
             }
 
             return query.ToList();

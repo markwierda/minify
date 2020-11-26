@@ -35,12 +35,9 @@ namespace mini_spotify.View
             if (loginController.TryLogin(username, password))
             {
                 // TODO: Display overview
-
-                // For testing, can be deleted later:
-                OverviewHitlist overviewHitlist = new OverviewHitlist(new System.Guid("aa4cb653-3c62-5e22-5cc3-cca5fd57c846"));
-                overviewHitlist.Show();
-                Close();
-                // end
+                Overview overview = new Overview();
+                overview.Show();
+                this.Close();
             }
             else
             {
