@@ -34,8 +34,21 @@ namespace mini_spotify.View
             string title = TitleText.Text;
             string description = DescriptionText.Text;
 
+            // Check Title
+            if (title.IsNullOrEmpty())
+            {
+                // display error message
+                TitleError.Visibility = Visibility.Visible;
 
-           
+            }
+            // Check descriptoin
+            if (description.Length > 140)
+            {
+                // display error message
+                DescriptionError.Visibility = Visibility.Visible;
+
+            }
+
         }
     }
 }
