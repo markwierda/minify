@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace mini_spotify.DAL.Entities
 {
@@ -8,8 +9,12 @@ namespace mini_spotify.DAL.Entities
 
         public string Genre { get; set; }
 
+        public string Artist { get; set; }
+
         public TimeSpan Duration { get; set; }
 
         public string Path { get; set; }
+
+        public ICollection<HitlistSong> Hitlists { get; set; }
     }
 }
