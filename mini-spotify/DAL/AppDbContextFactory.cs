@@ -24,9 +24,8 @@ namespace mini_spotify.DAL
 
             var builder = new DbContextOptionsBuilder<AppDbContext>();
 
-            builder.UseSqlServer(connectionString, providerOptions => providerOptions.CommandTimeout(60))
-                           
-          
+            builder.UseSqlServer(connectionString, providerOptions => providerOptions.CommandTimeout(60));
+
             return new AppDbContext(builder.Options);
         }
     }

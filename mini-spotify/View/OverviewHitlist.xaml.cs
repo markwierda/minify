@@ -11,12 +11,12 @@ namespace mini_spotify.View
     /// </summary>
     public partial class OverviewHitlist : Window
     {
-        private readonly HitlistCotroller _controller;
+        private readonly HitlistController _controller;
 
         public OverviewHitlist()
         {
             InitializeComponent();
-            _controller = new HitlistCotroller();
+            _controller = new HitlistController();
 
             List<Song> items = new List<Song>
             {
