@@ -1,7 +1,7 @@
-﻿using mini_spotify.Controller;
+﻿using Castle.Core.Internal;
+using mini_spotify.Controller;
 using mini_spotify.DAL.Entities;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 
 namespace mini_spotify.View
@@ -17,17 +17,28 @@ namespace mini_spotify.View
         {
             InitializeComponent();
 
+            // create instance of controller and get the hitlist by id
             _controller = new HitlistController();
             Hitlist _hitlist = _controller.Get(id, true);
 
-            Title.Content = _hitlist.Title;
-            Description.Content = _hitlist.Description;
-            HitlistInfo.Content = _controller.GetHitlistInfo(_hitlist);
-
-            if (_hitlist.Songs.Count > 0)
+            // check if hitlist is not null
+            if (_hitlist != null)
             {
-                HitlistSongs.ItemsSource = _controller.GetSongs(_hitlist.Songs);
-                HitlistSongs.Visibility = Visibility.Visible;
+                // set the title, description and the info in the overview
+                HitlistTitle.Content = _hitlist.Title;
+                if (!_hitlist.Description.IsNullOrEmpty())
+                {
+                    HitlistDescription.Content = _hitlist.Description;
+                    HitlistDescription.Visibility = Visibility.Visible;
+                }
+                HitlistInfo.Content = _controller.GetHitlistInfo(_hitlist);
+
+                // if there are songs, display the listview
+                if (_hitlist.Songs != null && _hitlist.Songs.Count > 0)
+                {
+                    HitlistSongs.ItemsSource = _controller.GetSongs(_hitlist.Songs);
+                    HitlistSongs.Visibility = Visibility.Visible;
+                }
             }
         }
     }

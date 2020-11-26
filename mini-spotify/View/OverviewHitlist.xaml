@@ -6,11 +6,11 @@
           mc:Ignorable="d"
         Title="OverviewHitlist" Height="450" Width="800">
     <Grid>
-        <Label Name="Title" Content="Playlist title" HorizontalAlignment="Left" Margin="80,65,0,0" VerticalAlignment="Top"/>
-        <Label Name="Description" Content="Playlist descriptionn" HorizontalAlignment="Left" Margin="80,94,0,0" VerticalAlignment="Top" Visibility="Visible"/>
-        <Label Name="HitlistInfo" HorizontalAlignment="Left" Margin="80,123,0,0" VerticalAlignment="Top"/>
+        <Label Name="HitlistTitle" Content="Playlist title" HorizontalAlignment="Left" Margin="80,65,0,0" VerticalAlignment="Top"/>
+        <Label Name="HitlistDescription" Content="Playlist descriptionn" HorizontalAlignment="Left" Margin="80,94,0,0" VerticalAlignment="Top" Visibility="Collapsed"/>
+        <Label Name="HitlistInfo" Content="Playlist info" HorizontalAlignment="Left" Margin="80,123,0,0" VerticalAlignment="Top"/>
 
-        <ListView Name="HitlistSongs" Margin="80,142,80,50" Visibility="Hidden">
+        <ListView Name="HitlistSongs" Margin="80,142,80,48" Visibility="Hidden">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}" />
