@@ -93,7 +93,11 @@ namespace mini_spotify.Controller
         private string GetHitlistDuration(ICollection<HitlistSong> songs)
         {
             TimeSpan total = new TimeSpan(songs.Sum(x => x.Song.Duration.Ticks));
-            return total.Hours > 0 ? $"{total.Hours} hr {total.Minutes} min" : $"{total.Minutes} min {total.Seconds} sec";
+
+            if (total.Hours > 0)
+                return total.Minutes > 0 ? $"{total.Hours} hr {total.Minutes} min" : $"{total.Hours} hr";
+            else
+                return total.Seconds > 0 ? $"{total.Minutes} min {total.Seconds} sec" : $"{total.Minutes} min";
         }
     }
 }
