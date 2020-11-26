@@ -63,7 +63,7 @@
         </StackPanel>
         <ScrollViewer VerticalScrollBarVisibility="auto" Grid.Row="3" Grid.RowSpan="8" Grid.ColumnSpan="3">
             <StackPanel>
-                <ListView Name="HitlistMenu"  HorizontalAlignment="Stretch">
+                <ListView Name="HitlistMenu"  HorizontalAlignment="Stretch" SelectionChanged="HitlistMenu_SelectionChanged">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Hitlists" DisplayMemberBinding="{Binding Title}"/>

@@ -68,5 +68,13 @@ namespace mini_spotify.View
         {
 
         }
+
+        private void HitlistMenu_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            Hitlist selected = (Hitlist)e.AddedItems[0];
+            OverviewHitlist overviewHitlist = new OverviewHitlist(selected.Id);
+            overviewHitlist.Show();
+            Close();
+        }
     }
 }
