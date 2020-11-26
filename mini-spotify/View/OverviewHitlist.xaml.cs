@@ -18,8 +18,6 @@ namespace mini_spotify.View
             InitializeComponent();
             _controller = new HitlistCotroller();
 
-            HitlistNoSongsMessage.Visibility = Visibility.Hidden;
-
             List<Song> items = new List<Song>
             {
                 new Song() { Name = "John Doe", Genre = "Huh", Duration = new TimeSpan(0, 1, 30), Path = "/path/to/song" },
@@ -27,10 +25,13 @@ namespace mini_spotify.View
                 new Song() { Name = "John", Genre = "Naar huis", Duration = new TimeSpan(0, 6, 00), Path = "/path/to/song" }
             };
 
-            HitlistInfo.Content = $"Created by User at {DateTime.Today:dd-MM-yyyy} - {items.Count} songs, {_controller.GetHitlistDuration(items)}";
+            HitlistInfo.Content = _controller.GetHitlistInfo(items);
 
-            HitlistSongs.ItemsSource = items;
-            HitlistSongs.Visibility = Visibility.Visible;
+            if (items.Count > 0)
+            {
+                HitlistSongs.ItemsSource = items;
+                HitlistSongs.Visibility = Visibility.Visible;
+            }
         }
     }
 }
