@@ -53,5 +53,10 @@ namespace mini_spotify.View
 
             HitlistMenu.ItemsSource = items;
         }
+
+        private void btn_Add_Hitlist(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

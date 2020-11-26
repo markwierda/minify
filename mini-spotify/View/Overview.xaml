@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:mini_spotify.View"
         mc:Ignorable="d"
         Loaded="Initialize"
-        Title="Overview" Width="1410" Height="1005" Background="#FFCF51FF">
+        Title="Overview" Width="1410" Height="1005" Background="#FF774AC7">
     <!--Switch showgridlines to True to see lines-->
     <Grid VerticalAlignment="Top" HorizontalAlignment="Left" ShowGridLines="False">
         <Grid.ColumnDefinitions>
@@ -61,17 +61,20 @@
         <StackPanel Grid.Column="12" Grid.RowSpan="3" Grid.ColumnSpan="3" Background="Red">
             <!--Code for showing username and logging out-->
         </StackPanel>
-        <ScrollViewer VerticalScrollBarVisibility="auto" Grid.Row="3" Grid.RowSpan="9" Grid.ColumnSpan="3">
+        <ScrollViewer VerticalScrollBarVisibility="auto" Grid.Row="3" Grid.RowSpan="8" Grid.ColumnSpan="3">
             <StackPanel>
                 <ListView Name="HitlistMenu"  HorizontalAlignment="Stretch">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Hitlists" DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Header="Hitlists" DisplayMemberBinding="{Binding Name}/>
                         </GridView>
                     </ListView.View>
                 </ListView>
             </StackPanel>
         </ScrollViewer>
+        <StackPanel Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Bottom">
+            <Button Height="67">Add hitlist</Button>
+        </StackPanel>
         <StackPanel Grid.Row="3" Grid.Column="3" Grid.RowSpan="9" Grid.ColumnSpan="9" Background="LightBlue">
             <!--Code for content-->
         </StackPanel>
