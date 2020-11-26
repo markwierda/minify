@@ -49,11 +49,43 @@ namespace UnitTests
         }
 
         [Test]
-        public void Find_Rerturn_IsNotNull()
+        public void Find_Return_IsNotNull()
         {
             Hitlist hitlist = _hitlistController.Get(testId);
 
             Assert.IsNotNull(hitlist);
+        }
+
+        [Test]
+        public void Find_WithRelation_False_User_IsNull()
+        {
+            Hitlist hitlist = _hitlistController.Get(testId);
+
+            Assert.IsNull(hitlist.User);
+        }
+
+        [Test]
+        public void Find_WithRelation_False_Songs_IsNull()
+        {
+            Hitlist hitlist = _hitlistController.Get(testId);
+
+            Assert.IsNull(hitlist.Songs);
+        }
+
+        [Test]
+        public void Find_WithRelation_True_User_IsNotNull()
+        {
+            Hitlist hitlist = _hitlistController.Get(testId, true);
+
+            Assert.IsNotNull(hitlist.User);
+        }
+
+        [Test]
+        public void Find_WithRelation_True_Songs_IsNotNull()
+        {
+            Hitlist hitlist = _hitlistController.Get(testId, true);
+
+            Assert.IsNotNull(hitlist.Songs);
         }
     }
 }
