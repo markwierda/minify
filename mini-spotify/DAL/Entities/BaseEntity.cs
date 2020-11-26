@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace mini_spotify.DAL.Entities
 {
-    public abstract class BaseEntity : IEntity
+    public abstract class BaseEntity
     {
         /// <summary>
         /// The unique identifier (Primary Key)
@@ -12,15 +12,5 @@ namespace mini_spotify.DAL.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-
-        public DateTimeOffset CreatedAt { get; private set; }
-
-        public DateTimeOffset UpdatedAt { get; set; }
-
-        public BaseEntity()
-        {
-            CreatedAt = DateTimeOffset.UtcNow;
-            UpdatedAt = DateTimeOffset.UtcNow;
-        }
     }
 }
