@@ -37,7 +37,7 @@ namespace mini_spotify.View
                 // TODO: Display overview
 
                 // For testing, can be deleted later:
-                OverviewHitlist overviewHitlist = new OverviewHitlist(new System.Guid("9b0cc3c2-8df5-45bf-a0c4-05a8476443d0"));
+                OverviewHitlist overviewHitlist = new OverviewHitlist(new System.Guid("aa4cb653-3c62-5e22-5cc3-cca5fd57c846"));
                 overviewHitlist.Show();
                 Close();
                 // end

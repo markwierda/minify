@@ -60,8 +60,8 @@ namespace UnitTests
         public void GetHitlistInfo_WithSongsReturn_AreEqual()
         {
             // arrange
-            Hitlist hitlist = _hitlistController.Get(new Guid("9b0cc3c2-8df5-45bf-a0c4-05a8476443d0"), true);
-            string expected = "Created by 1121300 at 24-11-2020 - 1 song, 4 min 30 sec";
+            Hitlist hitlist = _hitlistController.Get(new Guid("aa4cb653-3c62-5e22-5cc3-cca5fd57c846"), true);
+            string expected = $"Created by 1140207 at {hitlist.CreatedAt:dd/MM/yyyy} - 2 songs, 9 min 0 sec";;
 
             // act
             string result = _hitlistController.GetHitlistInfo(hitlist);
@@ -74,8 +74,8 @@ namespace UnitTests
         public void GetHitlistInfo_WithoutSongsReturn_AreEqual()
         {
             // arrange
-            Hitlist hitlist = _hitlistController.Get(new Guid("a6539bd6-c720-4999-bc1b-58f12809ef17"), true);
-            string expected = "Created by testuser at 24-11-2020 - This hitlist doesn't contain any songs yet";
+            Hitlist hitlist = _hitlistController.Get(new Guid("aa4cb653-3c62-5522-5cc3-cca5fd57c846"), true);
+            string expected = $"Created by testuser at {hitlist.CreatedAt:dd/MM/yyyy} - This hitlist doesn't contain any songs yet";
 
             // act
             string result = _hitlistController.GetHitlistInfo(hitlist);

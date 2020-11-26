@@ -76,8 +76,8 @@ namespace mini_spotify.DAL
             Hitlist[] hitlists = new Hitlist[]
             {
                 new Hitlist() { Id = new Guid("{aa4cb653-3c62-5e22-5cc3-cca5fd57c846}"), Title = "Unieke playlist", UserId = users[0].Id, Description = "Description"},
-                new Hitlist() { Id = Guid.NewGuid(), Title = "Unieke playlist", UserId = users[1].Id,  Description = "Description" },
-                new Hitlist() { Id = Guid.NewGuid(), Title = "HUH", UserId = users[2].Id, Description = "HUH"},
+                new Hitlist() { Id = new Guid("{aa3cb653-3c62-5e22-5cc3-cca5fd57c846}"), Title = "Unieke playlist", UserId = users[1].Id,  Description = "Description" },
+                new Hitlist() { Id = new Guid("{aa4cb653-3c62-5522-5cc3-cca5fd57c846}"), Title = "HUH", UserId = users[2].Id, Description = "HUH"},
             };
 
             HitlistSong[] hitlistSongs = new HitlistSong[]
