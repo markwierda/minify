@@ -30,11 +30,6 @@ namespace mini_spotify.DAL
             string connectionStringName = configuration.GetSection("Environment")["IsDevelopment"] == "false" ? "Spotify-Database-prod" : "Spotify-Database-local";
 
             return configuration.GetConnectionString(connectionStringName);
-            return new AppDbContext(builder.Options);
-            return new AppDbContext(builder.Options);
-            return new AppDbContext(builder.Options);
-            return new AppDbContext(builder.Options);
-            return new AppDbContext(builder.Options);
         }
     }
 }
