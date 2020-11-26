@@ -11,7 +11,6 @@ namespace mini_spotify
         public App()
         {
             AppData.Initialize();
-            
         }
     }
 }

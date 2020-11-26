@@ -12,6 +12,10 @@ namespace mini_spotify.Controller
     {
         private Repository<Hitlist> _hitlistRepository;
 
+        /// <summary>
+        /// Initialize the hitlist repository
+        /// </summary>
+        /// <param name="context"></param>
         public HitlistController(AppDbContext context = null)
         {
             _hitlistRepository = new Repository<Hitlist>(context ?? new AppDbContextFactory().CreateDbContext());

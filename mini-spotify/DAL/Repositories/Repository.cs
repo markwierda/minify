@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 using mini_spotify.DAL.Entities;
-
 using System;
 using System.Linq;
 using System.Linq.Expressions;
