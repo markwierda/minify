@@ -31,7 +31,8 @@ namespace mini_spotify.Controller
             {
                 query = query
                     .Include(hl => hl.User)
-                    .Include(hl => hl.Songs);
+                    .Include(hl => hl.Songs)
+                        .ThenInclude(s => s.Song);
             }
 
             return query.ToList();
@@ -58,13 +59,14 @@ namespace mini_spotify.Controller
             {
                 query = query
                     .Include(hl => hl.User)
-                    .Include(hl => hl.Songs);
-    }
+                    .Include(hl => hl.Songs)
+                        .ThenInclude(s => s.Song);
+            }
 
             return query.ToList();
         }
 
-public Hitlist Get(Guid id, bool withRelations = false)
+        public Hitlist Get(Guid id, bool withRelations = false)
         {
             if (id == null)
             {
