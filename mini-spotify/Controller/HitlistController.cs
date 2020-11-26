@@ -37,14 +37,29 @@ namespace mini_spotify.Controller
             return query.ToList();
         }
 
-        public Hitlist Get(Guid id)
+        public Hitlist Get(Guid id, bool withRelations = false)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            return _hitlistRepository.Find(id);
+            var query = _hitlistRepository
+                                        .GetAll();
+            if (withRelations)
+            {
+                query = query
+                    .Include(hl => hl.User)
+                    .Include(hl => hl.Songs)
+                        .ThenInclude(s => s.Song);
+            }
+
+            return query.Where(x => x.Id == id).FirstOrDefault();
+        }
+
+        public List<Song> GetSongs(ICollection<HitlistSong> hitlistSongs)
+        {
+            return hitlistSongs.Select(x => x.Song).ToList();
         }
 
         /// <summary>
@@ -52,12 +67,12 @@ namespace mini_spotify.Controller
         /// </summary>
         /// <param name="hitlist"></param>
         /// <returns>Returns the information about the hitlist</returns>
-        public string GetHitlistInfo(List<Song> hitlist)
+        public string GetHitlistInfo(Hitlist hitlist)
         {
-            if (hitlist.Count > 0)
-                return $"Created by User at {DateTime.Today:dd/MM/yyyy} - {GetHitlistSongsCount(hitlist)}, {GetHitlistDuration(hitlist)}";
+            if (hitlist.Songs.Count > 0)
+                return $"Created by {hitlist.User.UserName} at {hitlist.CreatedAt:dd/MM/yyyy} - {GetHitlistSongsCount(hitlist.Songs)}, {GetHitlistDuration(hitlist.Songs)}";
             else
-                return $"Created by User at {DateTime.Today:dd/MM/yyyy} - This hitlist doesn't contain any songs yet";
+                return $"Created by {hitlist.User.UserName} at {hitlist.CreatedAt:dd/MM/yyyy} - This hitlist doesn't contain any songs yet";
         }
 
         /// <summary>
@@ -65,9 +80,9 @@ namespace mini_spotify.Controller
         /// </summary>
         /// <param name="hitlist"></param>
         /// <returns>Returns a string containing the number of songs</returns>
-        private string GetHitlistSongsCount(List<Song> hitlist)
+        private string GetHitlistSongsCount(ICollection<HitlistSong> songs)
         {
-            return hitlist.Count > 1 ? $"{hitlist.Count} songs" : $"{hitlist.Count} song";
+            return songs.Count > 1 ? $"{songs.Count} songs" : $"{songs.Count} song";
         }
 
         /// <summary>
@@ -75,9 +90,9 @@ namespace mini_spotify.Controller
         /// </summary>
         /// <param name="hitlist"></param>
         /// <returns>Returns the total duration of a hitlist</returns>
-        private string GetHitlistDuration(List<Song> hitlist)
+        private string GetHitlistDuration(ICollection<HitlistSong> songs)
         {
-            TimeSpan total = new TimeSpan(hitlist.Sum(x => x.Duration.Ticks));
+            TimeSpan total = new TimeSpan(songs.Sum(x => x.Song.Duration.Ticks));
             return total.Hours > 0 ? $"{total.Hours} hr {total.Minutes} min" : $"{total.Minutes} min";
         }
     }

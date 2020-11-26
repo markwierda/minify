@@ -13,23 +13,20 @@ namespace mini_spotify.View
     {
         private readonly HitlistController _controller;
 
-        public OverviewHitlist()
+        public OverviewHitlist(Guid id)
         {
             InitializeComponent();
+
             _controller = new HitlistController();
+            Hitlist _hitlist = _controller.Get(id, true);
 
-            List<Song> items = new List<Song>
+            Title.Content = _hitlist.Title;
+            Description.Content = _hitlist.Description;
+            HitlistInfo.Content = _controller.GetHitlistInfo(_hitlist);
+
+            if (_hitlist.Songs.Count > 0)
             {
-                new Song() { Name = "John Doe", Genre = "Huh", Duration = new TimeSpan(0, 1, 30), Path = "/path/to/song" },
-                new Song() { Name = "Huh", Genre = "Piet", Duration = new TimeSpan(0, 2, 30), Path = "/path/to/song" },
-                new Song() { Name = "John", Genre = "Naar huis", Duration = new TimeSpan(0, 6, 00), Path = "/path/to/song" }
-            };
-
-            HitlistInfo.Content = _controller.GetHitlistInfo(items);
-
-            if (items.Count > 0)
-            {
-                HitlistSongs.ItemsSource = items;
+                HitlistSongs.ItemsSource = _controller.GetSongs(_hitlist.Songs);
                 HitlistSongs.Visibility = Visibility.Visible;
             }
         }
