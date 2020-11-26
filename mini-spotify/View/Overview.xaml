@@ -66,7 +66,7 @@
                 <ListView Name="HitlistMenu"  HorizontalAlignment="Stretch">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Hitlists" DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Header="Hitlists" DisplayMemberBinding="{Binding Title}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
