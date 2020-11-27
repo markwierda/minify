@@ -21,11 +21,11 @@ namespace mini_spotify.DAL.Entities
 
         public Hitlist() { }
 
-        public Hitlist(string title, string description, Guid id)
+        public Hitlist(string title, string description, Guid userId)
         {
             Title = title;
             Description = description;
-            Id = id;
+            UserId = userId;
         }
     }
 }
