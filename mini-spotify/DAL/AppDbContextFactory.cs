@@ -1,20 +1,35 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace mini_spotify.DAL
 {
     public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
     {
-        public AppDbContext CreateDbContext(string[] args)
-        {
+        public AppDbContext CreateDbContext(string[] args = null)
+        {          
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-                           
-            string prod = "Server=127.0.0.1; database=Spotify; Integrated Security=False; User id=sa; Password=PieterBrouwer01!; ConnectRetryCount=0; MultipleActiveResultSets=True";
-            string local = "Server=(localdb)\\MSSQLLocalDB;Database=Spotify;Trusted_Connection=True;";// ConfigurationManager.ConnectionStrings["Dev"].ConnectionString;
-            builder.UseSqlServer(prod, providerOptions => providerOptions.CommandTimeout(60))
+            builder.UseSqlServer(GetConnectionString(), providerOptions => providerOptions.CommandTimeout(60))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
             return new AppDbContext(builder.Options);
+        }
+
+        /// <summary>
+        /// Gets the connection string based on the environment setting in appsettings.json
+        /// </summary>
+        /// <returns>The connection string</returns>
+        public string GetConnectionString()
+        {
+            IConfigurationBuilder configbuilder = new ConfigurationBuilder()
+                       .SetBasePath(Directory.GetCurrentDirectory())
+                       .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            IConfigurationRoot configuration = configbuilder.Build();
+
+            string connectionStringName = configuration.GetSection("Environment")["IsDevelopment"] == "false" ? "Production" : "Development";
+
+            return configuration.GetConnectionString(connectionStringName);
         }
     }
 }

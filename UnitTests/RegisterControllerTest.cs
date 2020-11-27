@@ -1,5 +1,4 @@
 ﻿using mini_spotify.Controller;
-using mini_spotify.DAL;
 using NUnit.Framework;
 
 namespace UnitTests
@@ -11,8 +10,7 @@ namespace UnitTests
         [SetUp]
         public void Setup()
         {
-            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
-            _controller = new RegisterController(context);
+            _controller = new RegisterController();
         }
 
         [Test]
