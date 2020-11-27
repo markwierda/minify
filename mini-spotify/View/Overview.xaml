@@ -51,8 +51,12 @@
         <TextBlock Grid.Row="2" Grid.Column="1">100000</TextBlock>
         <TextBlock Grid.Row="2" Grid.Column="2">150000</TextBlock>
         <TextBlock FontSize="16" FontWeight="Bold" Grid.ColumnSpan="3" Grid.Row="3">Total Units: 300000</TextBlock>-->
-        <StackPanel Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" Background="Red">
+        <StackPanel Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" Background="MediumPurple">
             <!--Code for home and trending buttons-->
+            <StackPanel>
+                <Button Click="btn_home" Height="100" Background="MediumPurple" >Home</Button>
+                <Button Click="btn_songs" Height="100" Background="MediumPurple">Songs</Button>
+            </StackPanel>
         </StackPanel>
         <StackPanel Grid.Column="3" Grid.RowSpan="3" Grid.ColumnSpan="9" Background="Blue">
             <!--Code for search-->

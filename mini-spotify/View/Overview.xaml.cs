@@ -44,5 +44,15 @@ namespace mini_spotify.View
             overviewHitlist.Show();
             Close();
         }
+
+        private void btn_home(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_songs(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
