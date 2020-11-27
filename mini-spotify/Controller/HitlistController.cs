@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Castle.Core.Internal;
+using Microsoft.EntityFrameworkCore;
 
 using mini_spotify.DAL;
 using mini_spotify.DAL.Entities;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace mini_spotify.Controller
 {
@@ -49,5 +51,28 @@ namespace mini_spotify.Controller
 
             return _hitlistRepository.Find(id);
         }
+        // Check Title
+
+
+
+
+        public bool Validation(string title, string description)
+        {
+            //check title
+            if (title.IsNullOrEmpty())
+            {
+                return false;
+            }
+            // Check descriptoin
+            else if (description.Length > 140)
+            {
+                return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }
