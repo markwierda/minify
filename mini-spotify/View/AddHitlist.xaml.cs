@@ -1,4 +1,5 @@
 ﻿using Castle.Core.Internal;
+using mini_spotify.Controller;
 using System.Windows;
 
 namespace mini_spotify.View
@@ -6,11 +7,14 @@ namespace mini_spotify.View
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class AddHitlist : Window
     {
-        public Window1()
+        private readonly HitlistController hitlistContoller;
+
+        public AddHitlist()
         {
             InitializeComponent();
+            hitlistContoller = new HitlistController();
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
@@ -24,21 +28,21 @@ namespace mini_spotify.View
             string title = TitleText.Text;
             string description = DescriptionText.Text;
 
-            // Check Title
-            if (title.IsNullOrEmpty())
+
+            if (hitlistContoller.Validation_Title(title) == false)
             {
-                // display error message
+                // display error message for title
                 TitleError.Visibility = Visibility.Visible;
-
             }
-            // Check descriptoin
-            if (description.Length > 140)
-            {
-                // display error message
+            else if (hitlistContoller.Validation_Description(description) == false) 
+            { 
+                // display error message for description
                 DescriptionError.Visibility = Visibility.Visible;
-
             }
-
+            else
+            {
+               
+            }
         }
     }
 }

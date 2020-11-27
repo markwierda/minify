@@ -112,5 +112,55 @@ namespace UnitTests
 
             Assert.IsNotNull(hitlist.Songs);
         }
+
+        [Test]
+        public void Validation_Tiltle_ReturnFalse()
+        {
+            // Assemble
+            string title = "";
+            // Act
+            var ValidationTitle = _hitlistController.Validation_Title(title);
+
+            // Assert
+            Assert.IsFalse(ValidationTitle);
+        }
+
+        [Test]
+        public void Validation_Tiltle_ReturnTrue()
+        {
+            // Assemble
+            string title = "HuhHuh";
+            // Act
+            var ValidationTitle = _hitlistController.Validation_Title(title);
+
+            // Assert
+            Assert.IsTrue(ValidationTitle);
+        }
+        [Test]
+        public void Validation_Description_ReturnTrue()
+        {
+            // Assemble
+            string description = "HuhHuh";
+            // Act
+            var ValidationDescription = _hitlistController.Validation_Description(description);
+
+            // Assert
+            Assert.IsTrue(ValidationDescription);
+        }
+
+        [Test]
+        public void Validation_Description_ReturnFalse()
+        {
+            // Assemble
+            string description = "HuhHuhHuhHHuhHuhHuhHHuhHuhHuhHHuhHuhHuhHHuhHuhHuhHHuhHuhHuhHHuhHuhHuhHHuhHuhHuhHHuhHuhHuhHHuhHuhHuhH" +
+                "HuhHuhHuhHHuhHuhHuhHHuhHuhHuhHHuhHuhHuhH1"
+                ;
+            // Act
+            var ValidationDescription = _hitlistController.Validation_Description(description);
+
+            // Assert
+            Assert.IsFalse(ValidationDescription);
+        }
+
     }
 }
