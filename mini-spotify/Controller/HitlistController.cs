@@ -32,7 +32,7 @@ namespace mini_spotify.Controller
             var query = _hitlistRepository
                             .GetAll();
 
-            if(withRelations)
+            if (withRelations)
             {
                 query = query
                     .Include(hl => hl.User)
@@ -51,7 +51,7 @@ namespace mini_spotify.Controller
         /// <returns></returns>
         public List<Hitlist> GetHitlistsByUserId(Guid userId, bool withRelations = false)
         {
-            if(userId == Guid.Empty)
+            if (userId == Guid.Empty)
             {
                 throw new ArgumentException(nameof(userId));
             }
@@ -60,7 +60,7 @@ namespace mini_spotify.Controller
                             .GetAll()
                             .Where(x => x.UserId == userId);
 
-            if(withRelations)
+            if (withRelations)
             {
                 query = query
                     .Include(hl => hl.User)
@@ -134,23 +134,28 @@ namespace mini_spotify.Controller
                 return total.Seconds > 0 ? $"{total.Minutes} min {total.Seconds} sec" : $"{total.Minutes} min";
         }
 
-        // Check Title
-        public bool Validation(string title, string description)
+        public bool Validation_Title(string title)
         {
             //check title
             if (title.IsNullOrEmpty())
             {
                 return false;
             }
-            // Check descriptoin
-            else if (description.Length > 140)
-            {
-                return false;
-            }
-            else
-            {
-                return false;
-            }
+
+            return true;
+
+        }
+        public bool Validation_Description(string description)
+        {
+
+                // Check descriptoin
+                if (description.Length > 140)
+                {
+                    return false;
+                }
+
+            return true;
         }
     }
-}
+} 
+

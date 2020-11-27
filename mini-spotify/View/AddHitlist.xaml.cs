@@ -29,31 +29,19 @@ namespace mini_spotify.View
             string description = DescriptionText.Text;
 
 
-            if (hitlistContoller.Validation(title, description))
+            if (hitlistContoller.Validation_Title(title) == false)
             {
-
-                Close();
-            }
-            else {
-                
                 // display error message for title
                 TitleError.Visibility = Visibility.Visible;
+            }
+            else if (hitlistContoller.Validation_Description(description) == false) 
+            { 
                 // display error message for description
                 DescriptionError.Visibility = Visibility.Visible;
-             }
-            // Check Title
-            if (title.IsNullOrEmpty())
-            {
-                // display error message
-                TitleError.Visibility = Visibility.Visible;
-
             }
-            // Check descriptoin
-            if (description.Length > 140)
+            else
             {
-                // display error message
-                DescriptionError.Visibility = Visibility.Visible;
-
+               
             }
         }
     }
