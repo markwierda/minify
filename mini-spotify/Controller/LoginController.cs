@@ -8,15 +8,15 @@ namespace mini_spotify.Controller
 {
     public class LoginController
     {
-        private readonly Repository<User> _userRepository;
+        private readonly Repository<User> _repository;
 
         /// <summary>
         /// create a user repository with the context
         /// </summary>
-        /// <param name="context">The database contexzt</param>       
-        public LoginController(AppDbContext context) 
+        public LoginController() 
         {
-            _userRepository = new Repository<User>(context);
+            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
+            _repository = new Repository<User>(context);
         }
 
         /// <summary>
@@ -30,8 +30,8 @@ namespace mini_spotify.Controller
             if(Validation(username, password) && !AppData.LoggedIn)
             {
                 AppData.LoggedIn = true;
-                User user = _userRepository.FindOneBy(u => u.UserName == username);
-                AppData.Id = user.Id;
+                User user = _repository.FindOneBy(u => u.UserName == username);
+                AppData.UserId = user.Id;
 
                 return true;
             }
@@ -56,7 +56,7 @@ namespace mini_spotify.Controller
                 return false;
 
             // check if password is valid
-           foreach(User user  in _userRepository.GetAll())
+           foreach(User user  in _repository.GetAll())
            {
                 if (user.UserName == username && UserController.ValidatePassword(password, user.PassWord))
                 {
