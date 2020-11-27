@@ -16,10 +16,12 @@
 
   <ItemGroup>
     <None Remove="ImageResources\megascale_m.png" />
+    <None Remove="Music\G-Eazy &amp; Halsey - Him &amp; I.mp3" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="ImageResources\megascale_m.png" />
+    <Content Include="Music\G-Eazy &amp; Halsey - Him &amp; I.mp3" />
   </ItemGroup>
 
   <ItemGroup>
