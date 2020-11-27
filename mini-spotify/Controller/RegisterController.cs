@@ -9,12 +9,15 @@ namespace mini_spotify.Controller
 {
     public class RegisterController
     {
-        private readonly Repository<User> _userRepository;
+        private readonly Repository<User> _repository;
 
-        // create a user repository with the context
-        public RegisterController(AppDbContext context)
+        /// <summary>
+        /// create a user repository with the context
+        /// </summary>
+        public RegisterController()
         {
-            _userRepository = new Repository<User>(context);
+            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
+            _repository = new Repository<User>(context);
         }
 
         /// <summary>
@@ -28,14 +31,14 @@ namespace mini_spotify.Controller
 
             user.PassWord = UserController.HashPassword(user.PassWord);
 
-            _userRepository.Add(user);
-            _userRepository.SaveChanges();
+            _repository.Add(user);
+            _repository.SaveChanges();
         }
 
         // returns if given username is unique
         public bool IsUniqueUsername(string username)
         {
-            return !_userRepository.Any(u => u.UserName.Equals(username));
+            return !_repository.Any(u => u.UserName.Equals(username));
         }
 
         // returns if given email is valid (offical function from docs.microsoft.com)

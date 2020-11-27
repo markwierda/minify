@@ -11,15 +11,15 @@ namespace mini_spotify.Controller
 {
     public class HitlistController
     {
-        private readonly Repository<Hitlist> _hitlistRepository;
+        private readonly Repository<Hitlist> _repository;
 
         /// <summary>
-        /// Initialize the hitlist repository
+        /// create a hitlist repository with the context
         /// </summary>
         public HitlistController()
         {
             AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
-            _hitlistRepository = new Repository<Hitlist>(context);
+            _repository = new Repository<Hitlist>(context);
         }
 
         /// <summary>
@@ -29,8 +29,7 @@ namespace mini_spotify.Controller
         /// <returns>A list with all the hitlists</returns>
         public List<Hitlist> GetAll(bool withRelations = false)
         {
-            var query = _hitlistRepository
-                            .GetAll();
+            var query = _repository.GetAll();
 
             if (withRelations)
             {
@@ -56,7 +55,7 @@ namespace mini_spotify.Controller
                 throw new ArgumentException(nameof(userId));
             }
 
-            var query = _hitlistRepository
+            var query = _repository
                             .GetAll()
                             .Where(x => x.UserId == userId);
 
@@ -78,8 +77,8 @@ namespace mini_spotify.Controller
                 throw new ArgumentNullException(nameof(id));
             }
 
-            var query = _hitlistRepository
-                                        .GetAll();
+            var query = _repository.GetAll();
+
             if (withRelations)
             {
                 query = query
@@ -100,8 +99,8 @@ namespace mini_spotify.Controller
             if (hitlist.Id == null)
                 throw new ArgumentNullException("id");
 
-            _hitlistRepository.Add(hitlist);
-            _hitlistRepository.SaveChanges();
+            _repository.Add(hitlist);
+            _repository.SaveChanges();
         }
 
         public List<Song> GetSongs(ICollection<HitlistSong> hitlistSongs)
@@ -156,8 +155,8 @@ namespace mini_spotify.Controller
             }
 
             return true;
-
         }
+
         public bool Validation_Description(string description)
         {
 

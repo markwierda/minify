@@ -1,5 +1,4 @@
 ﻿using mini_spotify.Controller;
-using mini_spotify.DAL;
 using mini_spotify.DAL.Entities;
 using mini_spotify.Model;
 using System.Windows;
