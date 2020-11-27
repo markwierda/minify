@@ -1,16 +1,6 @@
 ﻿using Castle.Core.Internal;
 using mini_spotify.Controller;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace mini_spotify.View
 {
@@ -21,7 +11,6 @@ namespace mini_spotify.View
     {
         private readonly HitlistController hitlistContoller;
 
-       
         public AddHitlist()
         {
             InitializeComponent();
@@ -52,8 +41,20 @@ namespace mini_spotify.View
                 // display error message for description
                 DescriptionError.Visibility = Visibility.Visible;
              }
+            // Check Title
+            if (title.IsNullOrEmpty())
+            {
+                // display error message
+                TitleError.Visibility = Visibility.Visible;
 
-           
+            }
+            // Check descriptoin
+            if (description.Length > 140)
+            {
+                // display error message
+                DescriptionError.Visibility = Visibility.Visible;
+
+            }
         }
     }
 }
