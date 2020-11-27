@@ -1,5 +1,6 @@
 ﻿using Castle.Core.Internal;
 using mini_spotify.Controller;
+using mini_spotify.Controller;
 using mini_spotify.DAL;
 using mini_spotify.DAL.Entities;
 using mini_spotify.Model;
@@ -10,13 +11,17 @@ namespace mini_spotify.View
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class AddHitlist : Window
     {
+        private readonly HitlistController hitlistContoller;
+
+        public AddHitlist()
         private readonly HitlistController _controller;
 
         public Window1()
         {
             InitializeComponent();
+            hitlistContoller = new HitlistController();
             AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
             _controller = new HitlistController(context);
         }
@@ -32,22 +37,27 @@ namespace mini_spotify.View
             string title = TitleText.Text;
             string description = DescriptionText.Text;
 
+
+            if (hitlistContoller.Validation_Title(title) == false)
             // errors standard false
             bool errors = false;
 
             // Check Title
             if (title.IsNullOrEmpty())
             {
-                // display error message
+                // display error message for title
                 TitleError.Visibility = Visibility.Visible;
                 errors = true;
 
             }
-            // Check descriptoin
-            if (description.Length > 140)
-            {
-                // display error message
+            else if (hitlistContoller.Validation_Description(description) == false) 
+            { 
+                // display error message for description
                 DescriptionError.Visibility = Visibility.Visible;
+            }
+            else
+            {
+               
                 errors = true;
             }
 

@@ -32,7 +32,9 @@ namespace mini_spotify.View
 
         private void btn_Add_Hitlist(object sender, RoutedEventArgs e)
         {
-            // TODO: open add hitlist page
+            AddHitlist addHitlist = new AddHitlist();
+            addHitlist.Show();
+            Close();
         }
 
         private void HitlistMenu_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
