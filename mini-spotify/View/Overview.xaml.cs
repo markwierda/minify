@@ -24,7 +24,7 @@ namespace mini_spotify.View
 
         private void Initialize(object sender, RoutedEventArgs e)
         {
-            //GetAllHitList();
+            GetAllHitList();
         }
 
         public void GetAllHitList()
