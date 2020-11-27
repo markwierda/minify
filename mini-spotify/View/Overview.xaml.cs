@@ -84,6 +84,11 @@ namespace mini_spotify.View
 
         }
 
+
+        /// <summary>
+        /// Starts playing song in the mediaplayer
+        /// </summary>
+        /// <param name="song"></param>
         private void Play(Song song)
         {
             _mediaPlayer.Open(new Uri(song.Path, UriKind.RelativeOrAbsolute));
@@ -99,6 +104,11 @@ namespace mini_spotify.View
             timer.Start();
         }
 
+        /// <summary>
+        /// Updates the mediaplayer in the overview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateMediaplayer(object sender, EventArgs e)
         {
             if (_mediaPlayer.NaturalDuration.HasTimeSpan)
