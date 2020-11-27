@@ -11,15 +11,15 @@ namespace mini_spotify.Controller
 {
     public class HitlistController
     {
-        private Repository<Hitlist> _hitlistRepository;
+        private readonly Repository<Hitlist> _hitlistRepository;
 
         /// <summary>
         /// Initialize the hitlist repository
         /// </summary>
-        /// <param name="context"></param>
-        public HitlistController(AppDbContext context = null)
+        public HitlistController()
         {
-            _hitlistRepository = new Repository<Hitlist>(context ?? new AppDbContextFactory().CreateDbContext());
+            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
+            _hitlistRepository = new Repository<Hitlist>(context);
         }
 
         /// <summary>
@@ -89,6 +89,19 @@ namespace mini_spotify.Controller
             }
 
             return query.Where(x => x.Id == id).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Adds a hitlist to the database
+        /// </summary>
+        /// <param name="hitlist"></param>
+        public void Add(Hitlist hitlist)
+        {
+            if (hitlist.Id == null)
+                throw new ArgumentNullException("id");
+
+            _hitlistRepository.Add(hitlist);
+            _hitlistRepository.SaveChanges();
         }
 
         public List<Song> GetSongs(ICollection<HitlistSong> hitlistSongs)

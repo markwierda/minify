@@ -72,7 +72,7 @@
             </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Bottom">
-            <Button Height="67" Click="btn_Add_Hitlist">Add hitlist</Button>
+            <Button Height="67" Click="Btn_Add_Hitlist">Add hitlist</Button>
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.Column="3" Grid.RowSpan="9" Grid.ColumnSpan="9" Background="LightBlue">
             <!--Code for content-->

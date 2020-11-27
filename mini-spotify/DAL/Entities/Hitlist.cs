@@ -18,5 +18,14 @@ namespace mini_spotify.DAL.Entities
         public User User { get; set; }
 
         public ICollection<HitlistSong> Songs { get; set; }
+
+        public Hitlist() { }
+
+        public Hitlist(string title, string description, Guid userId)
+        {
+            Title = title;
+            Description = description;
+            UserId = userId;
+        }
     }
 }
