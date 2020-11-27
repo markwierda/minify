@@ -90,6 +90,19 @@ namespace mini_spotify.Controller
             return query.Where(x => x.Id == id).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Adds a hitlist to the database
+        /// </summary>
+        /// <param name="hitlist"></param>
+        public void Add(Hitlist hitlist)
+        {
+            if (hitlist.Id == null)
+                throw new ArgumentNullException("id");
+
+            _hitlistRepository.Add(hitlist);
+            _hitlistRepository.SaveChanges();
+        }
+
         public List<Song> GetSongs(ICollection<HitlistSong> hitlistSongs)
         {
             return hitlistSongs.Select(x => x.Song).ToList();
