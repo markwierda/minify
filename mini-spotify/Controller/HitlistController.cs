@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Castle.Core.Internal;
+using Microsoft.EntityFrameworkCore;
 using mini_spotify.DAL;
 using mini_spotify.DAL.Entities;
 using mini_spotify.DAL.Repositories;
@@ -10,15 +11,15 @@ namespace mini_spotify.Controller
 {
     public class HitlistController
     {
-        private Repository<Hitlist> _hitlistRepository;
+        private readonly Repository<Hitlist> _hitlistRepository;
 
         /// <summary>
         /// Initialize the hitlist repository
         /// </summary>
-        /// <param name="context"></param>
-        public HitlistController(AppDbContext context = null)
+        public HitlistController()
         {
-            _hitlistRepository = new Repository<Hitlist>(context ?? new AppDbContextFactory().CreateDbContext());
+            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
+            _hitlistRepository = new Repository<Hitlist>(context);
         }
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace mini_spotify.Controller
             var query = _hitlistRepository
                             .GetAll();
 
-            if(withRelations)
+            if (withRelations)
             {
                 query = query
                     .Include(hl => hl.User)
@@ -50,7 +51,7 @@ namespace mini_spotify.Controller
         /// <returns></returns>
         public List<Hitlist> GetHitlistsByUserId(Guid userId, bool withRelations = false)
         {
-            if(userId == Guid.Empty)
+            if (userId == Guid.Empty)
             {
                 throw new ArgumentException(nameof(userId));
             }
@@ -59,7 +60,7 @@ namespace mini_spotify.Controller
                             .GetAll()
                             .Where(x => x.UserId == userId);
 
-            if(withRelations)
+            if (withRelations)
             {
                 query = query
                     .Include(hl => hl.User)
@@ -88,6 +89,19 @@ namespace mini_spotify.Controller
             }
 
             return query.Where(x => x.Id == id).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Adds a hitlist to the database
+        /// </summary>
+        /// <param name="hitlist"></param>
+        public void Add(Hitlist hitlist)
+        {
+            if (hitlist.Id == null)
+                throw new ArgumentNullException("id");
+
+            _hitlistRepository.Add(hitlist);
+            _hitlistRepository.SaveChanges();
         }
 
         public List<Song> GetSongs(ICollection<HitlistSong> hitlistSongs)
@@ -132,5 +146,29 @@ namespace mini_spotify.Controller
             else
                 return total.Seconds > 0 ? $"{total.Minutes} min {total.Seconds} sec" : $"{total.Minutes} min";
         }
+
+        public bool Validation_Title(string title)
+        {
+            //check title
+            if (title.IsNullOrEmpty())
+            {
+                return false;
+            }
+
+            return true;
+
+        }
+        public bool Validation_Description(string description)
+        {
+
+                // Check descriptoin
+                if (description.Length > 140)
+                {
+                    return false;
+                }
+
+            return true;
+        }
     }
-}
+} 
+
