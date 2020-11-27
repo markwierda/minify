@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using mini_spotify.DAL.Entities;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -10,7 +11,7 @@ namespace mini_spotify.DAL.Repositories
     /// The purpose of this generic class is to ensure that the user has limited access towards our data.
     /// </summary>
     /// <typeparam name="T">The entity type</typeparam>
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class, IEntity
     {
         protected readonly DbContext Context;
         protected DbSet<T> DbSet;
@@ -79,6 +80,7 @@ namespace mini_spotify.DAL.Repositories
         /// <param name="entity">The updated entity</param>
         public virtual void Update(T entity)
         {
+            entity.UpdatedAt = DateTimeOffset.UtcNow;
             Context.Entry(entity).State = EntityState.Modified;
         }
 
