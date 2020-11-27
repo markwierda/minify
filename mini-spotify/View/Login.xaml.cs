@@ -1,5 +1,4 @@
 ﻿using mini_spotify.Controller;
-using mini_spotify.DAL;
 using System.Windows;
 
 namespace mini_spotify.View
@@ -9,13 +8,12 @@ namespace mini_spotify.View
     /// </summary>
     public partial class Login : Window
     {
-        private readonly LoginController loginController;
+        private readonly LoginController _controller;
 
         public Login()
         {
             InitializeComponent();
-            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
-            loginController = new LoginController(context);
+            _controller = new LoginController();
         }
 
         private void Create_Account_Button_click(object sender, RoutedEventArgs e)
@@ -32,12 +30,12 @@ namespace mini_spotify.View
             string password = Password.Password;
 
             // try to login with the values
-            if (loginController.TryLogin(username, password))
+            if (_controller.TryLogin(username, password))
             {
                 // TODO: Display overview
                 Overview overview = new Overview();
                 overview.Show();
-                this.Close();
+                Close();
             }
             else
             {

@@ -1,5 +1,4 @@
 ﻿using mini_spotify.Controller;
-using mini_spotify.DAL;
 using mini_spotify.DAL.Entities;
 using NUnit.Framework;
 using System;
@@ -9,21 +8,20 @@ namespace UnitTests
 {
     public class HitlistControllerTest
     {
-        private HitlistController _hitlistController;
+        private HitlistController _controller;
         private Guid testId;
 
         [SetUp]
         public void Setup()
         {
-            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
-            _hitlistController = new HitlistController(context);
+            _controller = new HitlistController();
             testId = new Guid("{aa4cb653-3c62-5e22-5cc3-cca5fd57c846}");
         }
 
         [Test]
         public void GetAll_NotNull()
         {
-            List<Hitlist> hitlists = _hitlistController.GetAll();
+            List<Hitlist> hitlists = _controller.GetAll();
 
             Assert.NotNull(hitlists);
         }
@@ -31,7 +29,7 @@ namespace UnitTests
         [Test]
         public void GetAll_Count_Greater_Than_Or_Equal_To_Zero()
         {
-            List<Hitlist> hitlists = _hitlistController.GetAll();
+            List<Hitlist> hitlists = _controller.GetAll();
 
             Assert.GreaterOrEqual(hitlists.Count, 0);
         }
@@ -40,7 +38,7 @@ namespace UnitTests
         public void Find__Random_Id_IsNull()
         {
             Guid randomId = Guid.NewGuid();
-            Hitlist hitlist = _hitlistController.Get(randomId);
+            Hitlist hitlist = _controller.Get(randomId);
 
             Assert.IsNull(hitlist);
         }
@@ -48,7 +46,7 @@ namespace UnitTests
         [Test]
         public void Find_Return_IsNotNull()
         {
-            Hitlist hitlist = _hitlistController.Get(testId);
+            Hitlist hitlist = _controller.Get(testId);
 
             Assert.IsNotNull(hitlist);
         }
@@ -57,11 +55,11 @@ namespace UnitTests
         public void GetHitlistInfo_WithSongsReturn_AreEqual()
         {
             // arrange
-            Hitlist hitlist = _hitlistController.Get(new Guid("aa4cb653-3c62-5e22-5cc3-cca5fd57c846"), true);
+            Hitlist hitlist = _controller.Get(new Guid("aa4cb653-3c62-5e22-5cc3-cca5fd57c846"), true);
             string expected = $"Created by 1140207 at {hitlist.CreatedAt:dd/MM/yyyy} - 2 songs, 9 min";;
 
             // act
-            string result = _hitlistController.GetHitlistInfo(hitlist);
+            string result = _controller.GetHitlistInfo(hitlist);
 
             // assert
             Assert.AreEqual(expected, result);
@@ -71,11 +69,11 @@ namespace UnitTests
         public void GetHitlistInfo_WithoutSongsReturn_AreEqual()
         {
             // arrange
-            Hitlist hitlist = _hitlistController.Get(new Guid("aa4cb653-3c62-5522-5cc3-cca5fd57c846"), true);
+            Hitlist hitlist = _controller.Get(new Guid("aa4cb653-3c62-5522-5cc3-cca5fd57c846"), true);
             string expected = $"Created by testuser at {hitlist.CreatedAt:dd/MM/yyyy} - This hitlist doesn't contain any songs yet";
 
             // act
-            string result = _hitlistController.GetHitlistInfo(hitlist);
+            string result = _controller.GetHitlistInfo(hitlist);
 
             // assert
             Assert.AreEqual(expected, result);
@@ -84,7 +82,7 @@ namespace UnitTests
         [Test]
         public void Find_WithRelation_False_User_IsNull()
         {
-            Hitlist hitlist = _hitlistController.Get(testId);
+            Hitlist hitlist = _controller.Get(testId);
 
             Assert.IsNull(hitlist.User);
         }
@@ -92,7 +90,7 @@ namespace UnitTests
         [Test]
         public void Find_WithRelation_False_Songs_IsNull()
         {
-            Hitlist hitlist = _hitlistController.Get(testId);
+            Hitlist hitlist = _controller.Get(testId);
 
             Assert.IsNull(hitlist.Songs);
         }
@@ -100,7 +98,7 @@ namespace UnitTests
         [Test]
         public void Find_WithRelation_True_User_IsNotNull()
         {
-            Hitlist hitlist = _hitlistController.Get(testId, true);
+            Hitlist hitlist = _controller.Get(testId, true);
 
             Assert.IsNotNull(hitlist.User);
         }
@@ -108,9 +106,59 @@ namespace UnitTests
         [Test]
         public void Find_WithRelation_True_Songs_IsNotNull()
         {
-            Hitlist hitlist = _hitlistController.Get(testId, true);
+            Hitlist hitlist = _controller.Get(testId, true);
 
             Assert.IsNotNull(hitlist.Songs);
         }
+
+        [Test]
+        public void Validation_Tiltle_ReturnFalse()
+        {
+            // Assemble
+            string title = "";
+            // Act
+            var ValidationTitle = _controller.Validation_Title(title);
+
+            // Assert
+            Assert.IsFalse(ValidationTitle);
+        }
+
+        [Test]
+        public void Validation_Tiltle_ReturnTrue()
+        {
+            // Assemble
+            string title = "HuhHuh";
+            // Act
+            var ValidationTitle = _controller.Validation_Title(title);
+
+            // Assert
+            Assert.IsTrue(ValidationTitle);
+        }
+        [Test]
+        public void Validation_Description_ReturnTrue()
+        {
+            // Assemble
+            string description = "HuhHuh";
+            // Act
+            var ValidationDescription = _controller.Validation_Description(description);
+
+            // Assert
+            Assert.IsTrue(ValidationDescription);
+        }
+
+        [Test]
+        public void Validation_Description_ReturnFalse()
+        {
+            // Assemble
+            string description = "HuhHuhHuhHHuhHuhHuhHHuhHuhHuhHHuhHuhHuhHHuhHuhHuhHHuhHuhHuhHHuhHuhHuhHHuhHuhHuhHHuhHuhHuhHHuhHuhHuhH" +
+                "HuhHuhHuhHHuhHuhHuhHHuhHuhHuhHHuhHuhHuhH1"
+                ;
+            // Act
+            var ValidationDescription = _controller.Validation_Description(description);
+
+            // Assert
+            Assert.IsFalse(ValidationDescription);
+        }
+
     }
 }
