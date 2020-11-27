@@ -54,7 +54,7 @@ namespace mini_spotify.View
             // add a new hitlist if there are no errors
             if (!errors)
             {
-                Hitlist hitlist = new Hitlist(title, description, AppData.Id);
+                Hitlist hitlist = new Hitlist(title, description, AppData.UserId);
                 _controller.Add(hitlist);
                 OverviewHitlist overviewHitlist = new OverviewHitlist(hitlist.Id);
                 overviewHitlist.Show();

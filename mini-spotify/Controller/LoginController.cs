@@ -31,7 +31,7 @@ namespace mini_spotify.Controller
             {
                 AppData.LoggedIn = true;
                 User user = _userRepository.FindOneBy(u => u.UserName == username);
-                AppData.Id = user.Id;
+                AppData.UserId = user.Id;
 
                 return true;
             }

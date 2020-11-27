@@ -26,7 +26,7 @@ namespace mini_spotify.View
 
         public void GetAllHitList()
         {
-            List<Hitlist> hitlists = _hitlistController.GetHitlistsByUserId(AppData.Id);
+            List<Hitlist> hitlists = _hitlistController.GetHitlistsByUserId(AppData.UserId);
             HitlistMenu.ItemsSource = hitlists;
         }
 
