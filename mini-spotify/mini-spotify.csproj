@@ -39,7 +39,9 @@
     <Content Include="ImageResources\play.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Music\G-Eazy &amp; Halsey - Him &amp; I.mp3" />
+    <Content Include="Music\G-Eazy &amp; Halsey - Him &amp; I.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
