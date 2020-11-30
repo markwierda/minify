@@ -4,8 +4,6 @@ using mini_spotify.Model;
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace mini_spotify.View
 {
@@ -14,16 +12,15 @@ namespace mini_spotify.View
     /// </summary>
     public partial class Overview : Window
     {
-        private readonly HitlistController _hitlistController;
-        private readonly SongController _songController;
-        private readonly MediaPlayer _mediaPlayer;
+        private readonly HitlistController _controller;
+        private Stack<Song> _songs;
 
         public Overview()
         {
             InitializeComponent();
-            _hitlistController = new HitlistController();
-            _songController = new SongController();
-            _mediaPlayer = new MediaPlayer();
+            _controller = new HitlistController();
+            MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
+            MediaplayerController.NextSong += NextSong;
         }
 
         private void Initialize(object sender, RoutedEventArgs e)
@@ -33,7 +30,7 @@ namespace mini_spotify.View
 
         public void GetAllHitList()
         {
-            List<Hitlist> hitlists = _hitlistController.GetHitlistsByUserId(AppData.UserId);
+            List<Hitlist> hitlists = _controller.GetHitlistsByUserId(AppData.UserId);
             HitlistMenu.ItemsSource = hitlists;
         }
 
@@ -52,26 +49,35 @@ namespace mini_spotify.View
             Close();
         }
 
-        //mediaplayer handlers
-
         //change play button into pause button and start music
         private void OnMouseDownPlay(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Song song = _songController.Get(new Guid("aa5ab627-3b64-4c22-9cc3-cca5fd57c896"));
+            if (MediaplayerController.GetSource() == null)
+            {
+                Hitlist hitlist = _controller.Get(new Guid("aa4cb653-3c62-5e22-5cc3-cca5fd57c846"), true);
+                _songs = _controller.GetSongs(hitlist.Songs);
 
-            if (song != null)
+                if (_songs.Peek() != null)
+                {
+                    btn_Play.Visibility = Visibility.Collapsed;
+                    btn_Pause.Visibility = Visibility.Visible;
+                    MediaplayerController.Play(_songs.Pop());
+                }
+            } 
+            else
             {
                 btn_Play.Visibility = Visibility.Collapsed;
                 btn_Pause.Visibility = Visibility.Visible;
-                Play(song);
+                MediaplayerController.Play();
             }
         }
 
         public void OnMouseDownPause(object sender, RoutedEventArgs e)
         {
-            //change pause button into play button
+            //change pause button into play button and pauses music
             btn_Pause.Visibility = Visibility.Collapsed;
             btn_Play.Visibility = Visibility.Visible;
+            MediaplayerController.Pause();
         }
 
         private void OnMouseDownBack(object sender, RoutedEventArgs e)
@@ -84,40 +90,27 @@ namespace mini_spotify.View
 
         }
 
-
-        /// <summary>
-        /// Starts playing song in the mediaplayer
-        /// </summary>
-        /// <param name="song"></param>
-        private void Play(Song song)
+        private void UpdateMediaplayer(object sender, UpdateMediaplayerEventArgs e)
         {
-            _mediaPlayer.Open(new Uri(song.Path, UriKind.RelativeOrAbsolute));
-            _mediaPlayer.Volume = 0.1;
-            _mediaPlayer.Play();
-
-            DispatcherTimer timer = new DispatcherTimer()
-            {
-                Interval = TimeSpan.FromMilliseconds(1)
-            };
-
-            timer.Tick += UpdateMediaplayer;
-            timer.Start();
+            lbl_Song_Name.Content = e.SongName;
+            lbl_Artist.Content = e.Artist;
+            lbl_Current_Time.Content = e.Position.ToString(@"mm\:ss");
+            lbl_Song_Duration.Content = e.Duration.ToString(@"mm\:ss");
+            Song_Progressbar.Maximum = e.Duration.TotalMilliseconds;
+            Song_Progressbar.Value = e.Position.TotalMilliseconds;
         }
 
-        /// <summary>
-        /// Updates the mediaplayer in the overview
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UpdateMediaplayer(object sender, EventArgs e)
+        private void NextSong(object sender, EventArgs e)
         {
-            if (_mediaPlayer.NaturalDuration.HasTimeSpan)
+            if (_songs.Count > 0)
             {
-                lbl_Current_Time.Content = _mediaPlayer.Position.ToString(@"mm\:ss");
-                lbl_Song_Duration.Content = _mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
-
-                Song_Progressbar.Maximum = _mediaPlayer.NaturalDuration.TimeSpan.TotalMilliseconds;
-                Song_Progressbar.Value = _mediaPlayer.Position.TotalMilliseconds;
+                MediaplayerController.Play(_songs.Pop());
+            }
+            else
+            {
+                //change pause button into play button
+                btn_Pause.Visibility = Visibility.Collapsed;
+                btn_Play.Visibility = Visibility.Visible;
             }
         }
     }

@@ -13,9 +13,10 @@
         <ListView Name="HitlistSongs" Margin="80,142,80,48" Visibility="Hidden">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="Genre" Width="200" DisplayMemberBinding="{Binding Genre}" />
-                    <GridViewColumn Header="Duration" Width="200" DisplayMemberBinding="{Binding Duration}" />
+                    <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Artist" Width="150" DisplayMemberBinding="{Binding Artist}" />
+                    <GridViewColumn Header="Genre" Width="150" DisplayMemberBinding="{Binding Genre}" />
+                    <GridViewColumn Header="Duration" Width="150" DisplayMemberBinding="{Binding Duration}" />
                 </GridView>
             </ListView.View>
         </ListView>
