@@ -27,7 +27,7 @@ namespace mini_spotify.DAL
                        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
             IConfigurationRoot configuration = configbuilder.Build();
 
-            string connectionStringName = configuration.GetSection("Environment")["IsDevelopment"] == "false" ? "Spotify-Database-prod" : "Spotify-Database-local";
+            string connectionStringName = configuration.GetSection("Environment")["IsDevelopment"] == "false" ? "Production" : "Development";
 
             return configuration.GetConnectionString(connectionStringName);
         }

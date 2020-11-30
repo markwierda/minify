@@ -1,5 +1,4 @@
 ﻿using mini_spotify.Controller;
-using mini_spotify.DAL;
 using NUnit.Framework;
 
 namespace UnitTests
@@ -7,13 +6,12 @@ namespace UnitTests
     public class LoginControllerTest
     {
 
-        private LoginController _loginController;
+        private LoginController _controller;
         
         [SetUp]
         public void SetUp()
         {
-            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
-            _loginController = new LoginController(context);
+            _controller = new LoginController();
         }
 
 
@@ -25,7 +23,7 @@ namespace UnitTests
             string password = "notempty";
 
             // Act
-            var LoginResults = _loginController.Validation(username, password);
+            var LoginResults = _controller.Validation(username, password);
 
             // Assert
             Assert.IsFalse(LoginResults);
@@ -40,7 +38,7 @@ namespace UnitTests
             string password = "";
 
             // Act
-            var LoginResults = _loginController.Validation(username, password);
+            var LoginResults = _controller.Validation(username, password);
 
             // Assert
             Assert.IsFalse(LoginResults);
@@ -54,7 +52,7 @@ namespace UnitTests
             string password = "Test123";
 
             // Act
-            var LoginResults = _loginController.Validation(username, password);
+            var LoginResults = _controller.Validation(username, password);
 
             // Assert
             Assert.IsTrue(LoginResults);
@@ -68,7 +66,7 @@ namespace UnitTests
             string password = "tess123";
 
             // Act
-            var LoginResults = _loginController.Validation(username, password);
+            var LoginResults = _controller.Validation(username, password);
 
             // Assert
             Assert.IsFalse(LoginResults);
@@ -82,7 +80,7 @@ namespace UnitTests
             string password = "test123";
 
             // Act
-            var LoginResults = _loginController.Validation(username, password.ToLower());
+            var LoginResults = _controller.Validation(username, password.ToLower());
 
             // Assert
             Assert.IsFalse(LoginResults);
@@ -96,7 +94,7 @@ namespace UnitTests
             string password = "test123";
 
             // Act
-            var LoginResults = _loginController.Validation(username, password.ToUpper());
+            var LoginResults = _controller.Validation(username, password.ToUpper());
 
             // Assert
             Assert.IsFalse(LoginResults);
@@ -110,7 +108,7 @@ namespace UnitTests
             string password = "Password";
 
             // Act
-            var LoginResults = _loginController.Validation(username, password);
+            var LoginResults = _controller.Validation(username, password);
 
             // Assert
             Assert.IsFalse(LoginResults);
@@ -124,7 +122,7 @@ namespace UnitTests
             string password = "Test123";
 
             // Act
-            var LoginResults = _loginController.TryLogin(username, password);
+            var LoginResults = _controller.TryLogin(username, password);
 
             // Assert
             Assert.IsTrue(LoginResults);
@@ -138,7 +136,7 @@ namespace UnitTests
             string password = "Pasord";
 
             // Act
-            var LoginResults = _loginController.TryLogin(username, password);
+            var LoginResults = _controller.TryLogin(username, password);
 
             // Assert
             Assert.IsFalse(LoginResults);

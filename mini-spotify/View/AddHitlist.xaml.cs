@@ -1,26 +1,21 @@
-﻿using Castle.Core.Internal;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using mini_spotify.Controller;
+using mini_spotify.DAL.Entities;
+using mini_spotify.Model;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace mini_spotify.View
 {
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class AddHitlist : Window
     {
-        public Window1()
+        private readonly HitlistController _controller;
+
+        public AddHitlist()
         {
             InitializeComponent();
+            _controller = new HitlistController();
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
@@ -34,8 +29,24 @@ namespace mini_spotify.View
             string title = TitleText.Text;
             string description = DescriptionText.Text;
 
-
-           
+            if (_controller.Validation_Title(title) == false)
+            {
+                // display error message for title
+                TitleError.Visibility = Visibility.Visible;
+            }
+            else if (_controller.Validation_Description(description) == false) 
+            { 
+                // display error message for description
+                DescriptionError.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Hitlist hitlist = new Hitlist(title, description, AppData.UserId);
+                _controller.Add(hitlist);
+                OverviewHitlist overviewHitlist = new OverviewHitlist(hitlist.Id);
+                overviewHitlist.Show();
+                Close();
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Castle.Core.Internal;
 using mini_spotify.Controller;
-using mini_spotify.DAL;
 using mini_spotify.DAL.Entities;
 using System.Windows;
 
@@ -16,8 +15,7 @@ namespace mini_spotify.View
         public Register()
         {
             InitializeComponent();
-            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
-            _controller = new RegisterController(context);
+            _controller = new RegisterController();
         }
 
         private void Register_Button_Click(object sender, RoutedEventArgs e)
