@@ -54,6 +54,22 @@ namespace mini_spotify.Controller
         }
 
         /// <summary>
+        /// Invoke the NextSong event
+        /// </summary>
+        public static void Next()
+        {
+            NextSong?.Invoke(null, new EventArgs());
+        }
+
+        /// <summary>
+        /// Closes the underlying media
+        /// </summary>
+        public static void Close()
+        {
+            _mediaPlayer.Close();
+        }
+
+        /// <summary>
         /// Returns the mediaplayer's current source
         /// </summary>
         /// <returns>Mediaplayer's source</returns>

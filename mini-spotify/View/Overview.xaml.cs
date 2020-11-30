@@ -4,6 +4,7 @@ using mini_spotify.Model;
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 
 namespace mini_spotify.View
 {
@@ -50,7 +51,7 @@ namespace mini_spotify.View
         }
 
         //change play button into pause button and start music
-        private void OnMouseDownPlay(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OnMouseDownPlay(object sender, MouseButtonEventArgs e)
         {
             if (MediaplayerController.GetSource() == null)
             {
@@ -72,7 +73,7 @@ namespace mini_spotify.View
             }
         }
 
-        public void OnMouseDownPause(object sender, RoutedEventArgs e)
+        private void OnMouseDownPause(object sender, MouseButtonEventArgs e)
         {
             //change pause button into play button and pauses music
             btn_Pause.Visibility = Visibility.Collapsed;
@@ -80,14 +81,16 @@ namespace mini_spotify.View
             MediaplayerController.Pause();
         }
 
-        private void OnMouseDownBack(object sender, RoutedEventArgs e)
+        private void OnMouseDownBack(object sender, MouseButtonEventArgs e)
         {
 
         }
         
-        private void OnMouseDownNext(object sender, RoutedEventArgs e)
+        private void OnMouseDownNext(object sender, MouseButtonEventArgs e)
         {
-
+            lbl_Current_Time.Content = lbl_Song_Duration.Content;
+            Song_Progressbar.Value = Song_Progressbar.Maximum;
+            MediaplayerController.Next();
         }
 
         private void UpdateMediaplayer(object sender, UpdateMediaplayerEventArgs e)
@@ -108,9 +111,9 @@ namespace mini_spotify.View
             }
             else
             {
-                //change pause button into play button
                 btn_Pause.Visibility = Visibility.Collapsed;
                 btn_Play.Visibility = Visibility.Visible;
+                MediaplayerController.Close();
             }
         }
     }
