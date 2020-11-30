@@ -54,6 +54,20 @@ namespace mini_spotify.Controller
         }
 
         /// <summary>
+        /// Replays a song in the mediaplayer
+        /// </summary>
+        public static void Replay()
+        {
+            _mediaPlayer.Stop();
+            _mediaPlayer.Play();
+        }
+
+        public static void Previous()
+        {
+            // TODO
+        }
+
+        /// <summary>
         /// Returns the mediaplayer's current source
         /// </summary>
         /// <returns>Mediaplayer's source</returns>

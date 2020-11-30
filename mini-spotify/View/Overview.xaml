@@ -84,7 +84,7 @@
             <Image Name="btn_Back" Source="/ImageResources\back.png" MouseDown="OnMouseDownBack" Height="50" Width="50" Margin="5, 0 , 5, 0"/>
             <Image Name="btn_Play" Source="/ImageResources\play.png" MouseDown="OnMouseDownPlay" Height="50" Width="50" Visibility="Visible" Margin="5, 0 , 5, 0"/>
             <Image Name="btn_Pause" Source="/ImageResources\pause.png" MouseDown="OnMouseDownPause" Height="50" Width="50" Visibility="Collapsed" Margin="5, 0 , 5, 0"/>
-            <Image Name="btn_Next" Source="/ImageResources\next.png" MouseDown="OnMouseDownBack" Height="50" Width="50" Margin="5, 0 , 5, 0"/>
+            <Image Name="btn_Next" Source="/ImageResources\next.png" MouseDown="OnMouseDhownNext" Height="50" Width="50" Margin="5, 0 , 5, 0"/>
         </StackPanel>
         <StackPanel Grid.Row="14" Grid.Column="3" Grid.ColumnSpan="9" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
             <Label Name="lbl_Current_Time" VerticalAlignment="Center">00:00</Label>
