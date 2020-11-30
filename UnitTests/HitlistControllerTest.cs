@@ -56,7 +56,7 @@ namespace UnitTests
         {
             // arrange
             Hitlist hitlist = _controller.Get(new Guid("aa4cb653-3c62-5e22-5cc3-cca5fd57c846"), true);
-            string expected = $"Created by 1140207 at {hitlist.CreatedAt:dd/MM/yyyy} - 2 songs, 9 min 10 sec";;
+            string expected = $"Created by 1140207 at {hitlist.CreatedAt:dd/MM/yyyy} - 2 songs, 8 min 10 sec";;
 
             // act
             string result = _controller.GetHitlistInfo(hitlist);
