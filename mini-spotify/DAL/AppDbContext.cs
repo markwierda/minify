@@ -18,7 +18,8 @@ namespace mini_spotify.DAL
         #region Required
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(builder); 
+            builder.UseCollation("SQL_Latin1_General_CP1_CS_AS");
 
             builder.Entity<User>(user =>
             {

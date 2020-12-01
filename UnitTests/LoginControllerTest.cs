@@ -76,7 +76,7 @@ namespace UnitTests
         public void Validation_Password_ToLower_ReturnFalse()
         {
             // Assemble
-            string username = "MijnUniekeUsernam";
+            string username = "1140207";
             string password = "test123";
 
             // Act
@@ -90,7 +90,7 @@ namespace UnitTests
         public void Validation_Password_ToUpper_ReturnFalse()
         {
             // Assemble
-            string username = "MijnUniekeUsernam";
+            string username = "1140207";
             string password = "test123";
 
             // Act
