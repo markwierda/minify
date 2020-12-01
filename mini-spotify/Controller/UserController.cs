@@ -5,6 +5,11 @@ namespace mini_spotify.Controller
 {
     public class UserController
     {
+        /// <summary>
+        /// Hashes a password
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns>Returns hash</returns>
         public static string HashPassword(string password)
         {
             //Create the salt value with a cryptographic PRNG:
@@ -26,6 +31,12 @@ namespace mini_spotify.Controller
             return savedPasswordHash;
         }
 
+        /// <summary>
+        /// Validate given password with hash
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="savedPasswordHash"></param>
+        /// <returns>Returns if valid or not</returns>
         public static bool ValidatePassword(string input, string savedPasswordHash)
         {
             /* Extract the bytes */

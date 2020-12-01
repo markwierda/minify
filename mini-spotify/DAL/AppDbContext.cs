@@ -54,8 +54,8 @@ namespace mini_spotify.DAL
             #region Seed
             Song[] songs = new Song[]
             {
-                new Song() { Id = new Guid("{aa5ab627-3b64-4c22-9cc3-cca5fd57c896}"), Name = "Titanic", Duration = new TimeSpan(0, 0, 4, 30), Genre = "Classic", Path = "." },
-                new Song() { Id = Guid.NewGuid(), Name = "Low(feat. T-Pain)", Duration = new TimeSpan(0, 0, 4, 30), Genre = "Rap", Path = "." },
+                new Song() { Id = new Guid("{aa5ab627-3b64-4c22-9cc3-cca5fd57c896}"), Artist = "G-Eazy & Halsey", Name = "Him & I", Duration = new TimeSpan(0, 0, 4, 40), Genre = "Rap", Path = "Music/G-Eazy & Halsey - Him & I.mp3" },
+                new Song() { Id = new Guid("{aa5ab677-3b64-4c22-9cc3-cca5fd57c896}"), Artist = "James Arthur", Name = "Say You Wont Let Go", Duration = new TimeSpan(0, 0, 3, 30), Genre = "Pop", Path = "Music/James Arthur - Say You Wont Let Go.mp3" }
             };
 
             User[] users = new User[]
