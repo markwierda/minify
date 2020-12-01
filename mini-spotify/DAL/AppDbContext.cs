@@ -41,7 +41,7 @@ namespace mini_spotify.DAL
                     .WithMany(s => s.Hitlists)
                     .HasForeignKey(hs => hs.SongId)
                     // When the relation is deleted, do not delete the song.
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 // create a one to many relation from hitlistSongs.Hitlist to Hitlist
                 hitlistsongs
@@ -49,7 +49,7 @@ namespace mini_spotify.DAL
                     .WithMany(hl => hl.Songs)
                     .HasForeignKey(hs => hs.HitlistId)
                     // When the relation is deleted, do not delete the hitlist.
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             #region Seed
@@ -68,8 +68,8 @@ namespace mini_spotify.DAL
 
             Hitlist[] hitlists = new Hitlist[]
             {
-                new Hitlist() { Id = new Guid("{aa4cb653-3c62-5e22-5cc3-cca5fd57c846}"), Title = "Unieke playlist", UserId = users[0].Id, Description = "Description"},
-                new Hitlist() { Id = new Guid("{aa3cb653-3c62-5e22-5cc3-cca5fd57c846}"), Title = "Unieke playlist", UserId = users[1].Id,  Description = "Description" },
+                new Hitlist() { Id = new Guid("{aa4cb653-3c62-5e22-5cc3-cca5fd57c846}"), Title = "Unieke playlist1", UserId = users[0].Id, Description = "Description"},
+                new Hitlist() { Id = new Guid("{aa3cb653-3c62-5e22-5cc3-cca5fd57c846}"), Title = "Unieke playlist2", UserId = users[1].Id,  Description = "Description" },
                 new Hitlist() { Id = new Guid("{aa4cb653-3c62-5522-5cc3-cca5fd57c846}"), Title = "HUH", UserId = users[2].Id, Description = "HUH"},
             };
 
