@@ -1,21 +1,31 @@
 ﻿using mini_spotify.DAL.Entities;
 using mini_spotify.Model;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace mini_spotify.Controller
 {
     public delegate void UpdateMediaplayerEventHandler(object sender, UpdateMediaplayerEventArgs e);
-    public delegate void NextSongEventHandler(object sender, EventArgs e);
 
     public static class MediaplayerController
     {
         private static readonly MediaPlayer _mediaPlayer = new MediaPlayer();
-        private static Song _song;
+        private static List<Song> _songs;
+        private static Song _currentSong;
 
         public static event UpdateMediaplayerEventHandler UpdateMediaplayer;
-        public static event NextSongEventHandler NextSong;
+
+        /// <summary>
+        /// Initialize the _songs variable
+        /// </summary>
+        /// <param name="songs"></param>
+        public static void Initialize(List<Song> songs)
+        {
+            _songs = songs;
+        }
 
         /// <summary>
         /// Starts playing a song in the mediaplayer
@@ -29,9 +39,9 @@ namespace mini_spotify.Controller
             }
             else
             {
-                _song = song;
+                _currentSong = song;
 
-                _mediaPlayer.Open(new Uri(song.Path, UriKind.RelativeOrAbsolute));
+                _mediaPlayer.Open(new Uri(_currentSong.Path, UriKind.RelativeOrAbsolute));
                 _mediaPlayer.MediaEnded += MediaEnded;
                 _mediaPlayer.Play();
 
@@ -54,22 +64,42 @@ namespace mini_spotify.Controller
         }
 
         /// <summary>
-        /// Invoke the NextSong event
+        /// Starts playing the next song in the mediaplayer
         /// </summary>
-        public static void Next()
+        /// <returns>Returns true if there is a next song and false if there is no next song</returns>
+        public static bool Next()
         {
-            NextSong?.Invoke(null, new EventArgs());
+            if (_songs.Last() == _currentSong)
+            {
+                Close();
+                return false;
+            }
+
+            int index = _songs.FindIndex(x => x == _currentSong);
+            _currentSong = _songs[index + 1];
+            Play(_currentSong);
+            return true;
         }
 
         /// <summary>
-        /// Closes the underlying media
+        /// Starts playing the previous song in the mediaplayer
         /// </summary>
-        public static void Close()
+        /// <returns>Returns true if there is a previous song and false if there is no previous song</returns>
+        public static bool Previous()
         {
-            _mediaPlayer.Close();
+            if (_songs.First() == _currentSong)
+            {
+                Close();
+                return false;
+            }
+
+            int index = _songs.FindIndex(x => x == _currentSong);
+            _currentSong = _songs[index - 1];
+            Play(_currentSong);
+            return true;
         }
 
-        ///
+        /// <summary>
         /// Replays a song in the mediaplayer
         /// </summary>
         public static void Replay()
@@ -78,9 +108,12 @@ namespace mini_spotify.Controller
             _mediaPlayer.Play();
         }
 
-        public static void Previous()
+        /// <summary>
+        /// Closes the underlying media
+        /// </summary>
+        public static void Close()
         {
-            // TODO
+            _mediaPlayer.Close();
         }
 
         /// <summary>
@@ -102,18 +135,31 @@ namespace mini_spotify.Controller
             if (_mediaPlayer.NaturalDuration.HasTimeSpan)
                 UpdateMediaplayer?.Invoke(null, 
                     new UpdateMediaplayerEventArgs(
-                        _song.Name,
-                        _song.Artist,
+                        _currentSong.Name,
+                        _currentSong.Artist,
                         _mediaPlayer.Position, 
                         _mediaPlayer.NaturalDuration.TimeSpan
                     )
                 );
         }
 
+        /// <summary>
+        /// Event handler to start the next song if the song ended
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void MediaEnded(object sender, EventArgs e)
         {
             _mediaPlayer.Close();
-            NextSong?.Invoke(null, new EventArgs());
+
+            if (_songs.Last() != _currentSong)
+                Next();
+            else
+                _currentSong = _songs.First();
+
+            UpdateMediaplayer?.Invoke(null,
+                new UpdateMediaplayerEventArgs()
+            );
         }
     }
 }
