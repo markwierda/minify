@@ -11,6 +11,7 @@ namespace mini_spotify.View
     public partial class OverviewSongs : Window
     {
         private readonly SongController _controller;
+        private List<Song> ListSongs { get; set; }
 
         public OverviewSongs()
         {
@@ -23,6 +24,16 @@ namespace mini_spotify.View
                
             Songs.ItemsSource = items;
             Songs.Visibility = Visibility.Visible;
+        }
+
+        private void Songs_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            Song[] songs = (Song[])e.AddedItems;
+
+            if(ListSongs.Count > 4)
+            {
+                int a = 1;
+            }
         }
     }
 }
