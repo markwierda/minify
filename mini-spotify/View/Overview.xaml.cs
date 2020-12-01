@@ -73,7 +73,6 @@ namespace mini_spotify.View
             }
         }
 
-        public void OnMouseDownPause(object sender, MouseButtonEventArgs e)
         private void OnMouseDownPause(object sender, MouseButtonEventArgs e)
         {
             //change pause button into play button and pauses music
