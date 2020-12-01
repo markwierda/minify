@@ -104,21 +104,13 @@ namespace mini_spotify.Controller
         }
 
         /// <summary>
-        /// Creates a stack with the hitlist's songs
+        /// Creates a list with the hitlist's songs
         /// </summary>
         /// <param name="hitlistSongs"></param>
         /// <returns>Hitlist songs</returns>
-        public Stack<Song> GetSongs(ICollection<HitlistSong> hitlistSongs)
+        public List<Song> GetSongs(ICollection<HitlistSong> hitlistSongs)
         {
-            List<Song> songs = hitlistSongs.Select(x => x.Song).ToList();
-            Stack<Song> stack = new Stack<Song>();
-
-            foreach (Song song in songs)
-            {
-                stack.Push(song);
-            }
-
-            return stack;
+            return hitlistSongs.Select(x => x.Song).ToList();
         }
 
         /// <summary>
