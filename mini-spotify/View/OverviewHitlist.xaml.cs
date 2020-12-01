@@ -12,6 +12,7 @@ namespace mini_spotify.View
     public partial class OverviewHitlist : Window
     {
         private readonly HitlistController _controller;
+        private readonly Hitlist _hitlist;
 
         public OverviewHitlist(Guid id)
         {
@@ -19,7 +20,7 @@ namespace mini_spotify.View
 
             // create instance of controller and get the hitlist by id
             _controller = new HitlistController();
-            Hitlist _hitlist = _controller.Get(id, true);
+            _hitlist = _controller.Get(id, true);
 
             // check if hitlist is not null
             if (_hitlist != null)
@@ -39,6 +40,18 @@ namespace mini_spotify.View
                     HitlistSongs.ItemsSource = _controller.GetSongs(_hitlist.Songs);
                     HitlistSongs.Visibility = Visibility.Visible;
                 }
+            }
+
+            MessageBoxResult result = MessageBox.Show("Are you sure?",
+                                          "Confirmation",
+                                          MessageBoxButton.YesNo,
+                                          MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+
+                _controller.Delete(_hitlist);
+                new Overview().Show();
+                this.Close();
             }
         }
     }

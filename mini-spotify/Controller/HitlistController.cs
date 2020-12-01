@@ -102,7 +102,14 @@ namespace mini_spotify.Controller
             _repository.Add(hitlist);
             _repository.SaveChanges();
         }
+        public void Delete(Hitlist hitlist)
+        {
+            if (hitlist.Id == null)
+                throw new ArgumentNullException("id");
 
+            _repository.Remove(hitlist);
+            _repository.SaveChanges();
+        }
         public List<Song> GetSongs(ICollection<HitlistSong> hitlistSongs)
         {
             return hitlistSongs.Select(x => x.Song).ToList();
