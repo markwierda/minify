@@ -97,7 +97,9 @@ namespace mini_spotify.Controller
         public void Add(Hitlist hitlist, List<Song> songs = null)
         {
             if (Utility.GuidIsNullOrEmpty(hitlist.Id))
+            {
                 throw new ArgumentNullException("id");
+            }
 
             if (songs != null && songs.Count > 0)
             {
