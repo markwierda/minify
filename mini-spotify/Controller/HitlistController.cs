@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using mini_spotify.DAL;
 using mini_spotify.DAL.Entities;
 using mini_spotify.DAL.Repositories;
+using mini_spotify.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -107,30 +108,13 @@ namespace mini_spotify.Controller
         {
             if (hitlist.Id == null)
                 throw new ArgumentNullException("id");
-            if(hitlist.Id == hitlist.UserId)
+            if(AppData.UserId == hitlist.UserId)
             {
                 _repository.Remove(hitlist);
                 _repository.SaveChanges();
             }
             
         }
-        /*public bool Validation(string username, string password)
-        {
-            if (username.IsNullOrEmpty())
-                return false;
-
-            if (password.IsNullOrEmpty())
-                return false;
-
-            foreach (User user in _repository.GetAll())
-            {
-                if (user.UserName == username && UserController.ValidatePassword(password, user.PassWord))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }*/
 
         public List<Song> GetSongs(ICollection<HitlistSong> hitlistSongs)
         {

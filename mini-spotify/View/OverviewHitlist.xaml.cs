@@ -43,6 +43,10 @@ namespace mini_spotify.View
                     HitlistSongs.ItemsSource = _hitlistcontroller.GetSongs(_hitlist.Songs);
                     HitlistSongs.Visibility = Visibility.Visible;
                 }
+                if (AppData.UserId == _hitlist.UserId)
+                {
+                    DeleteHitlist.Visibility = Visibility.Visible;
+                }
             }
 
                         
