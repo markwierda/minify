@@ -67,6 +67,9 @@
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.Column="3" Grid.RowSpan="9" Grid.ColumnSpan="9" Background="LightBlue">
             <!--Code for content-->
+            <Frame Name="contentFrame" NavigationUIVisibility="Hidden">
+                
+            </Frame>
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.Column="12" Grid.ColumnSpan="3" Grid.RowSpan="9" Background="Green">
             <!--placeholder-->

@@ -33,19 +33,28 @@ namespace mini_spotify.View
             HitlistMenu.ItemsSource = hitlists;
         }
 
+        public void UpdateHitlistMenu()
+        {
+            List<Hitlist> hitlists = _controller.GetHitlistsByUserId(AppData.UserId);
+            HitlistMenu.ItemsSource = hitlists;
+            HitlistMenu.Items.Refresh();
+        }
+
         private void Btn_Add_Hitlist(object sender, RoutedEventArgs e)
         {
-            AddHitlist addHitlist = new AddHitlist();
-            addHitlist.Show();
-            Close();
+            AddHistlistPage addHitlistPage = new AddHistlistPage();
+            contentFrame.Content = addHitlistPage;
+            //AddHistlistPage.Show();
+            //Close();
         }
 
         private void HitlistMenu_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             Hitlist selected = (Hitlist)e.AddedItems[0];
-            OverviewHitlist overviewHitlist = new OverviewHitlist(selected.Id);
-            overviewHitlist.Show();
-            Close();
+            OverviewHitlistPage overviewHitlistpage = new OverviewHitlistPage(selected.Id);
+            contentFrame.Content = overviewHitlistpage;
+            //overviewHitlist.Show();
+            //Close();
         }
 
         //mediaplayer handlers
