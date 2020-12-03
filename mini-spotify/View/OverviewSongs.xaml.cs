@@ -3,6 +3,7 @@ using mini_spotify.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace mini_spotify.View
 {
@@ -21,14 +22,18 @@ namespace mini_spotify.View
 
             List<Song> items = _controller.GetAll();
                
-            //Songs.ItemsSource = items;
+            Songs.ItemsSource = items;
             Songs.Visibility = Visibility.Visible;
 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _controller.Get(Guid id);
+            Button btn = (Button)sender;
+            Guid id = (Guid)btn.CommandParameter;
+
+            int a = 1;
+
         }
     }
 }
