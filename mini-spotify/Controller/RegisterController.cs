@@ -12,7 +12,7 @@ namespace mini_spotify.Controller
         private readonly Repository<User> _repository;
 
         /// <summary>
-        /// create a user repository with the context
+        /// Create a user repository with the context
         /// </summary>
         public RegisterController()
         {
@@ -35,13 +35,21 @@ namespace mini_spotify.Controller
             _repository.SaveChanges();
         }
 
-        // returns if given username is unique
+        /// <summary>
+        /// Check if username is unique
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>Returns if given username is unique</returns>
         public bool IsUniqueUsername(string username)
         {
             return !_repository.Any(u => u.UserName.Equals(username));
         }
 
-        // returns if given email is valid (offical function from docs.microsoft.com)
+        /// <summary>
+        /// Check if email is valid (offical function from docs.microsoft.com)
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>Returns if given email is valid</returns>
         public bool IsValidEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -86,13 +94,22 @@ namespace mini_spotify.Controller
             }
         }
 
-        // returns if password equals confirmPassword
+        /// <summary>
+        /// Check if password equals confirm password
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="confirmPassword"></param>
+        /// <returns>Returns if password equals confirmPassword</returns>
         public bool PasswordEqualsConfirmPassword(string password, string confirmPassword)
         {
             return password.Equals(confirmPassword);
         }
 
-        // returns if given password is valid
+        /// <summary>
+        /// Check if password is valid
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns>Returns if given password is valid</returns>
         public bool IsValidPassword(string password)
         {
             // check if minimal lenght is 8
