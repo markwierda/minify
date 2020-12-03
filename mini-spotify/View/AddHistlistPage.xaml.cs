@@ -14,10 +14,10 @@ namespace mini_spotify.View
     {
         private readonly HitlistController _controller;
 
-        public AddHistlistPage()
+        public AddHistlistPage(HitlistController controller)
         {
             InitializeComponent();
-            _controller = new HitlistController();
+            _controller = controller;
         }
 
         private void Create_Button_Click(object sender, RoutedEventArgs e)
