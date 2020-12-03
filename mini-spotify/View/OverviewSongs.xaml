@@ -15,7 +15,7 @@
         </Style>
         
     </Window.Resources>
-    <ListView Name="Songs" Margin="0,94,0,99" Background="White">
+    <ListView Name="Songs" Margin="0,94,0,99" Background="White" SelectionChanged="Songs_SelectionChanged">
         <ListView.View>
             <GridView>
                 <GridViewColumn Header="Add" Width="100">
@@ -33,8 +33,8 @@
                 </GridViewColumn>
                 
                 <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}" />
-                <GridViewColumn Header="Genre" Width="200" DisplayMemberBinding="{Binding Genre}" />
                 <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Artist}" />
+                <GridViewColumn Header="Genre" Width="200" DisplayMemberBinding="{Binding Genre}" />
                 <GridViewColumn Header="Duration" Width="200" DisplayMemberBinding="{Binding Duration}" />
             </GridView>
         </ListView.View>
