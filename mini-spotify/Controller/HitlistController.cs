@@ -50,7 +50,7 @@ namespace mini_spotify.Controller
         /// <returns></returns>
         public List<Hitlist> GetHitlistsByUserId(Guid userId, bool withRelations = false)
         {
-            if (userId == Guid.Empty)
+            if (Utility.GuidIsNullOrEmpty(userId))
             {
                 throw new ArgumentException(nameof(userId));
             }
@@ -72,7 +72,7 @@ namespace mini_spotify.Controller
 
         public Hitlist Get(Guid id, bool withRelations = false)
         {
-            if (id == null)
+            if (Utility.GuidIsNullOrEmpty(id))
             {
                 throw new ArgumentNullException(nameof(id));
             }
@@ -94,13 +94,44 @@ namespace mini_spotify.Controller
         /// Adds a hitlist to the database
         /// </summary>
         /// <param name="hitlist"></param>
-        public void Add(Hitlist hitlist)
+        public void Add(Hitlist hitlist, List<Song> songs = null)
         {
-            if (hitlist.Id == null)
+            if (Utility.GuidIsNullOrEmpty(hitlist.Id))
+            {
                 throw new ArgumentNullException("id");
+            }
+
+            if (songs != null && songs.Count > 0)
+            {
+                List<HitlistSong> hitlistSongs = AddSongsToHitlist(hitlist, songs);
+
+                if (hitlist.Songs == null)
+                {
+                    hitlist.Songs = hitlistSongs;
+                }
+                else
+                {
+                    hitlist.Songs.Union(hitlistSongs);
+                }
+            }
 
             _repository.Add(hitlist);
             _repository.SaveChanges();
+        }
+
+        public List<HitlistSong> AddSongsToHitlist(Hitlist hitlist, List<Song> songs)
+        {
+            List<HitlistSong> hitlistSongs = new List<HitlistSong>();
+
+            foreach(Song song in songs)
+            {
+                if(!Utility.GuidIsNullOrEmpty(song.Id))
+                {
+                    hitlistSongs.Add(new HitlistSong() { HitlistId = hitlist.Id, SongId = song.Id });
+                }
+            }
+
+            return hitlistSongs;
         }
 
         public List<Song> GetSongs(ICollection<HitlistSong> hitlistSongs)
@@ -159,7 +190,6 @@ namespace mini_spotify.Controller
 
         public bool Validation_Description(string description)
         {
-
                 // Check descriptoin
                 if (description.Length > 140)
                 {
