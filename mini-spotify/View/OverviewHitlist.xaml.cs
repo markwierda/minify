@@ -63,6 +63,7 @@ namespace mini_spotify.View
             {
 
                 _hitlistcontroller.Delete(_hitlist);
+                MessageBox.Show("Hitlist Deleted", "Success");
                 new Overview().Show();
                 this.Close();
             }

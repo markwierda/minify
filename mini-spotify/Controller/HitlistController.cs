@@ -107,10 +107,30 @@ namespace mini_spotify.Controller
         {
             if (hitlist.Id == null)
                 throw new ArgumentNullException("id");
-
-            _repository.Remove(hitlist);
-            _repository.SaveChanges();
+            if(hitlist.Id == hitlist.UserId)
+            {
+                _repository.Remove(hitlist);
+                _repository.SaveChanges();
+            }
+            
         }
+        /*public bool Validation(string username, string password)
+        {
+            if (username.IsNullOrEmpty())
+                return false;
+
+            if (password.IsNullOrEmpty())
+                return false;
+
+            foreach (User user in _repository.GetAll())
+            {
+                if (user.UserName == username && UserController.ValidatePassword(password, user.PassWord))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }*/
 
         public List<Song> GetSongs(ICollection<HitlistSong> hitlistSongs)
         {
