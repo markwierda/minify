@@ -42,15 +42,6 @@
             <RowDefinition Height="67"/>
             <RowDefinition Height="67"/>
         </Grid.RowDefinitions>
-
-        <!--<TextBlock FontSize="20" FontWeight="Bold" Grid.RowSpan="4" Grid.ColumnSpan="3" Grid.Row="0">2005 Products Shipped</TextBlock>
-        <TextBlock FontSize="12" FontWeight="Bold" Grid.Row="1" Grid.Column="0">Quarter 1</TextBlock>
-        <TextBlock FontSize="12" FontWeight="Bold" Grid.Row="1" Grid.Column="1">Quarter 2</TextBlock>
-        <TextBlock FontSize="12" FontWeight="Bold" Grid.Row="1" Grid.Column="2">Quarter 3</TextBlock>
-        <TextBlock Grid.Row="2" Grid.Column="0">50000</TextBlock>
-        <TextBlock Grid.Row="2" Grid.Column="1">100000</TextBlock>
-        <TextBlock Grid.Row="2" Grid.Column="2">150000</TextBlock>
-        <TextBlock FontSize="16" FontWeight="Bold" Grid.ColumnSpan="3" Grid.Row="3">Total Units: 300000</TextBlock>-->
         <StackPanel Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" Background="Red">
             <!--Code for home and trending buttons-->
         </StackPanel>
@@ -80,8 +71,28 @@
         <StackPanel Grid.Row="3" Grid.Column="12" Grid.ColumnSpan="3" Grid.RowSpan="9" Background="Green">
             <!--placeholder-->
         </StackPanel>
-        <StackPanel Grid.Row="12" Grid.ColumnSpan="15" Grid.RowSpan="3" Background="Aqua">
+        <StackPanel Grid.Row="12" Grid.ColumnSpan="3" Grid.RowSpan="3">
+            <!--left side of mediaplayer-->
+            <Label x:Name="lbl_Song_Name" Margin="10" FontSize="24" />
+            <Label x:Name="lbl_Artist" Margin="10" FontSize="24" />
+        </StackPanel>
+        <StackPanel Grid.Row="12" Grid.Column="3" Grid.ColumnSpan="9" Grid.RowSpan="1">
             <!--Placeholder for mediaplayer-->
+            <MediaElement x:Name="mediaplayer"/>
+        </StackPanel>
+        <StackPanel Grid.Row="13" Grid.Column="3" Grid.ColumnSpan="9" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Image Name="btn_Back" Source="/ImageResources\back.png" MouseDown="OnMouseDownBack" Height="50" Width="50" Margin="5, 0 , 5, 0"/>
+            <Image Name="btn_Play" Source="/ImageResources\play.png" MouseDown="OnMouseDownPlay" Height="50" Width="50" Visibility="Visible" Margin="5, 0 , 5, 0"/>
+            <Image Name="btn_Pause" Source="/ImageResources\pause.png" MouseDown="OnMouseDownPause" Height="50" Width="50" Visibility="Collapsed" Margin="5, 0 , 5, 0"/>
+            <Image Name="btn_Next" Source="/ImageResources\next.png" MouseDown="OnMouseDownNext" Height="50" Width="50" Margin="5, 0 , 5, 0"/>
+        </StackPanel>
+        <StackPanel Grid.Row="14" Grid.Column="3" Grid.ColumnSpan="9" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Label Name="lbl_Current_Time" VerticalAlignment="Center">00:00</Label>
+            <ProgressBar x:Name="Song_Progressbar" Width="400" Minimum="0" Maximum="100" Value="0" />
+            <Label Name="lbl_Song_Duration" VerticalAlignment="Center">00:00</Label>
+        </StackPanel>
+        <StackPanel Grid.Row="12" Grid.Column="12" Grid.ColumnSpan="3" Grid.RowSpan="3">
+            <!--right side of mediaplayer--> 
         </StackPanel>
     </Grid>
 </Window>
