@@ -137,5 +137,19 @@ namespace mini_spotify.View
             Song_Progressbar.Maximum = e.Duration.TotalMilliseconds;
             Song_Progressbar.Value = e.Position.TotalMilliseconds;
         }
+
+        private void btn_home(object sender, RoutedEventArgs e)
+        {
+            Overview overview = new Overview();
+            overview.Show();
+            Close();
+        }
+
+        private void btn_songs(object sender, RoutedEventArgs e)
+        {
+            OverviewSongs overviewSongs = new OverviewSongs();
+            overviewSongs.Show();
+            Close();
+        }
     }
 }

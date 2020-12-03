@@ -42,8 +42,12 @@
             <RowDefinition Height="67"/>
             <RowDefinition Height="67"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" Background="Red">
+        <StackPanel Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" Background="#FF774AC7">
             <!--Code for home and trending buttons-->
+            <StackPanel>
+                <Button Click="btn_home" Height="100" Background="#FF774AC7" >Home</Button>
+                <Button Click="btn_songs" Height="100" Background="#FF774AC7">Songs</Button>
+            </StackPanel>
         </StackPanel>
         <StackPanel Grid.Column="3" Grid.RowSpan="3" Grid.ColumnSpan="9" Background="Blue">
             <!--Code for search-->
