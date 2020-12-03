@@ -47,12 +47,16 @@ namespace mini_spotify.View
 
         private void btn_home(object sender, RoutedEventArgs e)
         {
-
+            Overview overview = new Overview();
+            overview.Show();
+            Close();
         }
 
         private void btn_songs(object sender, RoutedEventArgs e)
         {
-
+            OverviewSongs overviewSongs = new OverviewSongs();
+            overviewSongs.Show();
+            Close();
         }
     }
 }
