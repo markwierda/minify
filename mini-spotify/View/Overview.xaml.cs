@@ -1,7 +1,10 @@
 ﻿using mini_spotify.Controller;
 using mini_spotify.DAL.Entities;
 using mini_spotify.Model;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading;
 using System.Windows;
 
 namespace mini_spotify.View
@@ -43,6 +46,32 @@ namespace mini_spotify.View
             OverviewHitlist overviewHitlist = new OverviewHitlist(selected.Id);
             overviewHitlist.Show();
             Close();
+        }
+
+        //mediaplayer handlers
+
+        public void OnMouseDownPlay(object sender, RoutedEventArgs e)
+        {
+            //change play button into pause button
+            btn_Play.Visibility = Visibility.Collapsed;
+            btn_Pause.Visibility = Visibility.Visible;
+        }
+        
+        public void OnMouseDownPause(object sender, RoutedEventArgs e)
+        {
+            //change pause button into play button
+            btn_Pause.Visibility = Visibility.Collapsed;
+            btn_Play.Visibility = Visibility.Visible;
+        }
+
+        private void OnMouseDownBack(object sender, RoutedEventArgs e)
+        {
+
+        }
+        
+        private void OnMouseDownNext(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void btn_home(object sender, RoutedEventArgs e)
