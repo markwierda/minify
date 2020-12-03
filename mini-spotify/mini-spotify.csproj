@@ -20,13 +20,17 @@
     <None Remove="ImageResources\next.png" />
     <None Remove="ImageResources\pause.png" />
     <None Remove="ImageResources\play.png" />
+    <None Remove="Music\G-Eazy &amp; Halsey - Him &amp; I.mp3" />
+    <None Remove="Music\James Arthur - Say You Wont Let Go.mp3" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="ImageResources\back.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ImageResources\megascale_m.png" />
+    <Content Include="ImageResources\megascale_m.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ImageResources\next.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -34,6 +38,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ImageResources\play.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Music\G-Eazy &amp; Halsey - Him &amp; I.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Music\James Arthur - Say You Wont Let Go.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

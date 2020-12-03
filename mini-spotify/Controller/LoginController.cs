@@ -11,7 +11,7 @@ namespace mini_spotify.Controller
         private readonly Repository<User> _repository;
 
         /// <summary>
-        /// create a user repository with the context
+        /// Create a user repository with the context
         /// </summary>
         public LoginController() 
         {

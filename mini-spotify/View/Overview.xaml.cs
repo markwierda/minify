@@ -3,9 +3,9 @@ using mini_spotify.DAL.Entities;
 using mini_spotify.Model;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading;
+using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 
 namespace mini_spotify.View
 {
@@ -20,6 +20,7 @@ namespace mini_spotify.View
         {
             InitializeComponent();
             _controller = new HitlistController();
+            MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
         }
 
         private void Initialize(object sender, RoutedEventArgs e)
@@ -57,30 +58,83 @@ namespace mini_spotify.View
             //Close();
         }
 
-        //mediaplayer handlers
-
-        public void OnMouseDownPlay(object sender, RoutedEventArgs e)
+        private void DisplayPlay()
         {
-            //change play button into pause button
-            btn_Play.Visibility = Visibility.Collapsed;
-            btn_Pause.Visibility = Visibility.Visible;
-        }
-        
-        public void OnMouseDownPause(object sender, RoutedEventArgs e)
-        {
-            //change pause button into play button
             btn_Pause.Visibility = Visibility.Collapsed;
             btn_Play.Visibility = Visibility.Visible;
         }
 
-        private void OnMouseDownBack(object sender, RoutedEventArgs e)
+        private void DisplayPause()
         {
+            btn_Play.Visibility = Visibility.Collapsed;
+            btn_Pause.Visibility = Visibility.Visible;
+        }
 
+        private void OnMouseDownPlay(object sender, MouseButtonEventArgs e)
+        {
+            if (MediaplayerController.GetSource() == null)
+            {
+                Hitlist hitlist = _controller.Get(new Guid("aa4cb653-3c62-5e22-5cc3-cca5fd57c846"), true);
+                List<Song> songs = _controller.GetSongs(hitlist.Songs);
+
+                if (hitlist.Songs != null)
+                {
+                    MediaplayerController.Initialize(songs);
+                    MediaplayerController.Play(songs.First());
+                    DisplayPause();
+                }
+            } 
+            else
+            {
+                MediaplayerController.Play();
+                DisplayPause();
+            }
+        }
+
+        private void OnMouseDownPause(object sender, MouseButtonEventArgs e)
+        {
+            MediaplayerController.Pause();
+            DisplayPlay();
+        }
+
+        private void OnMouseDownBack(object sender, MouseButtonEventArgs e)
+        {
+            lbl_Current_Time.Content = "00:00";
+            Song_Progressbar.Value = Song_Progressbar.Minimum;
+
+            if (e.ClickCount == 1)
+                MediaplayerController.Replay();
+            else
+            {
+                if (MediaplayerController.Previous())
+                    DisplayPause();
+                else
+                    DisplayPlay();
+            }
         }
         
-        private void OnMouseDownNext(object sender, RoutedEventArgs e)
+        private void OnMouseDownNext(object sender, MouseButtonEventArgs e)
         {
+            lbl_Current_Time.Content = lbl_Song_Duration.Content;
+            Song_Progressbar.Value = Song_Progressbar.Maximum;
+            
+            if (MediaplayerController.Next())
+                DisplayPause();
+            else
+                DisplayPlay();
+        }
 
+        private void UpdateMediaplayer(object sender, UpdateMediaplayerEventArgs e)
+        {
+            if (e.SongName == null)
+                DisplayPlay();
+
+            lbl_Song_Name.Content = e.SongName;
+            lbl_Artist.Content = e.Artist;
+            lbl_Current_Time.Content = e.Position.ToString(@"mm\:ss");
+            lbl_Song_Duration.Content = e.Duration.ToString(@"mm\:ss");
+            Song_Progressbar.Maximum = e.Duration.TotalMilliseconds;
+            Song_Progressbar.Value = e.Position.TotalMilliseconds;
         }
     }
 }
