@@ -5,15 +5,13 @@ namespace UnitTests
 {
     public class LoginControllerTest
     {
-
         private LoginController _controller;
-        
+
         [SetUp]
         public void SetUp()
         {
             _controller = new LoginController();
         }
-
 
         [Test]
         public void Validation_UserName_IsNullOrEmpty_ReturnFalse()
@@ -28,7 +26,6 @@ namespace UnitTests
             // Assert
             Assert.IsFalse(LoginResults);
         }
-
 
         [Test]
         public void Validation_PassWord_IsNullOrEmpty_ReturnFalse()
@@ -76,7 +73,7 @@ namespace UnitTests
         public void Validation_Password_ToLower_ReturnFalse()
         {
             // Assemble
-            string username = "MijnUniekeUsernam";
+            string username = "1140207";
             string password = "test123";
 
             // Act
@@ -90,7 +87,7 @@ namespace UnitTests
         public void Validation_Password_ToUpper_ReturnFalse()
         {
             // Assemble
-            string username = "MijnUniekeUsernam";
+            string username = "1140207";
             string password = "test123";
 
             // Act
