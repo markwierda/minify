@@ -18,7 +18,9 @@ namespace mini_spotify.DAL.Entities
         [MinLength(8), RegularExpression("^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")]
         public string PassWord { get; set; }
 
-        public User () { }
+        public User()
+        {
+        }
 
         public User(string userName, string email, string firstName, string lastName, string passWord)
         {

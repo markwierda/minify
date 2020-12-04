@@ -16,6 +16,7 @@ namespace mini_spotify.Controller
         private static Song _currentSong;
 
         public static List<Song> Songs { get; private set; }
+
         public static event UpdateMediaplayerEventHandler UpdateMediaplayer;
 
         /// <summary>
@@ -147,11 +148,11 @@ namespace mini_spotify.Controller
         private static void Update(object sender, EventArgs e)
         {
             if (_mediaPlayer.NaturalDuration.HasTimeSpan)
-                UpdateMediaplayer?.Invoke(null, 
+                UpdateMediaplayer?.Invoke(null,
                     new UpdateMediaplayerEventArgs(
                         _currentSong.Name,
                         _currentSong.Artist,
-                        _mediaPlayer.Position, 
+                        _mediaPlayer.Position,
                         _mediaPlayer.NaturalDuration.TimeSpan
                     )
                 );
