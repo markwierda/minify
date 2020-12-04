@@ -8,7 +8,7 @@ namespace mini_spotify.DAL
     public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
     {
         public AppDbContext CreateDbContext(string[] args = null)
-        {          
+        {
             var builder = new DbContextOptionsBuilder<AppDbContext>();
             builder.UseSqlServer(GetConnectionString(), providerOptions => providerOptions.CommandTimeout(60))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);

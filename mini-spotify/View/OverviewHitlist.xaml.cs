@@ -48,13 +48,11 @@ namespace mini_spotify.View
                     DeleteHitlist.Visibility = Visibility.Visible;
                 }
             }
-
-                        
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if(_hitlist.UserId != AppData.UserId)
+            if (_hitlist.UserId != AppData.UserId)
             {
                 // todo send message
             }
@@ -65,7 +63,6 @@ namespace mini_spotify.View
                                              MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
-
                 _hitlistcontroller.Delete(_hitlist);
                 MessageBox.Show("Hitlist Deleted", "Success");
                 new Overview().Show();
@@ -73,6 +70,6 @@ namespace mini_spotify.View
             }
         }
 
-        //public override 
+        //public override
     }
 }

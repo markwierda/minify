@@ -71,7 +71,6 @@ namespace mini_spotify.Controller
             return query.ToList();
         }
 
-
         /// <summary>
         /// Get hitlist by id
         /// </summary>
@@ -120,12 +119,11 @@ namespace mini_spotify.Controller
         {
             if (hitlist.Id == null)
                 throw new ArgumentNullException("id");
-            if(AppData.UserId == hitlist.UserId)
+            if (AppData.UserId == hitlist.UserId)
             {
                 _repository.Remove(hitlist);
                 _repository.SaveChanges();
             }
-            
         }
 
         public List<Song> GetSongs(ICollection<HitlistSong> hitlistSongs)
@@ -191,4 +189,4 @@ namespace mini_spotify.Controller
             return description.Length <= 140;
         }
     }
-} 
+}

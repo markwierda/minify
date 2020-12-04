@@ -5,15 +5,13 @@ namespace UnitTests
 {
     public class LoginControllerTest
     {
-
         private LoginController _controller;
-        
+
         [SetUp]
         public void SetUp()
         {
             _controller = new LoginController();
         }
-
 
         [Test]
         public void Validation_UserName_IsNullOrEmpty_ReturnFalse()
@@ -28,7 +26,6 @@ namespace UnitTests
             // Assert
             Assert.IsFalse(LoginResults);
         }
-
 
         [Test]
         public void Validation_PassWord_IsNullOrEmpty_ReturnFalse()

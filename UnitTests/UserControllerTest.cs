@@ -11,7 +11,7 @@ namespace UnitTests
         [Test]
         public void HashPassword_Return_NotNull()
         {
-           string hash = UserController.HashPassword(testPassword);
+            string hash = UserController.HashPassword(testPassword);
 
             Assert.NotNull(hash);
         }
@@ -27,7 +27,7 @@ namespace UnitTests
         [Test]
         public void ValidatePassword_Return_False()
         {
-            bool hash = UserController.ValidatePassword("AnderWachtwoord:)" , testPasswordHashed);
+            bool hash = UserController.ValidatePassword("AnderWachtwoord:)", testPasswordHashed);
 
             Assert.IsFalse(hash);
         }

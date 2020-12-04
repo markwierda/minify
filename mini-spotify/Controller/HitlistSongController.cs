@@ -35,7 +35,7 @@ namespace mini_spotify.Controller
             }
 
             // check if relation already exists. when it exists, return false;
-            if(_hitlistSongRepository.FindOneBy(hs => hs.HitlistId == hitlistId && hs.SongId == songId) != null)
+            if (_hitlistSongRepository.FindOneBy(hs => hs.HitlistId == hitlistId && hs.SongId == songId) != null)
             {
                 return false;
             }

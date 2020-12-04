@@ -13,12 +13,15 @@ namespace mini_spotify.DAL
         public DbSet<Hitlist> Hitlists { get; set; }
         public DbSet<HitlistSong> HitlistSongs { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+        }
 
         #region Required
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder); 
+            base.OnModelCreating(builder);
             builder.UseCollation("SQL_Latin1_General_CP1_CS_AS");
 
             builder.Entity<User>(user =>
@@ -32,7 +35,7 @@ namespace mini_spotify.DAL
                     .HasKey(hs => hs.Id);
                 // create a unique constraint with the songid and hitlistid
                 hitlistsongs
-                    .HasIndex(hs => new { hs.SongId, hs.HitlistId})
+                    .HasIndex(hs => new { hs.SongId, hs.HitlistId })
                     .IsUnique();
 
                 // create a one to many relation from hitlistSongs.Song to Song
@@ -53,6 +56,7 @@ namespace mini_spotify.DAL
             });
 
             #region Seed
+
             Song[] songs = new Song[]
             {
                 new Song() { Id = new Guid("{aa5ab627-3b64-4c22-9cc3-cca5fd57c896}"), Artist = "G-Eazy & Halsey", Name = "Him & I", Duration = new TimeSpan(0, 0, 4, 40), Genre = "Rap", Path = "Music/G-Eazy & Halsey - Him & I.mp3" },
@@ -84,8 +88,10 @@ namespace mini_spotify.DAL
             builder.Entity<User>().HasData(users);
             builder.Entity<Hitlist>().HasData(hitlists);
             builder.Entity<HitlistSong>().HasData(hitlistSongs);
+
             #endregion Seed
         }
-        #endregion
+
+        #endregion Required
     }
 }
