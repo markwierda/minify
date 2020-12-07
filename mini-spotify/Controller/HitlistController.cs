@@ -3,15 +3,20 @@ using Microsoft.EntityFrameworkCore;
 using mini_spotify.DAL;
 using mini_spotify.DAL.Entities;
 using mini_spotify.DAL.Repositories;
+using mini_spotify.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace mini_spotify.Controller
 {
+    public delegate void HitlistAddedEventHandler(object sender, UpdateHitlistMenuEventArgs e);
+
     public class HitlistController
     {
         private readonly Repository<Hitlist> _repository;
+
+        public event HitlistAddedEventHandler HitlistAdded;
 
         /// <summary>
         /// Create a hitlist repository with the context
@@ -70,7 +75,6 @@ namespace mini_spotify.Controller
             return query.ToList();
         }
 
-
         /// <summary>
         /// Get hitlist by id
         /// </summary>
@@ -108,6 +112,8 @@ namespace mini_spotify.Controller
 
             _repository.Add(hitlist);
             _repository.SaveChanges();
+
+            HitlistAdded?.Invoke(this, new UpdateHitlistMenuEventArgs(hitlist.Id));
         }
 
         /// <summary>
@@ -115,6 +121,17 @@ namespace mini_spotify.Controller
         /// </summary>
         /// <param name="hitlistSongs"></param>
         /// <returns>Hitlist songs</returns>
+        public void Delete(Hitlist hitlist)
+        {
+            if (hitlist.Id == null)
+                throw new ArgumentNullException("id");
+            if (AppData.UserId == hitlist.UserId)
+            {
+                _repository.Remove(hitlist);
+                _repository.SaveChanges();
+            }
+        }
+
         public List<Song> GetSongs(ICollection<HitlistSong> hitlistSongs)
         {
             return hitlistSongs.Select(x => x.Song).ToList();
@@ -178,4 +195,4 @@ namespace mini_spotify.Controller
             return description.Length <= 140;
         }
     }
-} 
+}

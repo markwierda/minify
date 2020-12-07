@@ -113,7 +113,6 @@ namespace mini_spotify.DAL.Repositories
             return DbSet.Find(id);
         }
 
-
         /// <summary>
         /// Adds the given entities to the datatable.
         /// </summary>
@@ -124,7 +123,7 @@ namespace mini_spotify.DAL.Repositories
         }
 
         /// <summary>
-        /// Executes the changes made by the other methods of this class. 
+        /// Executes the changes made by the other methods of this class.
         /// </summary>
         /// <returns>The number of state entries written to the database</returns>
         public virtual int SaveChanges()

@@ -9,7 +9,9 @@ namespace mini_spotify.Model
         public TimeSpan Position { get; }
         public TimeSpan Duration { get; }
 
-        public UpdateMediaplayerEventArgs() { }
+        public UpdateMediaplayerEventArgs()
+        {
+        }
 
         public UpdateMediaplayerEventArgs(string songName, string artist, TimeSpan position, TimeSpan duration)
         {

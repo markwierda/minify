@@ -2,25 +2,21 @@
 using mini_spotify.DAL.Entities;
 using mini_spotify.Model;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace mini_spotify.View
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for AddHistlistPage.xaml
     /// </summary>
-    public partial class AddHitlist : Window
+    public partial class AddHistlistPage : Page
     {
         private readonly HitlistController _controller;
 
-        public AddHitlist()
+        public AddHistlistPage(HitlistController controller)
         {
             InitializeComponent();
-            _controller = new HitlistController();
-        }
-
-        private void Cancel_Button_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
+            _controller = controller;
         }
 
         private void Create_Button_Click(object sender, RoutedEventArgs e)
@@ -43,9 +39,8 @@ namespace mini_spotify.View
             {
                 Hitlist hitlist = new Hitlist(title, description, AppData.UserId);
                 _controller.Add(hitlist);
-                OverviewHitlist overviewHitlist = new OverviewHitlist(hitlist.Id);
-                overviewHitlist.Show();
-                Close();
+                //OverviewHitlist overviewHitlist = new OverviewHitlist(hitlist.Id);
+                //overviewHitlist.Show();
             }
         }
     }
