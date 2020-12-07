@@ -18,15 +18,10 @@ namespace mini_spotify.View
 
         public Overview()
         {
-            InitializeComponent();
             _hitlistController = new HitlistController();
             MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
             _hitlistController.HitlistAdded += UpdateHitlistMenu;
-        }
-
-        private void Initialize(object sender, RoutedEventArgs e)
-        {
-            GetAllHitList();
+            InitializeComponent();
         }
 
         public void GetAllHitList()
@@ -147,9 +142,13 @@ namespace mini_spotify.View
 
         private void btn_songs(object sender, RoutedEventArgs e)
         {
-            OverviewSongs overviewSongs = new OverviewSongs();
-            overviewSongs.Show();
-            Close();
+            OverviewSongsPage overviewSongs = new OverviewSongsPage();
+            contentFrame.Content = overviewSongs;
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            GetAllHitList();
         }
     }
 }
