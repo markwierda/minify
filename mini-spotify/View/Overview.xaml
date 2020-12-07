@@ -11,7 +11,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="9*" />
-                <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -26,10 +26,8 @@
             <Button Height="50" Click="btn_songs">Songs</Button>
             <Button Height="50" Click="Btn_Add_Hitlist">Add Hitlist</Button>
         </StackPanel>
-
         <StackPanel Grid.Row="1" Grid.Column="0" Background="#FF774AC7" >
-            <!--placeholder for search-->
-            <ScrollViewer VerticalScrollBarVisibility="auto" Grid.Row="3" Grid.RowSpan="8" Grid.ColumnSpan="3">
+            <ScrollViewer VerticalScrollBarVisibility="auto">
                 <StackPanel>
                     <ListView Name="HitlistMenu"  HorizontalAlignment="Stretch" SelectionChanged="HitlistMenu_SelectionChanged">
                         <ListView.View>
@@ -41,8 +39,7 @@
                 </StackPanel>
             </ScrollViewer>
         </StackPanel>
-
-        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Background="#FF774AC7" >
+        <StackPanel Grid.Row="1" Grid.Column="1" Background="#FF774AC7" >
             <!--placeholder for contentframe-->
             <Frame Name="contentFrame" NavigationUIVisibility="Hidden">
 
@@ -59,27 +56,22 @@
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="1" Background="#FF774AC7">
-            <StackPanel Grid.Row="2" Grid.Column="1" Background="#FF774AC7">
-                <!--placeholder for displaying mediaplayer-->
-                <StackPanel Background="#FF774AC7">
-                    <!--Placeholder for mediaplayer-->
-                    <MediaElement x:Name="mediaplayer"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="#FF774AC7">
-                    <Image Name="btn_Back" Source="/ImageResources\back.png" MouseDown="OnMouseDownBack" Height="50" Width="50" Margin="5, 0 , 5, 0"/>
-                    <Image Name="btn_Play" Source="/ImageResources\play.png" MouseDown="OnMouseDownPlay" Height="50" Width="50" Visibility="Visible" Margin="5, 0 , 5, 0"/>
-                    <Image Name="btn_Pause" Source="/ImageResources\pause.png" MouseDown="OnMouseDownPause" Height="50" Width="50" Visibility="Collapsed" Margin="5, 0 , 5, 0"/>
-                    <Image Name="btn_Next" Source="/ImageResources\next.png" MouseDown="OnMouseDownNext" Height="50" Width="50" Margin="5, 0 , 5, 0"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FF774AC7">
-                    <Label Name="lbl_Current_Time" VerticalAlignment="Center">00:00</Label>
-                    <ProgressBar x:Name="Song_Progressbar" Width="400" Minimum="0" Maximum="100" Value="0" />
-                    <Label Name="lbl_Song_Duration" VerticalAlignment="Center">00:00</Label>
-                </StackPanel>
+            <StackPanel Background="#FF774AC7">
+                <MediaElement x:Name="mediaplayer"/>
             </StackPanel>
-
-            <StackPanel Grid.Row="2" Grid.Column="2" Background="#FF774AC7">
-                <!--placeholder -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="#FF774AC7">
+                <Image Name="btn_Back" Source="/ImageResources\back.png" MouseDown="OnMouseDownBack" Height="50" Width="50" Margin="5, 0 , 5, 0"/>
+                <Image Name="btn_Play" Source="/ImageResources\play.png" MouseDown="OnMouseDownPlay" Height="50" Width="50" Visibility="Visible" Margin="5, 0 , 5, 0"/>
+                <Image Name="btn_Pause" Source="/ImageResources\pause.png" MouseDown="OnMouseDownPause" Height="50" Width="50" Visibility="Collapsed" Margin="5, 0 , 5, 0"/>
+                <Image Name="btn_Next" Source="/ImageResources\next.png" MouseDown="OnMouseDownNext" Height="50" Width="50" Margin="5, 0 , 5, 0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FF774AC7">
+                <Label Name="lbl_Current_Time" VerticalAlignment="Center">00:00</Label>
+                <ProgressBar x:Name="Song_Progressbar" Width="400" Minimum="0" Maximum="100" Value="0" />
+                <Label Name="lbl_Song_Duration" VerticalAlignment="Center">00:00</Label>
+            </StackPanel>
+            <StackPanel Background="#FF774AC7">
+                <!--right side of mediaplayer-->
             </StackPanel>
         </StackPanel>
     </Grid>
