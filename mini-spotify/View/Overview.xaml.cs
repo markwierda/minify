@@ -135,14 +135,14 @@ namespace mini_spotify.View
             Song_Progressbar.Value = e.Position.TotalMilliseconds;
         }
 
-        private void btn_home(object sender, RoutedEventArgs e)
+        private void Btn_home(object sender, RoutedEventArgs e)
         {
             Overview overview = new Overview();
             overview.Show();
             Close();
         }
 
-        private void btn_songs(object sender, RoutedEventArgs e)
+        private void Btn_songs(object sender, RoutedEventArgs e)
         {
             OverviewSongsPage overviewSongs = new OverviewSongsPage();
             contentFrame.Content = overviewSongs;
@@ -151,9 +151,10 @@ namespace mini_spotify.View
         private void Window_Initialized(object sender, EventArgs e)
         {
             GetAllHitList();
+            label_Username.Content = AppData.UserName;
         }
 
-        private void btn_Logout(object sender, RoutedEventArgs e)
+        private void Btn_Logout(object sender, RoutedEventArgs e)
         {
             _loginController.Logout();
             Login login = new Login();

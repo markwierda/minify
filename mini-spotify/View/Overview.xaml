@@ -22,8 +22,8 @@
 
         <StackPanel Grid.Row="0" Grid.Column="0" Background="#FF774AC7">
             <!--placeholder for buttons-->
-            <Button Height="50" Click="btn_home">Home</Button>
-            <Button Height="50" Click="btn_songs">Songs</Button>
+            <Button Height="50" Click="Btn_home">Home</Button>
+            <Button Height="50" Click="Btn_songs">Songs</Button>
             <Button Height="50" Click="Btn_Add_Hitlist">Add Hitlist</Button>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Background="#FF774AC7" >
@@ -54,7 +54,7 @@
         <StackPanel Grid.Row="0" Grid.Column="2" Background="#FF774AC7">
             <!--placeholder for logout-->
             <Label x:Name="label_Username" HorizontalContentAlignment="Center">Some Username</Label>
-            <Button Click="btn_Logout">Logout</Button>
+            <Button Click="Btn_Logout">Logout</Button>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="1" Background="#FF774AC7">
