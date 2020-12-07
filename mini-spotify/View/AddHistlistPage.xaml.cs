@@ -1,7 +1,6 @@
 ﻿using mini_spotify.Controller;
 using mini_spotify.DAL.Entities;
 using mini_spotify.Model;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -37,7 +36,7 @@ namespace mini_spotify.View
                 DescriptionError.Visibility = Visibility.Visible;
             }
             else
-            { 
+            {
                 Hitlist hitlist = new Hitlist(title, description, AppData.UserId);
                 _controller.Add(hitlist);
                 //OverviewHitlist overviewHitlist = new OverviewHitlist(hitlist.Id);

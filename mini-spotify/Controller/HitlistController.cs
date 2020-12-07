@@ -15,7 +15,9 @@ namespace mini_spotify.Controller
     public class HitlistController
     {
         private readonly Repository<Hitlist> _repository;
+
         public event HitlistAddedEventHandler HitlistAdded;
+
         /// <summary>
         /// Create a hitlist repository with the context
         /// </summary>

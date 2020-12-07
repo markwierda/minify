@@ -2,7 +2,7 @@
 
 namespace mini_spotify.Model
 {
-    public class UpdateHitlistMenuEventArgs :  EventArgs
+    public class UpdateHitlistMenuEventArgs : EventArgs
     {
         public Guid Id { get; }
 

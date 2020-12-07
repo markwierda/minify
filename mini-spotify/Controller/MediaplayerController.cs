@@ -108,7 +108,7 @@ namespace mini_spotify.Controller
                 Play(_currentSong);
                 return true;
             }
-            else 
+            else
             {
                 return false;
             }

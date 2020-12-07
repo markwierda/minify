@@ -15,9 +15,9 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="9*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="9*" />
+            <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Background="#FF774AC7">
@@ -26,7 +26,7 @@
             <Button Height="50" Click="Btn_songs">Songs</Button>
             <Button Height="50" Click="Btn_Add_Hitlist">Add Hitlist</Button>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="0" Background="#FF774AC7" >
+        <StackPanel Grid.Row="1" Grid.Column="0" Background="#FF774AC7">
             <ScrollViewer VerticalScrollBarVisibility="auto">
                 <StackPanel>
                     <ListView Name="HitlistMenu"  HorizontalAlignment="Stretch" SelectionChanged="HitlistMenu_SelectionChanged">
@@ -39,14 +39,13 @@
                 </StackPanel>
             </ScrollViewer>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1" Background="#FF774AC7" >
+        <StackPanel Grid.Row="1" Grid.Column="1" Background="#FF774AC7">
             <!--placeholder for contentframe-->
             <Frame Name="contentFrame" NavigationUIVisibility="Hidden">
-
             </Frame>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Grid.Column="0" Background="#FF774AC7" >
+        <StackPanel Grid.Row="2" Grid.Column="0" Background="#FF774AC7">
             <!--placeholder for displaying songs and artist-->
             <Label x:Name="lbl_Song_Name" Margin="10" FontSize="24" />
             <Label x:Name="lbl_Artist" Margin="10" FontSize="24" />
@@ -59,13 +58,13 @@
 
         <StackPanel Grid.Row="2" Grid.Column="1" Background="#FF774AC7">
             <StackPanel Background="#FF774AC7">
-                <MediaElement x:Name="mediaplayer"/>
+                <MediaElement x:Name="mediaplayer" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="#FF774AC7">
-                <Image Name="btn_Back" Source="/ImageResources\back.png" MouseDown="OnMouseDownBack" Height="50" Width="50" Margin="5, 0 , 5, 0"/>
-                <Image Name="btn_Play" Source="/ImageResources\play.png" MouseDown="OnMouseDownPlay" Height="50" Width="50" Visibility="Visible" Margin="5, 0 , 5, 0"/>
-                <Image Name="btn_Pause" Source="/ImageResources\pause.png" MouseDown="OnMouseDownPause" Height="50" Width="50" Visibility="Collapsed" Margin="5, 0 , 5, 0"/>
-                <Image Name="btn_Next" Source="/ImageResources\next.png" MouseDown="OnMouseDownNext" Height="50" Width="50" Margin="5, 0 , 5, 0"/>
+                <Image Name="btn_Back" Source="/ImageResources\back.png" MouseDown="OnMouseDownBack" Height="50" Width="50" Margin="5, 0 , 5, 0" />
+                <Image Name="btn_Play" Source="/ImageResources\play.png" MouseDown="OnMouseDownPlay" Height="50" Width="50" Visibility="Visible" Margin="5, 0 , 5, 0" />
+                <Image Name="btn_Pause" Source="/ImageResources\pause.png" MouseDown="OnMouseDownPause" Height="50" Width="50" Visibility="Collapsed" Margin="5, 0 , 5, 0" />
+                <Image Name="btn_Next" Source="/ImageResources\next.png" MouseDown="OnMouseDownNext" Height="50" Width="50" Margin="5, 0 , 5, 0" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FF774AC7">
                 <Label Name="lbl_Current_Time" VerticalAlignment="Center">00:00</Label>

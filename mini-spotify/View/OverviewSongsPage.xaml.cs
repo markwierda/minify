@@ -1,7 +1,6 @@
 ﻿using mini_spotify.Controller;
 using mini_spotify.DAL.Entities;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace mini_spotify.View
