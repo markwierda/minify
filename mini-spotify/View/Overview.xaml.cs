@@ -15,10 +15,12 @@ namespace mini_spotify.View
     public partial class Overview : Window
     {
         private readonly HitlistController _hitlistController;
+        private readonly LoginController _loginController;
 
         public Overview()
         {
             _hitlistController = new HitlistController();
+            _loginController = new LoginController();
             MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
             _hitlistController.HitlistAdded += UpdateHitlistMenu;
             InitializeComponent();
@@ -149,6 +151,14 @@ namespace mini_spotify.View
         private void Window_Initialized(object sender, EventArgs e)
         {
             GetAllHitList();
+        }
+
+        private void btn_Logout(object sender, RoutedEventArgs e)
+        {
+            _loginController.Logout();
+            Login login = new Login();
+            login.Show();
+            Close();
         }
     }
 }
