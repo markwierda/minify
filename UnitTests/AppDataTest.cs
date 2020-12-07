@@ -20,5 +20,12 @@ namespace UnitTests
             AppData.Initialize();
             Assert.AreEqual(AppData.UserId, Guid.Empty);
         }
+
+        [Test]
+        public void Initialize_UserName_IsNull()
+        {
+            AppData.Initialize();
+            Assert.IsNull(AppData.UserName);
+        }
     }
 }
