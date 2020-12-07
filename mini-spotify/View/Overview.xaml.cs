@@ -14,39 +14,46 @@ namespace mini_spotify.View
     /// </summary>
     public partial class Overview : Window
     {
-        private readonly HitlistController _controller;
+        private readonly HitlistController _hitlistController;
+        private readonly LoginController _loginController;
 
         public Overview()
         {
-            InitializeComponent();
-            _controller = new HitlistController();
+            _hitlistController = new HitlistController();
+            _loginController = new LoginController();
             MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
-        }
-
-        private void Initialize(object sender, RoutedEventArgs e)
-        {
-            GetAllHitList();
+            _hitlistController.HitlistAdded += UpdateHitlistMenu;
+            InitializeComponent();
         }
 
         public void GetAllHitList()
         {
-            List<Hitlist> hitlists = _controller.GetHitlistsByUserId(AppData.UserId);
+            List<Hitlist> hitlists = _hitlistController.GetHitlistsByUserId(AppData.UserId);
             HitlistMenu.ItemsSource = hitlists;
+        }
+
+        public void UpdateHitlistMenu(object sender, UpdateHitlistMenuEventArgs e)
+        {
+            List<Hitlist> hitlists = _hitlistController.GetHitlistsByUserId(AppData.UserId);
+            HitlistMenu.ItemsSource = hitlists;
+            HitlistMenu.Items.Refresh();
+
+            //display current hitlist
+            OverviewHitlistPage overview = new OverviewHitlistPage(e.Id);
+            contentFrame.Content = overview;
         }
 
         private void Btn_Add_Hitlist(object sender, RoutedEventArgs e)
         {
-            AddHitlist addHitlist = new AddHitlist();
-            addHitlist.Show();
-            Close();
+            AddHistlistPage addHitlistPage = new AddHistlistPage(_hitlistController);
+            contentFrame.Content = addHitlistPage;
         }
 
         private void HitlistMenu_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             Hitlist selected = (Hitlist)e.AddedItems[0];
-            OverviewHitlist overviewHitlist = new OverviewHitlist(selected.Id);
-            overviewHitlist.Show();
-            Close();
+            OverviewHitlistPage overviewHitlistpage = new OverviewHitlistPage(selected.Id);
+            contentFrame.Content = overviewHitlistpage;
         }
 
         private void DisplayPlay()
@@ -65,8 +72,8 @@ namespace mini_spotify.View
         {
             if (MediaplayerController.GetSource() == null)
             {
-                Hitlist hitlist = _controller.Get(new Guid("aa4cb653-3c62-5e22-5cc3-cca5fd57c846"), true);
-                List<Song> songs = _controller.GetSongs(hitlist.Songs);
+                Hitlist hitlist = _hitlistController.Get(new Guid("aa4cb653-3c62-5e22-5cc3-cca5fd57c846"), true);
+                List<Song> songs = _hitlistController.GetSongs(hitlist.Songs);
 
                 if (hitlist.Songs != null)
                 {
@@ -137,8 +144,20 @@ namespace mini_spotify.View
 
         private void btn_songs(object sender, RoutedEventArgs e)
         {
-            OverviewSongs overviewSongs = new OverviewSongs();
-            overviewSongs.Show();
+            OverviewSongsPage overviewSongs = new OverviewSongsPage();
+            contentFrame.Content = overviewSongs;
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            GetAllHitList();
+        }
+
+        private void btn_Logout(object sender, RoutedEventArgs e)
+        {
+            _loginController.Logout();
+            Login login = new Login();
+            login.Show();
             Close();
         }
     }
