@@ -79,7 +79,7 @@ namespace mini_spotify.View
                     MediaplayerController.Play(songs.First());
                     DisplayPause();
                 }
-            } 
+            }
             else
             {
                 MediaplayerController.Play();
@@ -108,12 +108,12 @@ namespace mini_spotify.View
                     DisplayPlay();
             }
         }
-        
+
         private void OnMouseDownNext(object sender, MouseButtonEventArgs e)
         {
             lbl_Current_Time.Content = lbl_Song_Duration.Content;
             Song_Progressbar.Value = Song_Progressbar.Maximum;
-            
+
             if (MediaplayerController.Next())
                 DisplayPause();
             else

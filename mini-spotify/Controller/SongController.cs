@@ -29,7 +29,6 @@ namespace mini_spotify.Controller
         {
             var query = _repository.GetAll().AsNoTracking();
             return query.ToList();
-
         }
 
         /// <summary>
@@ -39,7 +38,7 @@ namespace mini_spotify.Controller
         /// <returns>The song found, or null</returns>
         public Song Get(Guid id)
         {
-            if(id == null)
+            if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }

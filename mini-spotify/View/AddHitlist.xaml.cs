@@ -34,8 +34,8 @@ namespace mini_spotify.View
                 // display error message for title
                 TitleError.Visibility = Visibility.Visible;
             }
-            else if (_controller.Validation_Description(description) == false) 
-            { 
+            else if (_controller.Validation_Description(description) == false)
+            {
                 // display error message for description
                 DescriptionError.Visibility = Visibility.Visible;
             }
