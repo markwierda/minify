@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>mini_spotify</RootNamespace>
+    <RootNamespace>minify</RootNamespace>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
