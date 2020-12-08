@@ -1,4 +1,11 @@
-﻿using System.Windows;
+﻿using mini_spotify.Controller;
+using mini_spotify.DAL.Entities;
+using mini_spotify.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 
 namespace mini_spotify.View
 {
@@ -7,9 +14,152 @@ namespace mini_spotify.View
     /// </summary>
     public partial class Overview : Window
     {
+        private readonly HitlistController _hitlistController;
+        private readonly LoginController _loginController;
+
         public Overview()
         {
+            _hitlistController = new HitlistController();
+            _loginController = new LoginController();
+            MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
+            _hitlistController.HitlistAdded += UpdateHitlistMenu;
             InitializeComponent();
+        }
+
+        public void GetAllHitList()
+        {
+            List<Hitlist> hitlists = _hitlistController.GetHitlistsByUserId(AppData.UserId);
+            HitlistMenu.ItemsSource = hitlists;
+        }
+
+        public void UpdateHitlistMenu(object sender, UpdateHitlistMenuEventArgs e)
+        {
+            List<Hitlist> hitlists = _hitlistController.GetHitlistsByUserId(AppData.UserId);
+            HitlistMenu.ItemsSource = hitlists;
+            HitlistMenu.Items.Refresh();
+
+            //display current hitlist
+            OverviewHitlistPage overview = new OverviewHitlistPage(e.Id);
+            contentFrame.Content = overview;
+        }
+
+        private void Btn_Add_Hitlist(object sender, RoutedEventArgs e)
+        {
+            AddHistlistPage addHitlistPage = new AddHistlistPage(_hitlistController);
+            contentFrame.Content = addHitlistPage;
+        }
+
+        private void HitlistMenu_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            Hitlist selected = (Hitlist)e.AddedItems[0];
+            OverviewHitlistPage overviewHitlistpage = new OverviewHitlistPage(selected.Id);
+            contentFrame.Content = overviewHitlistpage;
+        }
+
+        private void DisplayPlay()
+        {
+            btn_Pause.Visibility = Visibility.Collapsed;
+            btn_Play.Visibility = Visibility.Visible;
+        }
+
+        private void DisplayPause()
+        {
+            btn_Play.Visibility = Visibility.Collapsed;
+            btn_Pause.Visibility = Visibility.Visible;
+        }
+
+        private void OnMouseDownPlay(object sender, MouseButtonEventArgs e)
+        {
+            if (MediaplayerController.GetSource() == null)
+            {
+                Hitlist hitlist = _hitlistController.Get(new Guid("aa4cb653-3c62-5e22-5cc3-cca5fd57c846"), true);
+                List<Song> songs = _hitlistController.GetSongs(hitlist.Songs);
+
+                if (hitlist.Songs != null)
+                {
+                    MediaplayerController.Initialize(songs);
+                    MediaplayerController.Play(songs.First());
+                    DisplayPause();
+                }
+            }
+            else
+            {
+                MediaplayerController.Play();
+                DisplayPause();
+            }
+        }
+
+        private void OnMouseDownPause(object sender, MouseButtonEventArgs e)
+        {
+            MediaplayerController.Pause();
+            DisplayPlay();
+        }
+
+        private void OnMouseDownBack(object sender, MouseButtonEventArgs e)
+        {
+            lbl_Current_Time.Content = "00:00";
+            Song_Progressbar.Value = Song_Progressbar.Minimum;
+
+            if (e.ClickCount == 1)
+                MediaplayerController.Replay();
+            else
+            {
+                if (MediaplayerController.Previous())
+                    DisplayPause();
+                else
+                    DisplayPlay();
+            }
+        }
+
+        private void OnMouseDownNext(object sender, MouseButtonEventArgs e)
+        {
+            lbl_Current_Time.Content = lbl_Song_Duration.Content;
+            Song_Progressbar.Value = Song_Progressbar.Maximum;
+
+            if (MediaplayerController.Next())
+                DisplayPause();
+            else
+                DisplayPlay();
+        }
+
+        private void UpdateMediaplayer(object sender, UpdateMediaplayerEventArgs e)
+        {
+            if (e.SongName == null)
+                DisplayPlay();
+
+            lbl_Song_Name.Content = e.SongName;
+            lbl_Artist.Content = e.Artist;
+            lbl_Current_Time.Content = e.Position.ToString(@"mm\:ss");
+            lbl_Song_Duration.Content = e.Duration.ToString(@"mm\:ss");
+            Song_Progressbar.Maximum = e.Duration.TotalMilliseconds;
+            Song_Progressbar.Value = e.Position.TotalMilliseconds;
+        }
+
+        private void Btn_home(object sender, RoutedEventArgs e)
+        {
+            Overview overview = new Overview();
+            overview.Show();
+            Close();
+        }
+
+        private void Btn_songs(object sender, RoutedEventArgs e)
+        {
+            OverviewSongsPage overviewSongs = new OverviewSongsPage();
+            contentFrame.Content = overviewSongs;
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            GetAllHitList();
+            label_Username.Content = AppData.UserName;
+        }
+
+        private void Btn_Logout(object sender, RoutedEventArgs e)
+        {
+            _loginController.Logout();
+            Login login = new Login();
+            login.Show();
+            Close();
         }
     }
 }

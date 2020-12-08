@@ -1,21 +1,19 @@
 ﻿using mini_spotify.Controller;
-using mini_spotify.DAL;
+using mini_spotify.Model;
 using NUnit.Framework;
+using System;
 
 namespace UnitTests
 {
     public class LoginControllerTest
     {
+        private LoginController _controller;
 
-        private LoginController _loginController;
-        
         [SetUp]
         public void SetUp()
         {
-            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
-            _loginController = new LoginController(context);
+            _controller = new LoginController();
         }
-
 
         [Test]
         public void Validation_UserName_IsNullOrEmpty_ReturnFalse()
@@ -25,12 +23,11 @@ namespace UnitTests
             string password = "notempty";
 
             // Act
-            var LoginResults = _loginController.Validation(username, password);
+            var LoginResults = _controller.Validation(username, password);
 
             // Assert
             Assert.IsFalse(LoginResults);
         }
-
 
         [Test]
         public void Validation_PassWord_IsNullOrEmpty_ReturnFalse()
@@ -40,7 +37,7 @@ namespace UnitTests
             string password = "";
 
             // Act
-            var LoginResults = _loginController.Validation(username, password);
+            var LoginResults = _controller.Validation(username, password);
 
             // Assert
             Assert.IsFalse(LoginResults);
@@ -54,7 +51,7 @@ namespace UnitTests
             string password = "Test123";
 
             // Act
-            var LoginResults = _loginController.Validation(username, password);
+            var LoginResults = _controller.Validation(username, password);
 
             // Assert
             Assert.IsTrue(LoginResults);
@@ -68,7 +65,7 @@ namespace UnitTests
             string password = "tess123";
 
             // Act
-            var LoginResults = _loginController.Validation(username, password);
+            var LoginResults = _controller.Validation(username, password);
 
             // Assert
             Assert.IsFalse(LoginResults);
@@ -78,11 +75,11 @@ namespace UnitTests
         public void Validation_Password_ToLower_ReturnFalse()
         {
             // Assemble
-            string username = "MijnUniekeUsernam";
+            string username = "1140207";
             string password = "test123";
 
             // Act
-            var LoginResults = _loginController.Validation(username, password.ToLower());
+            var LoginResults = _controller.Validation(username, password.ToLower());
 
             // Assert
             Assert.IsFalse(LoginResults);
@@ -92,11 +89,11 @@ namespace UnitTests
         public void Validation_Password_ToUpper_ReturnFalse()
         {
             // Assemble
-            string username = "MijnUniekeUsernam";
+            string username = "1140207";
             string password = "test123";
 
             // Act
-            var LoginResults = _loginController.Validation(username, password.ToUpper());
+            var LoginResults = _controller.Validation(username, password.ToUpper());
 
             // Assert
             Assert.IsFalse(LoginResults);
@@ -110,7 +107,7 @@ namespace UnitTests
             string password = "Password";
 
             // Act
-            var LoginResults = _loginController.Validation(username, password);
+            var LoginResults = _controller.Validation(username, password);
 
             // Assert
             Assert.IsFalse(LoginResults);
@@ -124,7 +121,7 @@ namespace UnitTests
             string password = "Test123";
 
             // Act
-            var LoginResults = _loginController.TryLogin(username, password);
+            var LoginResults = _controller.TryLogin(username, password);
 
             // Assert
             Assert.IsTrue(LoginResults);
@@ -138,10 +135,25 @@ namespace UnitTests
             string password = "Pasord";
 
             // Act
-            var LoginResults = _loginController.TryLogin(username, password);
+            var LoginResults = _controller.TryLogin(username, password);
 
             // Assert
             Assert.IsFalse(LoginResults);
+        }
+
+        [Test]
+        public void TryLogout_Succesfully()
+        {
+            // Assemble
+            string username = "1140207";
+            string password = "Test123";
+
+            // Login a user
+            _controller.TryLogin(username, password);
+
+            _controller.Logout();
+            Assert.IsFalse(AppData.LoggedIn);
+            Assert.AreEqual(AppData.UserId, Guid.Empty);
         }
     }
 }
