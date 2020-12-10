@@ -13,12 +13,15 @@ namespace mini_spotify.DAL
         public DbSet<Hitlist> Hitlists { get; set; }
         public DbSet<HitlistSong> HitlistSongs { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+        }
 
         #region Required
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder); 
+            base.OnModelCreating(builder);
             builder.UseCollation("SQL_Latin1_General_CP1_CS_AS");
 
             builder.Entity<User>(user =>
@@ -32,7 +35,7 @@ namespace mini_spotify.DAL
                     .HasKey(hs => hs.Id);
                 // create a unique constraint with the songid and hitlistid
                 hitlistsongs
-                    .HasIndex(hs => new { hs.SongId, hs.HitlistId})
+                    .HasIndex(hs => new { hs.SongId, hs.HitlistId })
                     .IsUnique();
 
                 // create a one to many relation from hitlistSongs.Song to Song
@@ -41,7 +44,7 @@ namespace mini_spotify.DAL
                     .WithMany(s => s.Hitlists)
                     .HasForeignKey(hs => hs.SongId)
                     // When the relation is deleted, do not delete the song.
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 // create a one to many relation from hitlistSongs.Hitlist to Hitlist
                 hitlistsongs
@@ -49,10 +52,11 @@ namespace mini_spotify.DAL
                     .WithMany(hl => hl.Songs)
                     .HasForeignKey(hs => hs.HitlistId)
                     // When the relation is deleted, do not delete the hitlist.
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             #region Seed
+
             Song[] songs = new Song[]
             {
                 new Song() { Id = new Guid("{aa5ab627-3b64-4c22-9cc3-cca5fd57c896}"), Artist = "G-Eazy & Halsey", Name = "Him & I", Duration = new TimeSpan(0, 0, 4, 40), Genre = "Rap", Path = "Music/G-Eazy & Halsey - Him & I.mp3" },
@@ -68,8 +72,8 @@ namespace mini_spotify.DAL
 
             Hitlist[] hitlists = new Hitlist[]
             {
-                new Hitlist() { Id = new Guid("{aa4cb653-3c62-5e22-5cc3-cca5fd57c846}"), Title = "Unieke playlist", UserId = users[0].Id, Description = "Description"},
-                new Hitlist() { Id = new Guid("{aa3cb653-3c62-5e22-5cc3-cca5fd57c846}"), Title = "Unieke playlist", UserId = users[1].Id,  Description = "Description" },
+                new Hitlist() { Id = new Guid("{aa4cb653-3c62-5e22-5cc3-cca5fd57c846}"), Title = "Unieke playlist1", UserId = users[0].Id, Description = "Description"},
+                new Hitlist() { Id = new Guid("{aa3cb653-3c62-5e22-5cc3-cca5fd57c846}"), Title = "Unieke playlist2", UserId = users[1].Id,  Description = "Description" },
                 new Hitlist() { Id = new Guid("{aa4cb653-3c62-5522-5cc3-cca5fd57c846}"), Title = "HUH", UserId = users[2].Id, Description = "HUH"},
             };
 
@@ -84,8 +88,10 @@ namespace mini_spotify.DAL
             builder.Entity<User>().HasData(users);
             builder.Entity<Hitlist>().HasData(hitlists);
             builder.Entity<HitlistSong>().HasData(hitlistSongs);
+
             #endregion Seed
         }
-        #endregion
+
+        #endregion Required
     }
 }

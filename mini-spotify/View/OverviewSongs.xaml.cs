@@ -17,13 +17,12 @@ namespace mini_spotify.View
 
         public OverviewSongs()
         {
-            
             InitializeComponent();
             _controller = new SongController();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             List<Song> items = _controller.GetAll();
-               
+
             Songs.ItemsSource = items;
             Songs.Visibility = Visibility.Visible;
 
@@ -42,7 +41,7 @@ namespace mini_spotify.View
         {
             Song[] songs = (Song[])e.AddedItems;
 
-            if(ListSongs.Count > 4)
+            if (ListSongs.Count > 4)
             {
                 int a = 1;
             }

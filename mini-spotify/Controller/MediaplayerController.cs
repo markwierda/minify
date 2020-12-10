@@ -16,6 +16,7 @@ namespace mini_spotify.Controller
         private static Song _currentSong;
 
         public static List<Song> Songs { get; private set; }
+
         public static event UpdateMediaplayerEventHandler UpdateMediaplayer;
 
         /// <summary>
@@ -69,16 +70,23 @@ namespace mini_spotify.Controller
         /// <returns>Returns true if there is a next song and false if there is no next song</returns>
         public static bool Next()
         {
-            if (Songs.Last() == _currentSong)
+            if (Songs != null)
             {
-                Close();
+                if (Songs.Last() == _currentSong)
+                {
+                    Close();
+                    return false;
+                }
+
+                int index = Songs.FindIndex(x => x == _currentSong);
+                _currentSong = Songs[index + 1];
+                Play(_currentSong);
+                return true;
+            }
+            else
+            {
                 return false;
             }
-
-            int index = Songs.FindIndex(x => x == _currentSong);
-            _currentSong = Songs[index + 1];
-            Play(_currentSong);
-            return true;
         }
 
         /// <summary>
@@ -87,16 +95,23 @@ namespace mini_spotify.Controller
         /// <returns>Returns true if there is a previous song and false if there is no previous song</returns>
         public static bool Previous()
         {
-            if (Songs.First() == _currentSong)
+            if (Songs != null)
             {
-                Close();
+                if (Songs.First() == _currentSong)
+                {
+                    Close();
+                    return false;
+                }
+
+                int index = Songs.FindIndex(x => x == _currentSong);
+                _currentSong = Songs[index - 1];
+                Play(_currentSong);
+                return true;
+            }
+            else
+            {
                 return false;
             }
-
-            int index = Songs.FindIndex(x => x == _currentSong);
-            _currentSong = Songs[index - 1];
-            Play(_currentSong);
-            return true;
         }
 
         /// <summary>
@@ -133,11 +148,11 @@ namespace mini_spotify.Controller
         private static void Update(object sender, EventArgs e)
         {
             if (_mediaPlayer.NaturalDuration.HasTimeSpan)
-                UpdateMediaplayer?.Invoke(null, 
+                UpdateMediaplayer?.Invoke(null,
                     new UpdateMediaplayerEventArgs(
                         _currentSong.Name,
                         _currentSong.Artist,
-                        _mediaPlayer.Position, 
+                        _mediaPlayer.Position,
                         _mediaPlayer.NaturalDuration.TimeSpan
                     )
                 );
