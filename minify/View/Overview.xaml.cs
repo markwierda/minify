@@ -76,7 +76,7 @@ namespace mini_spotify.View
             if (e.AddedItems.Count > 0)
             {
                 Hitlist selected = (Hitlist)e.AddedItems[0];
-                OverviewHitlistPage overviewHitlistpage = new OverviewHitlistPage(selected.Id);
+                OverviewHitlistPage overviewHitlistpage = new OverviewHitlistPage(selected.Id, _hitlistController);
                 contentFrame.Content = overviewHitlistpage;
             }
         }
@@ -182,6 +182,7 @@ namespace mini_spotify.View
         private void Btn_Logout(object sender, RoutedEventArgs e)
         {
             _loginController.Logout();
+            MediaplayerController.Close();
             Login login = new Login();
             login.Show();
             Close();

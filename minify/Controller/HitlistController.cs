@@ -108,7 +108,6 @@ namespace mini_spotify.Controller
         /// </summary>
         public void RefreshHitlistOverview()
         {
-            //Debug.Print("hiiii");
             Refreshhitlistoverview?.Invoke(null, new EventArgs());
         }
 
