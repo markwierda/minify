@@ -10,6 +10,5 @@ namespace mini_spotify.DAL.Entities
         public Hitlist Hitlist { get; set; }
 
         public Song Song { get; set; }
-
     }
 }

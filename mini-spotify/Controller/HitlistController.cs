@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using mini_spotify.DAL;
 using mini_spotify.DAL.Entities;
 using mini_spotify.DAL.Repositories;
+using mini_spotify.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace mini_spotify.Controller
         private readonly Repository<Hitlist> _repository;
 
         /// <summary>
-        /// create a hitlist repository with the context
+        /// Create a hitlist repository with the context
         /// </summary>
         public HitlistController()
         {
@@ -25,7 +26,7 @@ namespace mini_spotify.Controller
         /// <summary>
         /// Gets all the hitlists available.
         /// </summary>
-        /// <param name="withRelations">if true, all the songs and the user data will be included in the list, false otherwise</param>
+        /// <param name="withRelations">If true, all the songs and the user data will be included in the list, false otherwise</param>
         /// <returns>A list with all the hitlists</returns>
         public List<Hitlist> GetAll(bool withRelations = false)
         {
@@ -43,7 +44,7 @@ namespace mini_spotify.Controller
         }
 
         /// <summary>
-        /// d
+        /// Get hitlist by user id
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="withRelations"></param>
@@ -70,6 +71,12 @@ namespace mini_spotify.Controller
             return query.ToList();
         }
 
+        /// <summary>
+        /// Get hitlist by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="withRelations"></param>
+        /// <returns></returns>
         public Hitlist Get(Guid id, bool withRelations = false)
         {
             if (Utility.GuidIsNullOrEmpty(id))
@@ -131,7 +138,20 @@ namespace mini_spotify.Controller
                 }
             }
 
-            return hitlistSongs;
+        /// <summary>
+        /// Creates a list with the hitlist's songs
+        /// </summary>
+        /// <param name="hitlistSongs"></param>
+        /// <returns>Hitlist songs</returns>
+        public void Delete(Hitlist hitlist)
+        {
+            if (hitlist.Id == null)
+                throw new ArgumentNullException("id");
+            if (AppData.UserId == hitlist.UserId)
+            {
+                _repository.Remove(hitlist);
+                _repository.SaveChanges();
+            }
         }
 
         public List<Song> GetSongs(ICollection<HitlistSong> hitlistSongs)
@@ -177,27 +197,24 @@ namespace mini_spotify.Controller
                 return total.Seconds > 0 ? $"{total.Minutes} min {total.Seconds} sec" : $"{total.Minutes} min";
         }
 
+        /// <summary>
+        /// Validate title
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns>Returns true if not empty and false if empty</returns>
         public bool Validation_Title(string title)
         {
-            //check title
-            if (title.IsNullOrEmpty())
-            {
-                return false;
-            }
-
-            return true;
+            return !title.IsNullOrEmpty();
         }
 
+        /// <summary>
+        /// Validate description
+        /// </summary>
+        /// <param name="description"></param>
+        /// <returns>Returns true if lenght is not greater than 140 and false if greater than 140</returns>
         public bool Validation_Description(string description)
         {
-                // Check descriptoin
-                if (description.Length > 140)
-                {
-                    return false;
-                }
-
-            return true;
+            return description.Length <= 140;
         }
     }
-} 
-
+}
