@@ -161,5 +161,15 @@ namespace mini_spotify.View
             login.Show();
             Close();
         }
+
+        private void SearchBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Search_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Search.Text = "";
+        }
     }
 }
