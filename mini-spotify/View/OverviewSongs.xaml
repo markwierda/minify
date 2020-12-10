@@ -7,15 +7,31 @@
         Title="OverviewSongs" Height="450"  ResizeMode="NoResize" SizeToContent="WidthAndHeight" Topmost="False">
     <Window.Resources>
         <Style TargetType="Button">
-            <Setter Property="Margin" Value="1" />
-            <Setter Property="FontSize" Value="40" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="FontFamily" Value="Consolas" />
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+
         </Style>
+        
     </Window.Resources>
     <ListView Name="Songs" Margin="0,94,0,99" Background="White" SelectionChanged="Songs_SelectionChanged">
         <ListView.View>
             <GridView>
+                <GridViewColumn Header="Add" Width="100">
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button 
+                                Foreground="Green" 
+                                Content="+" 
+                                Margin="0" 
+                                Click="Button_Click"  
+                                CommandParameter="{Binding Id}"
+                                Width="59"/>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                
                 <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}" />
                 <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Artist}" />
                 <GridViewColumn Header="Genre" Width="200" DisplayMemberBinding="{Binding Genre}" />

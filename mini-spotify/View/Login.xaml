@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Login" Height="800" Width="600" HorizontalAlignment="Center" VerticalAlignment="Center" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Cursor="Arrow" Background="#FF821BB2">
+        Title="Login" Height="600" Width="600" HorizontalAlignment="Center" VerticalAlignment="Center" WindowStartupLocation="CenterScreen" Cursor="Arrow" Background="#FF821BB2">
 
     <Grid Height="auto">
         <StackPanel Margin="50">

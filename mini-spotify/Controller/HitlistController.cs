@@ -10,9 +10,13 @@ using System.Linq;
 
 namespace mini_spotify.Controller
 {
+    public delegate void HitlistAddedEventHandler(object sender, UpdateHitlistMenuEventArgs e);
+
     public class HitlistController
     {
         private readonly Repository<Hitlist> _repository;
+
+        public event HitlistAddedEventHandler HitlistAdded;
 
         /// <summary>
         /// Create a hitlist repository with the context
@@ -124,6 +128,8 @@ namespace mini_spotify.Controller
 
             _repository.Add(hitlist);
             _repository.SaveChanges();
+
+            HitlistAdded?.Invoke(this, new UpdateHitlistMenuEventArgs(hitlist.Id));
         }
 
         public List<HitlistSong> AddSongsToHitlist(Hitlist hitlist, List<Song> songs)
@@ -215,6 +221,13 @@ namespace mini_spotify.Controller
         public bool Validation_Description(string description)
         {
             return description.Length <= 140;
+                // Check descriptoin
+                if (description.Length > 140)
+                {
+                    return false;
+                }
+
+            return true;
         }
     }
 }

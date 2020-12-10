@@ -1,5 +1,7 @@
 ﻿using mini_spotify.Controller;
+using mini_spotify.Model;
 using NUnit.Framework;
+using System;
 
 namespace UnitTests
 {
@@ -137,6 +139,21 @@ namespace UnitTests
 
             // Assert
             Assert.IsFalse(LoginResults);
+        }
+
+        [Test]
+        public void TryLogout_Succesfully()
+        {
+            // Assemble
+            string username = "1140207";
+            string password = "Test123";
+
+            // Login a user
+            _controller.TryLogin(username, password);
+
+            _controller.Logout();
+            Assert.IsFalse(AppData.LoggedIn);
+            Assert.AreEqual(AppData.UserId, Guid.Empty);
         }
     }
 }

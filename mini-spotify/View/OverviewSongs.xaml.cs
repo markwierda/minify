@@ -1,7 +1,9 @@
 ﻿using mini_spotify.Controller;
 using mini_spotify.DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace mini_spotify.View
 {
@@ -23,6 +25,16 @@ namespace mini_spotify.View
 
             Songs.ItemsSource = items;
             Songs.Visibility = Visibility.Visible;
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+            Guid id = (Guid)btn.CommandParameter;
+
+            int a = 1;
+
         }
 
         private void Songs_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)

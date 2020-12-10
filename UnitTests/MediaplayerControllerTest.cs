@@ -49,6 +49,13 @@ namespace UnitTests
         }
 
         [Test]
+        public void Next_SongsEmpty_IsFalse()
+        {
+            MediaplayerController.Initialize(null);
+            Assert.IsFalse(MediaplayerController.Next());
+        }
+
+        [Test]
         public void Next_SongAvailable_IsTrue()
         {
             Assert.IsTrue(MediaplayerController.Next());
@@ -59,6 +66,13 @@ namespace UnitTests
         {
             MediaplayerController.Next();
             Assert.IsFalse(MediaplayerController.Next());
+        }
+
+        [Test]
+        public void Previous_SongsEmpty_IsFalse()
+        {
+            MediaplayerController.Initialize(null);
+            Assert.IsFalse(MediaplayerController.Previous());
         }
 
         [Test]

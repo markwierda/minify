@@ -3,6 +3,7 @@ using mini_spotify.DAL;
 using mini_spotify.DAL.Entities;
 using mini_spotify.DAL.Repositories;
 using mini_spotify.Model;
+using System;
 
 namespace mini_spotify.Controller
 {
@@ -32,6 +33,7 @@ namespace mini_spotify.Controller
                 AppData.LoggedIn = true;
                 User user = _repository.FindOneBy(u => u.UserName == username);
                 AppData.UserId = user.Id;
+                AppData.UserName = user.UserName;
 
                 return true;
             }
@@ -65,6 +67,13 @@ namespace mini_spotify.Controller
             }
 
             return false;
+        }
+
+        //Logs out the current user
+        public void Logout()
+        {
+            AppData.LoggedIn = false;
+            AppData.UserId = Guid.Empty;
         }
     }
 }
