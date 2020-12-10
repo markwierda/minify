@@ -52,6 +52,16 @@ namespace mini_spotify.View
 
             //display current hitlist
             OverviewHitlistPage overview = new OverviewHitlistPage(e.Id, _hitlistController);
+
+            // set the new item as selected
+            foreach (var item in HitlistMenu.Items)
+            {
+                // cast ListViewItem to Hitlist and check if the id equals the eventargs id
+                if (((Hitlist)item).Id.Equals(e.Id))
+                {
+                    HitlistMenu.SelectedItem = item;
+                }
+            }
             contentFrame.Content = overview;
         }
 
@@ -63,9 +73,12 @@ namespace mini_spotify.View
 
         private void HitlistMenu_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            Hitlist selected = (Hitlist)e.AddedItems[0];
-            OverviewHitlistPage overviewHitlistpage = new OverviewHitlistPage(selected.Id, _hitlistController);
-            contentFrame.Content = overviewHitlistpage;
+            if (e.AddedItems.Count > 0)
+            {
+                Hitlist selected = (Hitlist)e.AddedItems[0];
+                OverviewHitlistPage overviewHitlistpage = new OverviewHitlistPage(selected.Id);
+                contentFrame.Content = overviewHitlistpage;
+            }
         }
 
         private void DisplayPlay()
