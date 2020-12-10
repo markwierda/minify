@@ -6,17 +6,20 @@ using mini_spotify.DAL.Repositories;
 using mini_spotify.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace mini_spotify.Controller
 {
     public delegate void HitlistAddedEventHandler(object sender, UpdateHitlistMenuEventArgs e);
+    public delegate void RefreshHitlistOverview(object sender, EventArgs e);
 
     public class HitlistController
     {
         private readonly Repository<Hitlist> _repository;
 
         public event HitlistAddedEventHandler HitlistAdded;
+        public event RefreshHitlistOverview Refreshhitlistoverview;
 
         /// <summary>
         /// Create a hitlist repository with the context
@@ -99,6 +102,14 @@ namespace mini_spotify.Controller
             }
 
             return query.Where(x => x.Id == id).FirstOrDefault();
+        }
+        /// <summary>
+        /// Fires off event to refresh hitlistmenu in the overview
+        /// </summary>
+        public void RefreshHitlistOverview()
+        {
+            //Debug.Print("hiiii");
+            Refreshhitlistoverview?.Invoke(null, new EventArgs());
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using Castle.Core.Internal;
 using mini_spotify.Controller;
 using mini_spotify.DAL.Entities;
+using mini_spotify.Model;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,14 +13,16 @@ namespace mini_spotify.View
     /// </summary>
     public partial class OverviewHitlistPage : Page
     {
-        private HitlistController _controller;
-
-        public OverviewHitlistPage(Guid id)
+        private readonly HitlistController _hitlistcontroller;
+        private readonly Hitlist _hitlist;
+        
+        public OverviewHitlistPage(Guid id, HitlistController controller)
         {
             InitializeComponent();
+
             // create instance of controller and get the hitlist by id
-            _controller = new HitlistController();
-            Hitlist _hitlist = _controller.Get(id, true);
+            _hitlistcontroller = controller;
+            _hitlist = _hitlistcontroller.Get(id, true);
 
             // check if hitlist is not null
             if (_hitlist != null)
@@ -31,14 +34,32 @@ namespace mini_spotify.View
                     HitlistDescription.Content = _hitlist.Description;
                     HitlistDescription.Visibility = Visibility.Visible;
                 }
-                HitlistInfo.Content = _controller.GetHitlistInfo(_hitlist);
+                HitlistInfo.Content = _hitlistcontroller.GetHitlistInfo(_hitlist);
 
                 // if there are songs, display the listview
                 if (_hitlist.Songs != null && _hitlist.Songs.Count > 0)
                 {
-                    HitlistSongs.ItemsSource = _controller.GetSongs(_hitlist.Songs);
+                    HitlistSongs.ItemsSource = _hitlistcontroller.GetSongs(_hitlist.Songs);
                     HitlistSongs.Visibility = Visibility.Visible;
                 }
+                if (AppData.UserId == _hitlist.UserId)
+                {
+                    DeleteHitlist.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private void btn_delete_click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure?",
+                                             "Confirmation",
+                                             MessageBoxButton.YesNo,
+                                             MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                _hitlistcontroller.Delete(_hitlist);
+                MessageBox.Show("Hitlist Deleted", "Success");
+                _hitlistcontroller.RefreshHitlistOverview();
             }
         }
     }

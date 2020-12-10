@@ -3,6 +3,7 @@ using mini_spotify.DAL.Entities;
 using mini_spotify.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -23,7 +24,18 @@ namespace mini_spotify.View
             _loginController = new LoginController();
             MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
             _hitlistController.HitlistAdded += UpdateHitlistMenu;
+            _hitlistController.Refreshhitlistoverview += RefreshHitListMenu;
             InitializeComponent();
+        }
+
+        public void RefreshHitListMenu(object sender, EventArgs e)
+        {
+            List<Hitlist> hitlists = _hitlistController.GetHitlistsByUserId(AppData.UserId);
+            HitlistMenu.ItemsSource = hitlists;
+            HitlistMenu.Items.Refresh();
+
+            OverviewSongsPage overviewSongs = new OverviewSongsPage();
+            contentFrame.Content = overviewSongs;
         }
 
         public void GetAllHitList()
@@ -39,7 +51,7 @@ namespace mini_spotify.View
             HitlistMenu.Items.Refresh();
 
             //display current hitlist
-            OverviewHitlistPage overview = new OverviewHitlistPage(e.Id);
+            OverviewHitlistPage overview = new OverviewHitlistPage(e.Id, _hitlistController);
             contentFrame.Content = overview;
         }
 
@@ -52,7 +64,7 @@ namespace mini_spotify.View
         private void HitlistMenu_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             Hitlist selected = (Hitlist)e.AddedItems[0];
-            OverviewHitlistPage overviewHitlistpage = new OverviewHitlistPage(selected.Id);
+            OverviewHitlistPage overviewHitlistpage = new OverviewHitlistPage(selected.Id, _hitlistController);
             contentFrame.Content = overviewHitlistpage;
         }
 
