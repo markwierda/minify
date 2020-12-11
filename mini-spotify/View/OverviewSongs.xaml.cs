@@ -12,16 +12,18 @@ namespace mini_spotify.View
     /// </summary>
     public partial class OverviewSongs : Window
     {
-        private readonly SongController _controller;
+        private readonly SongController _songController;
+        private readonly HitlistController _hitlistController;
         private List<Song> ListSongs { get; set; }
 
         public OverviewSongs()
         {
             InitializeComponent();
-            _controller = new SongController();
+            _songController = new SongController();
+            _hitlistController = new HitlistController();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            List<Song> items = _controller.GetAll();
+            List<Song> items = _songController.GetAll();
 
             Songs.ItemsSource = items;
             Songs.Visibility = Visibility.Visible;
@@ -31,20 +33,11 @@ namespace mini_spotify.View
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender;
-            Guid id = (Guid)btn.CommandParameter;
+            Guid songId = (Guid)btn.CommandParameter;
+            ChooseHitlistDialog choose = new ChooseHitlistDialog(songId);
+            
 
-            int a = 1;
 
-        }
-
-        private void Songs_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            Song[] songs = (Song[])e.AddedItems;
-
-            if (ListSongs.Count > 4)
-            {
-                int a = 1;
-            }
         }
     }
 }

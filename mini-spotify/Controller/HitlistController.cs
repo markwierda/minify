@@ -114,7 +114,7 @@ namespace mini_spotify.Controller
 
             if (songs != null && songs.Count > 0)
             {
-                List<HitlistSong> hitlistSongs = AddSongsToHitlist(hitlist, songs);
+                List<HitlistSong> hitlistSongs = AddSongsToHitlist(hitlist, songs.ToArray());
 
                 if (hitlist.Songs == null)
                 {
@@ -132,18 +132,20 @@ namespace mini_spotify.Controller
             HitlistAdded?.Invoke(this, new UpdateHitlistMenuEventArgs(hitlist.Id));
         }
 
-        public List<HitlistSong> AddSongsToHitlist(Hitlist hitlist, List<Song> songs)
+        public List<HitlistSong> AddSongsToHitlist(Hitlist hitlist, params Song[] songs)
         {
             List<HitlistSong> hitlistSongs = new List<HitlistSong>();
 
-            foreach(Song song in songs)
+            foreach (Song song in songs)
             {
-                if(!Utility.GuidIsNullOrEmpty(song.Id))
+                if (!Utility.GuidIsNullOrEmpty(song.Id))
                 {
                     hitlistSongs.Add(new HitlistSong() { HitlistId = hitlist.Id, SongId = song.Id });
                 }
             }
 
+            return hitlistSongs;
+        }
         /// <summary>
         /// Creates a list with the hitlist's songs
         /// </summary>
