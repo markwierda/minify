@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace mini_spotify.DAL.Repositories
+namespace minify.DAL.Repositories
 {
     public interface IRepository<T> where T : class
     {

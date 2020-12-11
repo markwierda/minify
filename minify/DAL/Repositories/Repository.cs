@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using mini_spotify.DAL.Entities;
+using minify.DAL.Entities;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace mini_spotify.DAL.Repositories
+namespace minify.DAL.Repositories
 {
     /// <summary>
     /// Generic Repository for the most basic actions to interact with an entity.

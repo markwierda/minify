@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace mini_spotify
+namespace minify
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

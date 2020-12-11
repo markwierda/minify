@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using mini_spotify.Controller;
-using mini_spotify.DAL.Entities;
+using minify.Controller;
 using minify.DAL.Entities;
 using System;
 
-namespace mini_spotify.DAL
+namespace minify.DAL
 {
     public class AppDbContext : DbContext
     {

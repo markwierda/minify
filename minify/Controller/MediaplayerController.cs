@@ -1,12 +1,12 @@
-﻿using mini_spotify.DAL.Entities;
-using mini_spotify.Model;
+﻿using minify.DAL.Entities;
+using minify.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace mini_spotify.Controller
+namespace minify.Controller
 {
     public delegate void UpdateMediaplayerEventHandler(object sender, UpdateMediaplayerEventArgs e);
 
