@@ -1,4 +1,4 @@
-﻿using mini_spotify.DAL.Entities;
+﻿using minify.DAL.Entities;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -21,5 +21,18 @@ namespace minify.DAL.Entities
         public Song Song { get; set; }
 
         public Hitlist Hitlist { get; set; }
+
+        public Streamroom()
+        {
+
+        }
+
+        public Streamroom(Guid hitlistId, Guid currentSongId)
+        {
+            HitlistId = hitlistId;
+            CurrentSongId = currentSongId;
+            CurrentSongPosition = new TimeSpan(0, 0, 0);
+            IsPaused = false;
+        }
     }
 }

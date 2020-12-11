@@ -13,6 +13,7 @@ namespace minify.DAL
         public DbSet<HitlistSong> HitlistSongs { get; set; }
         public DbSet<Streamroom> Streamrooms { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<SongVote> SongVotes { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -127,6 +128,10 @@ namespace minify.DAL
             {
                 new SongVote { Id = Guid.NewGuid(), StreamroomId = streamrooms[0].Id, SongId = songs[0].Id, Votes = 1 },
             };
+
+            builder.Entity<Streamroom>().HasData(streamrooms);
+            builder.Entity<Message>().HasData(messages);
+            builder.Entity<SongVote>().HasData(songVotes);
 
             builder.Entity<Song>().HasData(songs);
             builder.Entity<User>().HasData(users);
