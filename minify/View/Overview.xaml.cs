@@ -169,7 +169,10 @@ namespace mini_spotify.View
 
         private void Search_MouseEnter(object sender, MouseEventArgs e)
         {
-            Search.Text = "";
+            if(Search.Text == "Search...")
+            {
+                Search.Text = "";
+            }
         }
     }
 }
