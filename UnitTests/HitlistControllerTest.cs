@@ -1,5 +1,5 @@
-﻿using mini_spotify.Controller;
-using mini_spotify.DAL.Entities;
+﻿using minify.Controller;
+using minify.DAL.Entities;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

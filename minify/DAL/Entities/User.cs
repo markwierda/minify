@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace mini_spotify.DAL.Entities
+namespace minify.DAL.Entities
 {
     public class User : BaseEntity
     {
