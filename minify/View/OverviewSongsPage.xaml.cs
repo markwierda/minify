@@ -15,12 +15,16 @@ namespace mini_spotify.View
         public OverviewSongsPage()
         {
             InitializeComponent();
-
-            InitializeComponent();
             _controller = new SongController();
             List<Song> items = _controller.GetAll();
 
             Songs.ItemsSource = items;
+        }
+
+        public OverviewSongsPage(List<Song> songs)
+        {
+            InitializeComponent();
+            Songs.ItemsSource = songs;
         }
     }
 }

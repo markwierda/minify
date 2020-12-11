@@ -32,6 +32,20 @@ namespace mini_spotify.Controller
         }
 
         /// <summary>
+        /// Gets all songs by name
+        /// </summary>
+        /// <returns></returns>
+        public List<Song> FindByName(string searchquery)
+        {
+            var Songs = _repository.GetAll();
+            Songs = Songs.Where(s => 
+                (s.Name.ToUpper().Contains(searchquery.ToUpper()))||
+                (s.Artist.ToUpper().Contains(searchquery.ToUpper()))||
+                (s.Genre.ToUpper().Contains(searchquery.ToUpper())));
+            return Songs.ToList();
+        }
+
+        /// <summary>
         /// Gets a <see cref="Song"/> by the <see cref="Guid"/> id.
         /// </summary>
         /// <param name="id">The <see cref="Guid"/> id of the song</param>
