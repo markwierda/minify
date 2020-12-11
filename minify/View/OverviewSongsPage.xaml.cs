@@ -36,6 +36,7 @@ namespace mini_spotify.View
             ChooseHitlistDialog choose = new ChooseHitlistDialog(songId);
             choose.IdRetreived += IdRetreived;
             choose.Show();
+            btn.Visibility = Visibility.Hidden;
        
 
         }

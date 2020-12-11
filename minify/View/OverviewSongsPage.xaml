@@ -20,6 +20,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button 
+                                Name="AddButton"
                                 Foreground="Green" 
                                 Content="+" 
                                 Margin="0" 
