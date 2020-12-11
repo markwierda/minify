@@ -42,5 +42,19 @@ namespace UnitTests
 
             Assert.IsNotNull(song);
         }
+
+        [Test]
+        public void Search_Succesful()
+        {
+            List<Song> songs = _controller.Search("him");
+            Assert.IsNotNull(songs);
+        }
+
+        [Test]
+        public void Search_Fail()
+        {
+            List<Song> songs = _controller.Search("xxxxx");
+            Assert.IsNull(songs);
+        }
     }
 }

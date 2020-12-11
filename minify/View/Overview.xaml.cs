@@ -184,7 +184,7 @@ namespace minify.View
         {
             if(Search.Text != "Search..." && Search.Text != "")
             {
-                var songs = _songController.FindByName(Search.Text);
+                var songs = _songController.Search(Search.Text);
                 if(songs != null && songs.Count > 0)
                 {
                     OverviewSongsPage overviewSongs = new OverviewSongsPage(songs);

@@ -35,7 +35,7 @@ namespace minify.Controller
         /// Gets all songs by name
         /// </summary>
         /// <returns></returns>
-        public List<Song> FindByName(string searchquery)
+        public List<Song> Search(string searchquery)
         {
             var Songs = _repository.GetAll();
             Songs = Songs.Where(s => 
