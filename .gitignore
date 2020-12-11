@@ -352,3 +352,6 @@ MigrationBackup/
 # Migrations
 */DAL/Migrations
 */Migrations
+
+# Settings
+*/appsettings.json

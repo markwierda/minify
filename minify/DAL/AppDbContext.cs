@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using mini_spotify.Controller;
 using mini_spotify.DAL.Entities;
+using minify.DAL.Entities;
 using System;
 
 namespace mini_spotify.DAL
@@ -8,10 +9,11 @@ namespace mini_spotify.DAL
     public class AppDbContext : DbContext
     {
         public DbSet<Song> Songs { get; set; }
-        public DbSet<Stream> Streams { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Hitlist> Hitlists { get; set; }
         public DbSet<HitlistSong> HitlistSongs { get; set; }
+        public DbSet<Streamroom> Streamrooms { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -55,6 +57,34 @@ namespace mini_spotify.DAL
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
+            builder.Entity<Streamroom>(streamroom => {
+                streamroom
+                    .HasKey(s => s.Id);
+
+                // create a one to one relation from Streamroom.HitlistId to Hitlist
+                streamroom
+                    .HasOne(r => r.Hitlist)
+                    .WithOne()
+                    .HasForeignKey<Streamroom>(h => h.HitlistId);
+
+                // create a one to one relation from Streamroom.SongId to Song
+                streamroom
+                    .HasOne(r => r.Song)
+                    .WithOne()
+                    .HasForeignKey<Streamroom>(s => s.CurrentSongId);
+            });
+
+            builder.Entity<Message>(message => {
+                message
+                    .HasKey(s => s.Id);
+
+                // create a one to one relation from Message.UserId to User
+                message
+                    .HasOne(m => m.User)
+                    .WithOne()
+                    .HasForeignKey<Message>(u => u.UserId);
+            });
+
             #region Seed
 
             Song[] songs = new Song[]
@@ -84,10 +114,28 @@ namespace mini_spotify.DAL
                 new HitlistSong { Id = Guid.NewGuid(), SongId = songs[0].Id, HitlistId = hitlists[1].Id },
             };
 
+            Streamroom[] streamrooms = new Streamroom[]
+            {
+                new Streamroom { Id = new Guid("{197a232b-4bb7-4961-9153-81349df9d785}"), HitlistId = hitlists[0].Id, CurrentSongId = songs[0].Id, CurrentSongPosition = new TimeSpan(0, 0, 0), IsPaused = false },
+            };
+
+            Message[] messages = new Message[]
+            {
+                new Message { Id = Guid.NewGuid(), StreamroomId = streamrooms[0].Id, UserId = users[0].Id, Text = "Huh naar huis?" },
+            };
+
+            SongVote[] songVotes = new SongVote[]
+            {
+                new SongVote { Id = Guid.NewGuid(), StreamroomId = streamrooms[0].Id, SongId = songs[0].Id, Votes = 1 },
+            };
+
             builder.Entity<Song>().HasData(songs);
             builder.Entity<User>().HasData(users);
             builder.Entity<Hitlist>().HasData(hitlists);
             builder.Entity<HitlistSong>().HasData(hitlistSongs);
+            builder.Entity<Streamroom>().HasData(streamrooms);
+            builder.Entity<Message>().HasData(messages);
+            builder.Entity<SongVote>().HasData(songVotes);
 
             #endregion Seed
         }
