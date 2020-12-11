@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Overview" Initialized="Window_Initialized"  Height="450" Width="800" WindowState="Maximized" WindowStartupLocation="CenterScreen">
     <Grid Background="#FF774AC7">
-
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="9*" />
@@ -20,6 +20,10 @@
             <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
 
+        <StackPanel Grid.Row="0" Grid.Column="1" Background="#FF774AC7">
+            <TextBox Text="Search..." MouseEnter="Search_MouseEnter" MaxLength="30" x:Name="Search" Margin="5" Style="{StaticResource MaterialDesignTextBox}" Background="Transparent" Width="160" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        </StackPanel>
+        
         <StackPanel Grid.Row="0" Grid.Column="0" Background="#FF774AC7">
             <!--placeholder for buttons-->
             <Button Height="50" Click="Btn_home">Home</Button>
