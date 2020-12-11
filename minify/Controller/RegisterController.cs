@@ -1,11 +1,11 @@
-﻿using mini_spotify.DAL;
-using mini_spotify.DAL.Entities;
-using mini_spotify.DAL.Repositories;
+﻿using minify.DAL;
+using minify.DAL.Entities;
+using minify.DAL.Repositories;
 using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace mini_spotify.Controller
+namespace minify.Controller
 {
     public class RegisterController
     {

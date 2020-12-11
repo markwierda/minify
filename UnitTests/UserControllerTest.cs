@@ -1,4 +1,4 @@
-﻿using mini_spotify.Controller;
+﻿using minify.Controller;
 using NUnit.Framework;
 
 namespace UnitTests

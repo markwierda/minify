@@ -1,11 +1,11 @@
 ﻿using Castle.Core.Internal;
-using mini_spotify.DAL;
-using mini_spotify.DAL.Entities;
-using mini_spotify.DAL.Repositories;
-using mini_spotify.Model;
+using minify.DAL;
+using minify.DAL.Entities;
+using minify.DAL.Repositories;
+using minify.Model;
 using System;
 
-namespace mini_spotify.Controller
+namespace minify.Controller
 {
     public class LoginController
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace mini_spotify.Controller
+namespace minify.Controller
 {
     public class UserController
     {
