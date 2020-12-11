@@ -32,7 +32,7 @@ namespace minify.Controller
         }
 
         /// <summary>
-        /// Gets all songs by name
+        /// Gets all songs by name, artist or genre
         /// </summary>
         /// <returns></returns>
         public List<Song> Search(string searchquery)
