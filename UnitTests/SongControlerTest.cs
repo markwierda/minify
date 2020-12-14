@@ -54,7 +54,7 @@ namespace UnitTests
         public void Search_Fail()
         {
             List<Song> songs = _controller.Search("xxxxx");
-            Assert.IsNull(songs);
+            Assert.IsEmpty(songs);
         }
     }
 }
