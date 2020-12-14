@@ -36,6 +36,13 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
+                    <ListView Name="streamrooms"  HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectionChanged="streamroom_SelectionChanged" >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Streamrooms" DisplayMemberBinding="{Binding Title}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
                 </StackPanel>
             </ScrollViewer>
         </StackPanel>
