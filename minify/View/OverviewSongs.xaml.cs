@@ -34,7 +34,7 @@ namespace mini_spotify.View
         {
             Button btn = (Button)sender;
             Guid songId = (Guid)btn.CommandParameter;
-            ChooseHitlistDialog choose = new ChooseHitlistDialog(songId);
+            //ChooseHitlistDialog choose = new ChooseHitlistDialog(songId, this);
             
 
 

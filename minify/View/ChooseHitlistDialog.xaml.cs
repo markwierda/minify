@@ -35,13 +35,16 @@ namespace mini_spotify.View
         public List<Hitlist> Hitlists { get; set; }
         public Hitlist hitlist;
         public IdRetreived IdRetreived { get; set; }
+        public OverviewSongsPage _page;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="songId"></param>
-        public ChooseHitlistDialog(Guid songId)
+        public ChooseHitlistDialog(Guid songId, OverviewSongsPage overviewSongsPage)
         {
+            _page = overviewSongsPage;
+
             this.songId = songId;
             InitializeComponent();
             DataContext = this;
@@ -65,7 +68,6 @@ namespace mini_spotify.View
 
                 }
             }
-
         }
         private void AddSongToHitlist(object sender, RoutedEventArgs e)
         {
@@ -89,6 +91,9 @@ namespace mini_spotify.View
             }
         }
 
-
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _page.Refresh();
+        }
     }
 }

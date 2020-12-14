@@ -29,15 +29,20 @@ namespace mini_spotify.View
 
         }
 
+        public void Refresh()
+        {
+            List<Song> items = _songController.GetAll();
+            Songs.ItemsSource = items.ToArray();
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender;
             Guid songId = (Guid)btn.CommandParameter;
-            ChooseHitlistDialog choose = new ChooseHitlistDialog(songId);
+            ChooseHitlistDialog choose = new ChooseHitlistDialog(songId, this);
             choose.IdRetreived += IdRetreived;
             choose.Show();
             btn.Visibility = Visibility.Hidden;
-       
 
         }
 
