@@ -16,5 +16,6 @@ namespace minify.DAL.Entities
         public string Text { get; set; }
 
         public User User { get; set; }
+
     }
 }
