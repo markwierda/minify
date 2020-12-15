@@ -1,4 +1,6 @@
 ﻿using minify.Controller;
+using minify.Managers;
+
 using System.Windows;
 
 namespace minify.View
@@ -13,7 +15,7 @@ namespace minify.View
         public Login()
         {
             InitializeComponent();
-            _controller = new LoginController();
+            _controller = ControllerManager.Get<LoginController>();
         }
 
         private void Create_Account_Button_click(object sender, RoutedEventArgs e)

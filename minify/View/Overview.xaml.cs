@@ -1,5 +1,7 @@
 ﻿using minify.Controller;
+using minify.DAL;
 using minify.DAL.Entities;
+using minify.Managers;
 using minify.Model;
 using System;
 using System.Collections.Generic;
@@ -15,14 +17,14 @@ namespace minify.View
     /// </summary>
     public partial class Overview : Window
     {
-        private readonly HitlistController _hitlistController;
-        private readonly LoginController _loginController;
+        private HitlistController _hitlistController;
+        private LoginController _loginController;
 
         public Overview()
         {
-            _hitlistController = new HitlistController();
-            _loginController = new LoginController();
             MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
+            _hitlistController = ControllerManager.Get<HitlistController>();
+            _loginController = ControllerManager.Get<LoginController>();
             _hitlistController.HitlistAdded += UpdateHitlistMenu;
             _hitlistController.Refreshhitlistoverview += RefreshHitListMenu;
             InitializeComponent();
@@ -51,7 +53,7 @@ namespace minify.View
             HitlistMenu.Items.Refresh();
 
             //display current hitlist
-            OverviewHitlistPage overview = new OverviewHitlistPage(e.Id, _hitlistController);
+            OverviewHitlistPage overview = new OverviewHitlistPage(e.Id);
 
             // set the new item as selected
             foreach (var item in HitlistMenu.Items)
@@ -67,7 +69,7 @@ namespace minify.View
 
         private void Btn_Add_Hitlist(object sender, RoutedEventArgs e)
         {
-            AddHistlistPage addHitlistPage = new AddHistlistPage(_hitlistController);
+            AddHistlistPage addHitlistPage = new AddHistlistPage();
             contentFrame.Content = addHitlistPage;
         }
 
@@ -76,7 +78,7 @@ namespace minify.View
             if (e.AddedItems.Count > 0)
             {
                 Hitlist selected = (Hitlist)e.AddedItems[0];
-                OverviewHitlistPage overviewHitlistpage = new OverviewHitlistPage(selected.Id, _hitlistController);
+                OverviewHitlistPage overviewHitlistpage = new OverviewHitlistPage(selected.Id);
                 contentFrame.Content = overviewHitlistpage;
             }
         }
@@ -187,5 +189,6 @@ namespace minify.View
             login.Show();
             Close();
         }
+
     }
 }

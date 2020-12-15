@@ -2,21 +2,21 @@
 using minify.DAL;
 using minify.DAL.Entities;
 using minify.DAL.Repositories;
+using minify.Interfaces;
 using minify.Model;
 using System;
 
 namespace minify.Controller
 {
-    public class LoginController
+    public class LoginController : IController
     {
         private readonly Repository<User> _repository;
 
         /// <summary>
         /// Create a user repository with the context
         /// </summary>
-        public LoginController()
+        public LoginController(AppDbContext context)
         {
-            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
             _repository = new Repository<User>(context);
         }
 

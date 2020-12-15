@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using minify.DAL;
 using minify.DAL.Entities;
 using minify.DAL.Repositories;
+using minify.Interfaces;
 using minify.Model;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace minify.Controller
     public delegate void HitlistAddedEventHandler(object sender, UpdateHitlistMenuEventArgs e);
     public delegate void RefreshHitlistOverview(object sender, EventArgs e);
 
-    public class HitlistController
+    public class HitlistController : IController
     {
         private readonly Repository<Hitlist> _repository;
 
@@ -24,9 +25,8 @@ namespace minify.Controller
         /// <summary>
         /// Create a hitlist repository with the context
         /// </summary>
-        public HitlistController()
+        public HitlistController(AppDbContext context)
         {
-            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
             _repository = new Repository<Hitlist>(context);
         }
 

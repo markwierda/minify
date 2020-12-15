@@ -1,5 +1,7 @@
 ﻿using minify.Controller;
 using minify.DAL.Entities;
+using minify.Managers;
+
 using System.Collections.Generic;
 using System.Windows.Controls;
 
@@ -15,9 +17,7 @@ namespace minify.View
         public OverviewSongsPage()
         {
             InitializeComponent();
-
-            InitializeComponent();
-            _controller = new SongController();
+            _controller = ControllerManager.Get<SongController>();
             List<Song> items = _controller.GetAll();
 
             Songs.ItemsSource = items;

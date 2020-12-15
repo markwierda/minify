@@ -1,5 +1,6 @@
 ﻿using minify.Controller;
 using minify.DAL.Entities;
+using minify.Managers;
 using minify.Model;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,10 +14,10 @@ namespace minify.View
     {
         private readonly HitlistController _controller;
 
-        public AddHistlistPage(HitlistController controller)
+        public AddHistlistPage()
         {
+            _controller = ControllerManager.Get<HitlistController>();
             InitializeComponent();
-            _controller = controller;
         }
 
         private void Create_Button_Click(object sender, RoutedEventArgs e)

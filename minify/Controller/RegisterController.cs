@@ -1,22 +1,23 @@
 ﻿using minify.DAL;
 using minify.DAL.Entities;
 using minify.DAL.Repositories;
+using minify.Interfaces;
+
 using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace minify.Controller
 {
-    public class RegisterController
+    public class RegisterController : IController
     {
         private readonly Repository<User> _repository;
 
         /// <summary>
         /// Create a user repository with the context
         /// </summary>
-        public RegisterController()
+        public RegisterController(AppDbContext context)
         {
-            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
             _repository = new Repository<User>(context);
         }
 

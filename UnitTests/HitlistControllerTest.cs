@@ -1,5 +1,7 @@
 ﻿using minify.Controller;
 using minify.DAL.Entities;
+using minify.Managers;
+
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,7 @@ namespace UnitTests
         [SetUp]
         public void Setup()
         {
-            _controller = new HitlistController();
+            _controller = ControllerManager.Get<HitlistController>();
             testId = new Guid("{aa4cb653-3c62-5e22-5cc3-cca5fd57c846}");
         }
 

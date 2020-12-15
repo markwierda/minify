@@ -1,6 +1,8 @@
 ﻿using Castle.Core.Internal;
 using minify.Controller;
 using minify.DAL.Entities;
+using minify.Managers;
+
 using System.Windows;
 
 namespace minify.View
@@ -15,7 +17,7 @@ namespace minify.View
         public Register()
         {
             InitializeComponent();
-            _controller = new RegisterController();
+            _controller = ControllerManager.Get<RegisterController>();
         }
 
         private void Register_Button_Click(object sender, RoutedEventArgs e)

@@ -1,6 +1,7 @@
 ﻿using Castle.Core.Internal;
 using minify.Controller;
 using minify.DAL.Entities;
+using minify.Managers;
 using minify.Model;
 using System;
 using System.Windows;
@@ -16,12 +17,12 @@ namespace minify.View
         private readonly HitlistController _hitlistcontroller;
         private readonly Hitlist _hitlist;
         
-        public OverviewHitlistPage(Guid id, HitlistController controller)
+        public OverviewHitlistPage(Guid id)
         {
             InitializeComponent();
 
             // create instance of controller and get the hitlist by id
-            _hitlistcontroller = controller;
+            _hitlistcontroller = ControllerManager.Get<HitlistController>();
             _hitlist = _hitlistcontroller.Get(id, true);
 
             // check if hitlist is not null
