@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+
 using minify.Controller;
 using minify.DAL.Entities;
 using System;
+using System.Data.Entity.Core.Objects;
 
 namespace minify.DAL
 {
@@ -13,11 +16,7 @@ namespace minify.DAL
         public DbSet<Hitlist> Hitlists { get; set; }
         public DbSet<HitlistSong> HitlistSongs { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
-        }
-
-        #region Required
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -91,7 +90,5 @@ namespace minify.DAL
 
             #endregion Seed
         }
-
-        #endregion Required
-    }
+    }    
 }
