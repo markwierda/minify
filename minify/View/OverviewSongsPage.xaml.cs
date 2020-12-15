@@ -1,10 +1,7 @@
-﻿using mini_spotify.View;
-using minify.Controller;
+﻿using minify.Controller;
 using minify.DAL.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace minify.View
@@ -14,13 +11,29 @@ namespace minify.View
     /// </summary>
     public partial class OverviewSongsPage : Page
     {
-        private readonly SongController _songController;
-        private readonly HitlistController _hitlistController;
-        private List<Song> ListSongs { get; set; }
+        private readonly SongController _controller;
+        private readonly List<Song> _songs;
 
         public OverviewSongsPage()
         {
             InitializeComponent();
+            _controller = new SongController();
+            _songs = _controller.GetAll();
+            Songs.ItemsSource = _songs;
+        }
+
+        public void Refresh(Song song)
+        {
+            Songs.ItemsSource = _songs;
+
+            foreach (var item in Songs.Items)
+            {
+                if (((Song)item).Equals(song))
+                    Songs.SelectedItem = item;
+
+
+            }
+        }
             _songController = new SongController();
             _hitlistController = new HitlistController();
 
@@ -28,6 +41,18 @@ namespace minify.View
 
             Songs.ItemsSource = items.ToArray();
 
+        private void Songs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                // Get song
+                Song selectedSong = (Song)e.AddedItems[0];
+
+                // Initialize songs
+                MediaplayerController.Initialize(_songs);
+
+                // Open song
+                MediaplayerController.Open(selectedSong);
         }
 
         public void Refresh()
@@ -64,6 +89,7 @@ namespace minify.View
                 _hitlistController.AddSongsToHitlist(hitlist, song);
             }
 
+            Songs.ItemsSource = items;
         }
     }
 }
