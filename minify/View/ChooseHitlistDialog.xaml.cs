@@ -44,7 +44,6 @@ namespace minify.View
             _hitlistController = new HitlistController();
             var hitlists = _hitlistController.GetHitlistsByUserId(AppData.UserId, true);
             Hitlists = new List<Hitlist>(hitlists);
-            //TODO: filter de hitlists die deze songid al hebben eruit.
 
             var removeHitlists = new List<Hitlist>();
             foreach (Hitlist hitlist in hitlists)
