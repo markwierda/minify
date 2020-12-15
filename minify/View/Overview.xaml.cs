@@ -36,7 +36,7 @@ namespace minify.View
             InitializeComponent();
         }
 
-        public void GetAllHitList()
+        public void InitializeHitListMenu()
         {
             List<Hitlist> hitlists = _hitlistController.GetHitlistsByUserId(AppData.UserId);
             HitlistMenu.ItemsSource = hitlists;
@@ -66,6 +66,7 @@ namespace minify.View
 
         private void Btn_Add_Hitlist(object sender, RoutedEventArgs e)
         {
+            InitializeHitListMenu();
             AddHistlistPage addHitlistPage = new AddHistlistPage(_hitlistController);
             contentFrame.Content = addHitlistPage;
         }
@@ -178,13 +179,14 @@ namespace minify.View
 
         private void Btn_songs(object sender, RoutedEventArgs e)
         {
+            InitializeHitListMenu();
             _overviewSongsPage = new OverviewSongsPage();
             contentFrame.Content = _overviewSongsPage;
         }
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            GetAllHitList();
+            InitializeHitListMenu();
             label_Username.Content = AppData.UserName;
         }
 
