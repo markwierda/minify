@@ -260,13 +260,6 @@ namespace minify.Controller
         public bool Validation_Description(string description)
         {
             return description.Length <= 140;
-                // Check descriptoin
-                if (description.Length > 140)
-                {
-                    return false;
-                }
-
-            return true;
         }
     }
 }
