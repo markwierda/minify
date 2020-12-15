@@ -65,11 +65,11 @@ namespace minify.DAL
                 new Song() { Id = Guid.NewGuid(), Artist = "Charlie Puth", Name = "Attention", Duration = new TimeSpan(0, 0, 3, 51), Genre = "Pop", Path = "Music/Charlie Puth - Attention.mp3" },
                 new Song() { Id = Guid.NewGuid(), Artist = "Echosmith", Name = "Cool Kids", Duration = new TimeSpan(0, 0, 4, 48), Genre = "EDM", Path = "Music/Echosmith - Cool Kids.mp3" },
                 new Song() { Id = Guid.NewGuid(), Artist = "Ed Sheeran", Name = "Thinking Out Loud", Duration = new TimeSpan(0, 0, 4, 56), Genre = "Pop", Path = "Music/Ed Sheeran - Thinking Out Loud.mp3" },
-                new Song() { Id = Guid.NewGuid(), Artist = "Lukrative", Name = "Anthem", Duration = new TimeSpan(0, 0, 6, 0), Genre = "Trap", Path = "Music/Lukrative - Anthem" },
-                new Song() { Id = Guid.NewGuid(), Artist = "Shawn Mendes", Name = "Stitches", Duration = new TimeSpan(0, 0, 3, 39), Genre = "Pop", Path = "Music/Shawn Mendes & Hailee Steinfeld - Stitches" },
-                new Song() { Id = Guid.NewGuid(), Artist = "Simple Plan", Name = "Summer Paradise", Duration = new TimeSpan(0, 0, 3, 55), Genre = "Pop", Path = "Music/Simple Plan - Summer Paradise" },
-                new Song() { Id = Guid.NewGuid(), Artist = "The Chainsmokers", Name = "Closer", Duration = new TimeSpan(0, 0, 4, 21), Genre = "Pop", Path = "Music/The Chainsmokers - Closer" },
-                new Song() { Id = Guid.NewGuid(), Artist = "Zara Larsson", Name = "Ain't My Fault", Duration = new TimeSpan(0, 0, 2, 39), Genre = "EDM", Path = "Music/Zara larsson - Ain't My Fault" },
+                new Song() { Id = Guid.NewGuid(), Artist = "Lukrative", Name = "Anthem", Duration = new TimeSpan(0, 0, 6, 0), Genre = "Trap", Path = "Music/Lukrative - Anthem.mp3" },
+                new Song() { Id = Guid.NewGuid(), Artist = "Shawn Mendes", Name = "Stitches", Duration = new TimeSpan(0, 0, 3, 39), Genre = "Pop", Path = "Music/Shawn Mendes & Hailee Steinfeld - Stitches.mp3" },
+                new Song() { Id = Guid.NewGuid(), Artist = "Simple Plan", Name = "Summer Paradise", Duration = new TimeSpan(0, 0, 3, 55), Genre = "Pop", Path = "Music/Simple Plan - Summer Paradise.mp3" },
+                new Song() { Id = Guid.NewGuid(), Artist = "The Chainsmokers", Name = "Closer", Duration = new TimeSpan(0, 0, 4, 21), Genre = "Pop", Path = "Music/The Chainsmokers - Closer.mp3" },
+                new Song() { Id = Guid.NewGuid(), Artist = "Zara Larsson", Name = "Ain't My Fault", Duration = new TimeSpan(0, 0, 2, 39), Genre = "EDM", Path = "Music/Zara larsson - Ain't My Fault.mp3" },
             };
 
             User[] users = new User[]
