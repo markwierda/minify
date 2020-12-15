@@ -151,6 +151,15 @@ namespace minify.View
             lbl_Song_Duration.Content = e.Duration.ToString(@"mm\:ss");
             Song_Progressbar.Maximum = e.Duration.TotalMilliseconds;
             Song_Progressbar.Value = e.Position.TotalMilliseconds;
+
+            if (e.SongName == null)
+            {
+                if (_overviewHitlistPage != null)
+                    _overviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
+
+                if (_overviewSongsPage != null)
+                    _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
+            }
         }
 
         private void Btn_home(object sender, RoutedEventArgs e)
