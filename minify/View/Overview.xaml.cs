@@ -1,6 +1,6 @@
-﻿using mini_spotify.Controller;
-using mini_spotify.DAL.Entities;
-using mini_spotify.Model;
+﻿using minify.Controller;
+using minify.DAL.Entities;
+using minify.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
-namespace mini_spotify.View
+namespace minify.View
 {
     /// <summary>
     /// Interaction logic for Overview.xaml

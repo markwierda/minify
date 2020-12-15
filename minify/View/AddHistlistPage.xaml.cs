@@ -1,10 +1,10 @@
-﻿using mini_spotify.Controller;
-using mini_spotify.DAL.Entities;
-using mini_spotify.Model;
+﻿using minify.Controller;
+using minify.DAL.Entities;
+using minify.Model;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace mini_spotify.View
+namespace minify.View
 {
     /// <summary>
     /// Interaction logic for AddHistlistPage.xaml

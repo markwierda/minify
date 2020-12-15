@@ -1,5 +1,5 @@
-﻿using mini_spotify.Controller;
-using mini_spotify.Model;
+﻿using minify.Controller;
+using minify.Model;
 using NUnit.Framework;
 using System;
 

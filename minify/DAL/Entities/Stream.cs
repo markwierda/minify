@@ -1,4 +1,4 @@
-﻿namespace mini_spotify.DAL.Entities
+﻿namespace minify.DAL.Entities
 {
     public class Stream : BaseEntity
     {
