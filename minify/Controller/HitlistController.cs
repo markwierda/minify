@@ -16,7 +16,7 @@ namespace minify.Controller
     public class HitlistController
     {
         private readonly Repository<Hitlist> _hitlistRepository;
-        Repository<HitlistSong> _hitlistSongRepository;
+        private readonly Repository<HitlistSong> _hitlistSongRepository;
 
 
         public event HitlistAddedEventHandler HitlistAdded;
