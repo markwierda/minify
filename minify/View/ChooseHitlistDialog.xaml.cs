@@ -67,24 +67,30 @@ namespace mini_spotify.View
                     Hitlists.Remove(hitlist);
 
                 }
+               
             }
         }
         private void AddSongToHitlist(object sender, RoutedEventArgs e)
         {
             try
             {
-                Guid hitlistId = (Guid)cbxHitlist.SelectedValue;
-                IdRetreived.Invoke(this, new IdRetreivedEventArgs
+                if (cbxHitlist.SelectedValue != null)
                 {
-                    HitlistId = hitlistId,
-                    SongId = songId
-                });
-                this.Close();
+                    Guid hitlistId = (Guid)cbxHitlist.SelectedValue;
+
+                    IdRetreived.Invoke(this, new IdRetreivedEventArgs
+                    {
+                        HitlistId = hitlistId,
+                        SongId = songId
+                    });
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Geen hitlijst gekozen");
+                }
             }
-            catch(NullReferenceException)
-            {
-                MessageBox.Show("Geen hitlijst gekozen");
-            }
+           
             catch(Exception)
             {
                 MessageBox.Show("Onbekende fout opgetreden.");
