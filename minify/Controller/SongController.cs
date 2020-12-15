@@ -37,12 +37,17 @@ namespace minify.Controller
         /// <returns></returns>
         public List<Song> Search(string searchquery)
         {
-            var Songs = _repository.GetAll();
-            Songs = Songs.Where(s => 
-                (s.Name.ToUpper().Contains(searchquery.ToUpper()))||
-                (s.Artist.ToUpper().Contains(searchquery.ToUpper()))||
-                (s.Genre.ToUpper().Contains(searchquery.ToUpper())));
-            return Songs.ToList();
+            var query = _repository.GetAll();
+
+            var likeSearch = $"%{searchquery}%";
+
+            query = query.Where(s =>
+                EF.Functions.Like(s.Name.ToUpper(), likeSearch.ToUpper()) ||
+                EF.Functions.Like(s.Artist.ToUpper(), likeSearch.ToUpper()) ||
+                EF.Functions.Like(s.Genre.ToUpper(), likeSearch.ToUpper())
+            );
+
+            return query.ToList();
         }
 
         /// <summary>
