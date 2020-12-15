@@ -1,4 +1,4 @@
-﻿using mini_spotify.Model;
+﻿using minify.Model;
 using NUnit.Framework;
 using System;
 

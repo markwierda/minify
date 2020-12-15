@@ -1,7 +1,7 @@
-﻿using mini_spotify.Controller;
+﻿using minify.Controller;
 using System.Windows;
 
-namespace mini_spotify.View
+namespace minify.View
 {
     /// <summary>
     /// Interaction logic for Login.xaml

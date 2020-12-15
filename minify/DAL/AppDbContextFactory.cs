@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 
-namespace mini_spotify.DAL
+namespace minify.DAL
 {
     public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
     {
