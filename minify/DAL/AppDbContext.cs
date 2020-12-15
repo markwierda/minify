@@ -121,7 +121,7 @@ namespace minify.DAL
 
             Message[] messages = new Message[]
             {
-                new Message { Id = Guid.NewGuid(), StreamroomId = streamrooms[0].Id, UserId = users[0].Id, Text = "Huh naar huis?" },
+                new Message { Id = new Guid("{197a232b-4bb8-4961-9264-81349df9d785}"), StreamroomId = streamrooms[0].Id, UserId = users[0].Id, Text = "Huh naar huis?" },
                 new Message { Id = Guid.NewGuid(), StreamroomId = streamrooms[0].Id, UserId = users[0].Id, Text = "Huh naar huis?2" },
             };
 

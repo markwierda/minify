@@ -50,6 +50,12 @@ namespace minify.Controller
         public Message GetMessage(Guid messageId)
         {
             Message message = _messageRepository.Find(messageId);
+
+            if(message == null)
+            {
+                return null;
+            }
+
             return BelongsEntityToUser(message.UserId) ? message : null;
         }
 
