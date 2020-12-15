@@ -3,7 +3,10 @@ using minify.DAL.Entities;
 using minify.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace minify.View
@@ -15,6 +18,9 @@ namespace minify.View
     {
         private readonly HitlistController _hitlistController;
         private readonly LoginController _loginController;
+
+        private readonly SongController _songController;
+
         private TimeSpan _positionCache;
 
         private OverviewHitlistPage _overviewHitlistPage;
@@ -24,6 +30,7 @@ namespace minify.View
         {
             _hitlistController = new HitlistController();
             _loginController = new LoginController();
+            _songController = new SongController();
             MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
             _hitlistController.HitlistAdded += UpdateHitlistMenu;
             InitializeComponent();
@@ -189,6 +196,33 @@ namespace minify.View
             Login login = new Login();
             login.Show();
             Close();
+        }
+
+        private void SearchBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if(Search.Text != "Search..." && Search.Text != "")
+            {
+                var songs = _songController.Search(Search.Text);
+                if(songs != null && songs.Count > 0)
+                {
+                    OverviewSongsPage overviewSongs = new OverviewSongsPage(songs);
+                    contentFrame.Content = overviewSongs;
+                }
+                else
+                {
+                    Label label = new Label();
+                    label.Content = "No songs could be found";
+                    contentFrame.Content = label;
+                }
+            }
+        }
+
+        private void Search_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if(Search.Text == "Search...")
+            {
+                Search.Text = "";
+            }
         }
     }
 }

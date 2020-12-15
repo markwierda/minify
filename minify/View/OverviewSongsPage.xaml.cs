@@ -52,5 +52,11 @@ namespace minify.View
                 MediaplayerController.Play();
             }
         }
+
+        public OverviewSongsPage(List<Song> songs)
+        {
+            InitializeComponent();
+            Songs.ItemsSource = songs;
+        }
     }
 }
