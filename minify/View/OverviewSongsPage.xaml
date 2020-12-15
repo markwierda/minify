@@ -14,7 +14,7 @@
                     <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding Name}" />
                     <GridViewColumn Header="Artist" Width="auto" DisplayMemberBinding="{Binding Artist}" />
                     <GridViewColumn Header="Genre" Width="auto" DisplayMemberBinding="{Binding Genre}" />
-                    <GridViewColumn Header="Duration" Width="auto" DisplayMemberBinding="{Binding Duration}" />
+                    <GridViewColumn Header="Duration" Width="auto" DisplayMemberBinding="{Binding Duration, StringFormat=mm\\:ss}" />
                 </GridView>
             </ListView.View>
         </ListView>
