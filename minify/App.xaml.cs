@@ -1,7 +1,7 @@
-﻿using mini_spotify.Model;
+﻿using minify.Model;
 using System.Windows;
 
-namespace mini_spotify
+namespace minify
 {
     /// <summary>
     /// Interaction logic for App.xaml

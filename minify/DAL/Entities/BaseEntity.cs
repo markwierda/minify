@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace mini_spotify.DAL.Entities
+namespace minify.DAL.Entities
 {
     public abstract class BaseEntity : IEntity
     {
