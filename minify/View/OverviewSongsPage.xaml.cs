@@ -1,7 +1,6 @@
-﻿using minify.Controller;
+﻿using mini_spotify.View;
+using minify.Controller;
 using minify.DAL.Entities;
-using mini_spotify.Controller;
-using mini_spotify.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

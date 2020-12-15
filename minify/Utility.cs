@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace mini_spotify
+namespace minify
 {
     public static class Utility
     {

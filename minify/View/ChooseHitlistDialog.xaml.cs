@@ -1,18 +1,11 @@
-﻿using mini_spotify.Controller;
-using mini_spotify.DAL.Entities;
-using mini_spotify.Model;
+﻿using minify.Controller;
+using minify.DAL.Entities;
+using minify.Model;
+using minify.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace mini_spotify.View
 
