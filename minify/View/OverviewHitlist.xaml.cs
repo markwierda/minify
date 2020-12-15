@@ -13,7 +13,6 @@ namespace minify.View
     public partial class OverviewHitlist : Window
     {
         private readonly HitlistController _hitlistcontroller;
-        private readonly HitlistSongController _hitlistSongController;
         private readonly Hitlist _hitlist;
 
         public OverviewHitlist(Guid id)
@@ -22,7 +21,6 @@ namespace minify.View
 
             // create instance of controller and get the hitlist by id
             _hitlistcontroller = new HitlistController();
-            _hitlistSongController = new HitlistSongController();
             _hitlist = _hitlistcontroller.Get(id, true);
 
             // check if hitlist is not null

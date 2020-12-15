@@ -1,7 +1,9 @@
 ﻿using minify.Controller;
 using minify.DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace minify.View
 {
@@ -10,29 +12,32 @@ namespace minify.View
     /// </summary>
     public partial class OverviewSongs : Window
     {
-        private readonly SongController _controller;
+        private readonly SongController _songController;
+        private readonly HitlistController _hitlistController;
         private List<Song> ListSongs { get; set; }
 
         public OverviewSongs()
         {
             InitializeComponent();
-            _controller = new SongController();
+            _songController = new SongController();
+            _hitlistController = new HitlistController();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            List<Song> items = _controller.GetAll();
+            List<Song> items = _songController.GetAll();
 
             Songs.ItemsSource = items;
             Songs.Visibility = Visibility.Visible;
+
         }
 
-        private void Songs_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Song[] songs = (Song[])e.AddedItems;
+            Button btn = (Button)sender;
+            Guid songId = (Guid)btn.CommandParameter;
+            //ChooseHitlistDialog choose = new ChooseHitlistDialog(songId, this);
+            
 
-            if (ListSongs.Count > 4)
-            {
-                int a = 1;
-            }
+
         }
     }
 }
