@@ -16,8 +16,8 @@ namespace minify.View
     {
         private readonly HitlistController _hitlistController;
         private readonly StreamroomController _streamroomController;
-        private readonly Hitlist _hitlist;
-        private readonly List<Song> _songs = new List<Song>();
+        private Hitlist _hitlist;
+        private List<Song> _songs = new List<Song>();
 
         public OverviewHitlistPage(Guid id)
         {
@@ -52,6 +52,39 @@ namespace minify.View
                         CreateStreamroom.Visibility = Visibility.Visible;
                     }
                 }
+            }
+        }
+        public void Refresh(Song song)
+        {
+            _songs = _hitlistController.GetSongs(_hitlist.Songs);
+            HitlistSongs.ItemsSource = _songs;
+
+            foreach (var item in HitlistSongs.Items)
+            {
+                if (((Song)item).Equals(song))
+                    HitlistSongs.SelectedItem = item;
+
+
+            }
+
+            HitlistSongs.Visibility = Visibility.Visible;
+        }
+
+        private void HitlistSongs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                // Get song
+                Song selectedSong = (Song)e.AddedItems[0];
+
+                // Initialize songs
+                MediaplayerController.Initialize(_songs);
+
+                // Open song
+                MediaplayerController.Open(selectedSong);
+
+                // Play song
+                MediaplayerController.Play();
             }
         }
 

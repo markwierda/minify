@@ -32,6 +32,25 @@ namespace minify.Controller
         }
 
         /// <summary>
+        /// Gets all songs by name, artist or genre
+        /// </summary>
+        /// <returns></returns>
+        public List<Song> Search(string searchquery)
+        {
+            var query = _repository.GetAll();
+
+            var likeSearch = $"%{searchquery}%";
+
+            query = query.Where(s =>
+                EF.Functions.Like(s.Name.ToUpper(), likeSearch.ToUpper()) ||
+                EF.Functions.Like(s.Artist.ToUpper(), likeSearch.ToUpper()) ||
+                EF.Functions.Like(s.Genre.ToUpper(), likeSearch.ToUpper())
+            );
+
+            return query.ToList();
+        }
+
+        /// <summary>
         /// Gets a <see cref="Song"/> by the <see cref="Guid"/> id.
         /// </summary>
         /// <param name="id">The <see cref="Guid"/> id of the song</param>

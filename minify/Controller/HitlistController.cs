@@ -6,6 +6,7 @@ using minify.DAL.Repositories;
 using minify.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace minify.Controller
@@ -14,7 +15,9 @@ namespace minify.Controller
 
     public class HitlistController
     {
-        private readonly Repository<Hitlist> _repository;
+        private readonly Repository<Hitlist> _hitlistRepository;
+        private readonly Repository<HitlistSong> _hitlistSongRepository;
+
 
         public event HitlistAddedEventHandler HitlistAdded;
 
@@ -24,7 +27,8 @@ namespace minify.Controller
         public HitlistController()
         {
             AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
-            _repository = new Repository<Hitlist>(context);
+            _hitlistRepository = new Repository<Hitlist>(context);
+            _hitlistSongRepository = new Repository<HitlistSong>(context);
         }
 
         /// <summary>
@@ -34,7 +38,7 @@ namespace minify.Controller
         /// <returns>A list with all the hitlists</returns>
         public List<Hitlist> GetAll(bool withRelations = false)
         {
-            var query = _repository.GetAll();
+            var query = _hitlistRepository.GetAll();
 
             if (withRelations)
             {
@@ -55,12 +59,12 @@ namespace minify.Controller
         /// <returns></returns>
         public List<Hitlist> GetHitlistsByUserId(Guid userId, bool withRelations = false)
         {
-            if (userId == Guid.Empty)
+            if (Utility.GuidIsNullOrEmpty(userId))
             {
                 throw new ArgumentException(nameof(userId));
             }
 
-            var query = _repository
+            var query = _hitlistRepository
                             .GetAll()
                             .Where(x => x.UserId == userId);
 
@@ -83,12 +87,12 @@ namespace minify.Controller
         /// <returns></returns>
         public Hitlist Get(Guid id, bool withRelations = false)
         {
-            if (id == null)
+            if (Utility.GuidIsNullOrEmpty(id))
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            var query = _repository.GetAll();
+            var query = _hitlistRepository.GetAll();
 
             if (withRelations)
             {
@@ -105,17 +109,80 @@ namespace minify.Controller
         /// Adds a hitlist to the database
         /// </summary>
         /// <param name="hitlist"></param>
-        public void Add(Hitlist hitlist)
+        public void Add(Hitlist hitlist, List<Song> songs = null)
         {
             if (hitlist.Id == null)
+            {
                 throw new ArgumentNullException("id");
+            }
 
-            _repository.Add(hitlist);
-            _repository.SaveChanges();
+            if (songs != null && songs.Count > 0)
+            {
+                List<HitlistSong> hitlistSongs = CreateHitlistSongList(hitlist, songs.ToArray());
 
-            HitlistAdded?.Invoke(this, new UpdateHitlistMenuEventArgs(hitlist.Id));
+                if (hitlist.Songs == null)
+                {
+                    hitlist.Songs = hitlistSongs;
+                }
+                else
+                {
+                    hitlist.Songs.Union(hitlistSongs);
+                }
+            }
+            try
+            {
+                _hitlistRepository.Add(hitlist);
+                _hitlistRepository.SaveChanges();
+                HitlistAdded?.Invoke(this, new UpdateHitlistMenuEventArgs(hitlist.Id));
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex);
+            }
+
         }
 
+        public bool AddSongsToHitlist(Hitlist hitlist, params Song[] songs)
+        {
+            if (songs == null || songs.Length == 0)
+            {
+                return false; 
+            }
+                
+            List<HitlistSong> hitlistSongs = CreateHitlistSongList(hitlist, songs);
+
+            try
+            {
+                foreach(var hitlistSong in hitlistSongs)
+                {
+                    _hitlistSongRepository.Add(hitlistSong);
+                }
+
+                int ammount = _hitlistSongRepository.SaveChanges();
+
+                return ammount > 0;
+            }
+            catch(Exception ex)
+            {
+                Debug.Write(ex);
+                return false;
+            }
+        }
+
+        private List<HitlistSong> CreateHitlistSongList(Hitlist hitlist, params Song[] songs)
+        {
+            List<HitlistSong> hitlistSongs = new List<HitlistSong>();
+
+            foreach (Song song in songs)
+            {
+                if (!Utility.GuidIsNullOrEmpty(song.Id) && !hitlist.Songs.Any(x => x.SongId == song.Id))
+                {
+                    hitlistSongs.Add(new HitlistSong() { HitlistId = hitlist.Id, SongId = song.Id });
+                }
+            }
+
+            return hitlistSongs;
+        }
         /// <summary>
         /// Creates a list with the hitlist's songs
         /// </summary>
@@ -127,8 +194,8 @@ namespace minify.Controller
                 throw new ArgumentNullException("id");
             if (AppData.UserId == hitlist.UserId)
             {
-                _repository.Remove(hitlist);
-                _repository.SaveChanges();
+                _hitlistRepository.Remove(hitlist);
+                _hitlistRepository.SaveChanges();
             }
         }
 
