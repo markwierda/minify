@@ -1,14 +1,14 @@
 ﻿using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
-using mini_spotify.DAL;
-using mini_spotify.DAL.Entities;
-using mini_spotify.DAL.Repositories;
-using mini_spotify.Model;
+using minify.DAL;
+using minify.DAL.Entities;
+using minify.DAL.Repositories;
+using minify.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace mini_spotify.Controller
+namespace minify.Controller
 {
     public delegate void HitlistAddedEventHandler(object sender, UpdateHitlistMenuEventArgs e);
 

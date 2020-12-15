@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace mini_spotify.DAL.Entities
+namespace minify.DAL.Entities
 {
     public class Song : BaseEntity
     {
