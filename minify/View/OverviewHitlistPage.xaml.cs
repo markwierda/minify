@@ -2,6 +2,8 @@
 using minify.Controller;
 using minify.DAL.Entities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,14 +14,18 @@ namespace minify.View
     /// </summary>
     public partial class OverviewHitlistPage : Page
     {
-        private HitlistController _controller;
+        private readonly HitlistController _hitlistController;
+        private readonly StreamroomController _streamroomController;
+        private readonly Hitlist _hitlist;
+        private readonly List<Song> _songs = new List<Song>();
 
         public OverviewHitlistPage(Guid id)
         {
             InitializeComponent();
-            // create instance of controller and get the hitlist by id
-            _controller = new HitlistController();
-            Hitlist _hitlist = _controller.Get(id, true);
+            // create instances of controllers and get the hitlist by id
+            _hitlistController = new HitlistController();
+            _streamroomController = new StreamroomController();
+            _hitlist = _hitlistController.Get(id, true);
 
             // check if hitlist is not null
             if (_hitlist != null)
@@ -31,15 +37,34 @@ namespace minify.View
                     HitlistDescription.Content = _hitlist.Description;
                     HitlistDescription.Visibility = Visibility.Visible;
                 }
-                HitlistInfo.Content = _controller.GetHitlistInfo(_hitlist);
+                HitlistInfo.Content = _hitlistController.GetHitlistInfo(_hitlist);
 
                 // if there are songs, display the listview
                 if (_hitlist.Songs != null && _hitlist.Songs.Count > 0)
                 {
-                    HitlistSongs.ItemsSource = _controller.GetSongs(_hitlist.Songs);
+                    _songs = _hitlistController.GetSongs(_hitlist.Songs);
+                    HitlistSongs.ItemsSource = _songs;
                     HitlistSongs.Visibility = Visibility.Visible;
+
+                    // display create streamroom button when room doesn't exist yet
+                    if (!_streamroomController.DoesRoomAlreadyExist(_hitlist.Id))
+                    {
+                        CreateStreamroom.Visibility = Visibility.Visible;
+                    }
                 }
             }
+        }
+
+        /// <summary>
+        /// Creates new streamroom when button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CreateStreamroom_Click(object sender, RoutedEventArgs e)
+        {
+            Streamroom streamroom = new Streamroom(_hitlist.Id, _songs.First().Id);
+            _streamroomController.Add(streamroom);
+            MessageBox.Show("TODO: Open streamroom");
         }
     }
 }
