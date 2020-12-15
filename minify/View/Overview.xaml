@@ -1,9 +1,9 @@
-﻿<Window x:Class="mini_spotify.View.Overview"
+﻿<Window x:Class="minify.View.Overview"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:mini_spotify.View"
+        xmlns:local="clr-namespace:minify.View"
         mc:Ignorable="d"
         Title="Overview" Initialized="Window_Initialized"  Height="450" Width="800" WindowState="Maximized" WindowStartupLocation="CenterScreen">
     <Grid Background="#FF774AC7">
@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="1" Background="#FF774AC7">
-            <TextBox Text="Search..." MouseEnter="Search_MouseEnter" MaxLength="30" x:Name="Search" Margin="5" Style="{StaticResource MaterialDesignTextBox}" Background="Transparent" Width="160" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <TextBox Text="Search..." TextChanged="SearchBox_TextChanged" MouseEnter="Search_MouseEnter" MaxLength="30" x:Name="Search" Margin="5" Style="{StaticResource MaterialDesignTextBox}" Background="Transparent" Width="160" Height="30" HorizontalAlignment="Left"/>
         </StackPanel>
         
         <StackPanel Grid.Row="0" Grid.Column="0" Background="#FF774AC7">
@@ -33,7 +33,7 @@
         <StackPanel Grid.Row="1" Grid.Column="0" Background="#FF774AC7">
             <ScrollViewer VerticalScrollBarVisibility="auto">
                 <StackPanel>
-                    <ListView Name="HitlistMenu"  HorizontalAlignment="Stretch" SelectionChanged="HitlistMenu_SelectionChanged">
+                    <ListView Name="HitlistMenu"  HorizontalAlignment="Stretch"  SelectionChanged="HitlistMenu_SelectionChanged">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Hitlists" DisplayMemberBinding="{Binding Title}" />

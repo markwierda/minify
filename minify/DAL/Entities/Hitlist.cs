@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace mini_spotify.DAL.Entities
+namespace minify.DAL.Entities
 {
     public class Hitlist : BaseEntity
     {

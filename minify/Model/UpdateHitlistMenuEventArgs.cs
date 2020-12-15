@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace mini_spotify.Model
+namespace minify.Model
 {
     public class UpdateHitlistMenuEventArgs : EventArgs
     {
