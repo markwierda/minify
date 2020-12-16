@@ -25,6 +25,16 @@ namespace minify.View
 
         private OverviewHitlistPage _overviewHitlistPage;
         private OverviewSongsPage _overviewSongsPage;
+        private OverviewHitlistPage hitlistPage;
+        private OverviewHitlistPage OverviewHitlistPage
+        {
+            get { return hitlistPage; }
+            set
+            {
+                value.StreamroomCreated += OpenStreamroom;
+                hitlistPage = value;
+            }
+        }
 
         public Overview()
         {
@@ -223,6 +233,10 @@ namespace minify.View
             {
                 Search.Text = "";
             }
+        }
+        private void OpenStreamroom(object sender, CreatedStreamRoomEventArgs e)
+        {
+            contentFrame.Content = new OverviewStreamroom(e.Streamroom.Id);
         }
     }
 }

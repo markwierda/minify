@@ -1,6 +1,8 @@
 ﻿using Castle.Core.Internal;
 using minify.Controller;
 using minify.DAL.Entities;
+using minify.Model;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,7 @@ using System.Windows.Controls;
 
 namespace minify.View
 {
+    public delegate void StreamroomCreatedEventHandler(object sender, CreatedStreamRoomEventArgs e);
     /// <summary>
     /// Interaction logic for OverviewHitlistPage.xaml
     /// </summary>
@@ -18,6 +21,8 @@ namespace minify.View
         private readonly StreamroomController _streamroomController;
         private Hitlist _hitlist;
         private List<Song> _songs = new List<Song>();
+
+        public StreamroomCreatedEventHandler StreamroomCreated;
 
         public OverviewHitlistPage(Guid id)
         {
@@ -97,7 +102,7 @@ namespace minify.View
         {
             Streamroom streamroom = new Streamroom(_hitlist.Id, _songs.First().Id);
             _streamroomController.Add(streamroom);
-            MessageBox.Show("TODO: Open streamroom");
+            StreamroomCreated.Invoke(this, new CreatedStreamRoomEventArgs { Streamroom = streamroom });
         }
     }
 }
