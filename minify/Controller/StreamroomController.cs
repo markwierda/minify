@@ -2,12 +2,15 @@
 using minify.DAL;
 using minify.DAL.Repositories;
 using minify.DAL.Entities;
+using minify.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 
 namespace minify.Controller
 {
+
     public class StreamroomController
     {
         private readonly Repository<Streamroom> _repository;
@@ -17,8 +20,7 @@ namespace minify.Controller
         /// </summary>
         public StreamroomController()
         {
-            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
-            _repository = new Repository<Streamroom>(context);
+            _repository = new Repository<Streamroom>(new AppDbContextFactory().CreateDbContext());
         }
 
         /// <summary>
