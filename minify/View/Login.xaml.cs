@@ -34,7 +34,6 @@ namespace minify.View
             // try to login with the values
             if (_controller.TryLogin(username, password))
             {
-                // TODO: Display overview
                 Overview overview = new Overview();
                 overview.Show();
                 Close();

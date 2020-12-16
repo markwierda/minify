@@ -4,6 +4,7 @@ using minify.DAL.Entities;
 using minify.Managers;
 using minify.Model;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,9 +15,10 @@ namespace minify.View
     /// </summary>
     public partial class OverviewHitlistPage : Page
     {
-        private readonly HitlistController _hitlistcontroller;
+        private readonly HitlistController _controller;
         private readonly Hitlist _hitlist;
-        
+        private List<Song> _songs;
+
         public OverviewHitlistPage(Guid id)
         {
             InitializeComponent();
@@ -40,13 +42,44 @@ namespace minify.View
                 // if there are songs, display the listview
                 if (_hitlist.Songs != null && _hitlist.Songs.Count > 0)
                 {
-                    HitlistSongs.ItemsSource = _hitlistcontroller.GetSongs(_hitlist.Songs);
+                    _songs = _controller.GetSongs(_hitlist.Songs);
+                    HitlistSongs.ItemsSource = _songs;
                     HitlistSongs.Visibility = Visibility.Visible;
                 }
-                if (AppData.UserId == _hitlist.UserId)
-                {
-                    DeleteHitlist.Visibility = Visibility.Visible;
-                }
+            }
+        }
+
+        public void Refresh(Song song)
+        {
+            _songs = _controller.GetSongs(_hitlist.Songs);
+            HitlistSongs.ItemsSource = _songs;
+            
+            foreach (var item in HitlistSongs.Items)
+            {
+                if (((Song)item).Equals(song))
+                    HitlistSongs.SelectedItem = item;
+
+
+            }
+
+            HitlistSongs.Visibility = Visibility.Visible;
+        }
+
+        private void HitlistSongs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                // Get song
+                Song selectedSong = (Song)e.AddedItems[0];
+
+                // Initialize songs
+                MediaplayerController.Initialize(_songs);
+
+                // Open song
+                MediaplayerController.Open(selectedSong);
+
+                // Play song
+                MediaplayerController.Play();
             }
         }
 

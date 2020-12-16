@@ -16,12 +16,13 @@
         <Label Name="HitlistDescription" Content="Playlist descriptionn" HorizontalAlignment="Left" Margin="80,94,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
         <Label Name="HitlistInfo" Content="Playlist info" HorizontalAlignment="Left" Margin="80,123,0,0" VerticalAlignment="Top" />
 
-        <ListView Name="HitlistSongs" Margin="80,142,80,48" Visibility="Hidden">
+        <ListView Name="HitlistSongs" Margin="80,142,80,48" Visibility="Hidden" SelectionChanged="HitlistSongs_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Artist}" />
                     <GridViewColumn Header="Genre" Width="200" DisplayMemberBinding="{Binding Genre}" />
-                    <GridViewColumn Header="Duration" Width="200" DisplayMemberBinding="{Binding Duration}" />
+                    <GridViewColumn Header="Duration" Width="200" DisplayMemberBinding="{Binding Duration, StringFormat=mm\\:ss}" />
                 </GridView>
             </ListView.View>
         </ListView>
