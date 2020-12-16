@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Timers;
 
-namespace minify
+namespace minify.Manager
 {
     public delegate void StreamroomRefreshedEventHandler(object sender, LocalStreamroomUpdatedEventArgs e);
     public class StreamroomManager
@@ -16,13 +16,14 @@ namespace minify
         private readonly Timer _timer;
         private readonly Guid _streamroomId;
         private Streamroom _streamroom;
+        private List<Message> _messages;
 
         public StreamroomRefreshedEventHandler StreamroomRefreshed;
 
         public StreamroomManager(Guid streamroomId)
         {
             _streamroomId = streamroomId;
-            _streamroom = Get();
+            LoadData();
 
             _timer = new Timer(INTERVAL);
             _timer.Enabled = true;
@@ -31,8 +32,8 @@ namespace minify
 
         public void OnTimedEvent(object obj, ElapsedEventArgs e)
         {
-            _streamroom = Get();
-            StreamroomRefreshed.Invoke(this, new LocalStreamroomUpdatedEventArgs { Streamroom = _streamroom });
+            LoadData();
+            StreamroomRefreshed.Invoke(this, new LocalStreamroomUpdatedEventArgs(_streamroom, _messages));
         }
 
         public void Start()
@@ -76,9 +77,10 @@ namespace minify
             new StreamroomController().Update(_streamroom);
         }
 
-        private Streamroom Get()
+        private void LoadData()
         {
-            return new StreamroomController().Get(_streamroomId);
+            _streamroom = new StreamroomController().Get(_streamroomId);
+            _messages = new MessageController().GetMessages(_streamroom);
         }
     }
 }

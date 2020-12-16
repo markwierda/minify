@@ -1,5 +1,6 @@
 ﻿using minify.Controller;
 using minify.DAL.Entities;
+using minify.Manager;
 using minify.Model;
 
 using System;
@@ -25,6 +26,7 @@ namespace minify.View
     {
         private readonly Guid _streamroomId;
         private Streamroom _streamroom;
+        private List<Message> _messages;
         private StreamroomManager _manager;
 
         public OverviewStreamroom(Guid streamroomId)
@@ -33,13 +35,23 @@ namespace minify.View
             _manager = new StreamroomManager(streamroomId);
             _manager.StreamroomRefreshed += UpdateLocalStreamroom;
             InitializeComponent();
+
         }
 
         private void UpdateLocalStreamroom(object sender, LocalStreamroomUpdatedEventArgs e)
         {
+            // Get data from the updates per second from the manager.
             _streamroom = e.Streamroom;
+            _messages = e.Messages;
 
-            //TODO set all changes to screen
+            //TODO: set all changes to screen
+        }
+
+        public override void EndInit()
+        {
+            base.EndInit();
+            // start with reloading the data.
+            _manager.Start();
         }
     }
 }
