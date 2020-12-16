@@ -25,9 +25,9 @@ namespace minify.Controller
         /// <summary>
         /// Create a hitlist repository with the context
         /// </summary>
-        public HitlistController(AppDbContext context)
+        public HitlistController()
         {
-            _repository = new Repository<Hitlist>(context);
+            _repository = new Repository<Hitlist>(new AppDbContextFactory().CreateDbContext());
         }
 
         /// <summary>

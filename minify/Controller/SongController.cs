@@ -17,9 +17,9 @@ namespace minify.Controller
         /// <summary>
         /// Create a sog repository with the context
         /// </summary>
-        public SongController(AppDbContext context)
+        public SongController()
         {
-            _repository = new Repository<Song>(context);
+            _repository = new Repository<Song>(new AppDbContextFactory().CreateDbContext());
         }
 
         /// <summary>

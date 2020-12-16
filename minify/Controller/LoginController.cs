@@ -3,6 +3,7 @@ using minify.DAL;
 using minify.DAL.Entities;
 using minify.DAL.Repositories;
 using minify.Interfaces;
+using minify.Managers;
 using minify.Model;
 using System;
 
@@ -15,9 +16,9 @@ namespace minify.Controller
         /// <summary>
         /// Create a user repository with the context
         /// </summary>
-        public LoginController(AppDbContext context)
+        public LoginController()
         {
-            _repository = new Repository<User>(context);
+            _repository = new Repository<User>(new AppDbContextFactory().CreateDbContext());
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace minify.Controller
             // check if password is valid
             foreach (User user in _repository.GetAll())
             {
-                if (user.UserName == username && UserController.ValidatePassword(password, user.PassWord))
+                if (user.UserName == username && PasswordManager.ValidatePassword(password, user.PassWord))
                 {
                     return true;
                 }
