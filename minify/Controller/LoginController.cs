@@ -2,14 +2,13 @@
 using minify.DAL;
 using minify.DAL.Entities;
 using minify.DAL.Repositories;
-using minify.Interfaces;
 using minify.Managers;
 using minify.Model;
 using System;
 
 namespace minify.Controller
 {
-    public class LoginController : IController
+    public class LoginController
     {
         private readonly Repository<User> _repository;
 

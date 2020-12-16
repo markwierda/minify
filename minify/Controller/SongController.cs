@@ -2,7 +2,6 @@
 using minify.DAL;
 using minify.DAL.Entities;
 using minify.DAL.Repositories;
-using minify.Interfaces;
 
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ using System.Linq;
 
 namespace minify.Controller
 {
-    public class SongController : IController
+    public class SongController 
     {
         private readonly Repository<Song> _repository;
 

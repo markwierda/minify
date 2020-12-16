@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using minify.DAL;
 using minify.DAL.Entities;
 using minify.DAL.Repositories;
-using minify.Interfaces;
 using minify.Model;
 using System;
 using System.Collections.Generic;
@@ -12,8 +11,8 @@ using System.Linq;
 
 namespace minify.Controller
 {
-    public class HitlistController : IController
-    {
+    public class HitlistController
+    { 
         private readonly Repository<Hitlist> _hitlistRepository;
         private readonly Repository<HitlistSong> _hitlistSongRepository;
 

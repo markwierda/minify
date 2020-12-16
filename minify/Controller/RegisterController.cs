@@ -1,7 +1,6 @@
 ﻿using minify.DAL;
 using minify.DAL.Entities;
 using minify.DAL.Repositories;
-using minify.Interfaces;
 using minify.Managers;
 
 using System;
@@ -10,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace minify.Controller
 {
-    public class RegisterController : IController
+    public class RegisterController 
     {
         private readonly Repository<User> _repository;
 
