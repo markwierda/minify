@@ -16,7 +16,7 @@ namespace UnitTests
         [SetUp]
         public void Setup()
         {
-            _controller = ControllerManager.Get<SongController>();
+            _controller = new SongController();
             testId = new Guid("{aa5ab627-3b64-4c22-9cc3-cca5fd57c896}");
         }
 

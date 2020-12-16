@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows;
+using System.Diagnostics;
 
 namespace minify.View
 {
@@ -16,16 +17,13 @@ namespace minify.View
     /// </summary>
     public partial class OverviewSongsPage : Page
     {
-        private readonly SongController _songController;
-        private readonly HitlistController _hitlistController;
         private readonly List<Song> _songs;
 
         public OverviewSongsPage()
         {
             InitializeComponent();
-            _songController = new SongController();
-            _hitlistController = new HitlistController();
-            _songs = _songController.GetAll();
+            SongController songController = new SongController();
+            _songs = songController.GetAll();
             Songs.ItemsSource = _songs;
         }
 
@@ -59,7 +57,8 @@ namespace minify.View
 
         public void Refresh()
         {
-            List<Song> items = _songController.GetAll();
+            SongController controller = new SongController();
+            List<Song> items = controller.GetAll();
             Songs.ItemsSource = items.ToArray();
         }
 
@@ -92,17 +91,21 @@ namespace minify.View
             {
                 var re = (IdRetreivedEventArgs)e;
 
-                Hitlist hitlist = _hitlistController.Get(re.HitlistId, true);
-                Song song = _songController.Get(re.SongId);
+                HitlistController hitlistController = new HitlistController();
+                SongController songController = new SongController();
+
+                Hitlist hitlist = hitlistController.Get(re.HitlistId, true);
+                Song song = songController.Get(re.SongId);
 
                 if (!hitlist.Songs.Any(x => x.SongId == song.Id))
                 {
-                    _hitlistController.AddSongsToHitlist(hitlist, song);
+                    hitlistController.AddSongsToHitlist(hitlist, song);
                 }
             }
             catch(Exception ex)
             {
                 // Handle exception
+                Debug.Write(ex);
             }
         }
 

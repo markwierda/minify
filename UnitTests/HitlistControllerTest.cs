@@ -16,7 +16,7 @@ namespace UnitTests
         [SetUp]
         public void Setup()
         {
-            _controller = ControllerManager.Get<HitlistController>();
+            _controller = new HitlistController();
             testId = new Guid("{aa4cb653-3c62-5e22-5cc3-cca5fd57c846}");
         }
 

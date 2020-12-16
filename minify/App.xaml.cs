@@ -13,22 +13,7 @@ namespace minify
     {
         public App()
         {
-            CreateControllers();
             AppData.Initialize();
-        }
-        public void CreateControllers()
-        {
-            AppDbContext context = new AppDbContextFactory().CreateDbContext();
-
-            ControllerManager.Initialize();
-            ControllerManager.AddRange(
-                    new HitlistController(context), 
-                    new LoginController(context), 
-                    new SongController(context),
-                    new LoginController(context),
-                    new RegisterController(context),
-                    new SongController(context)
-            );
         }
     }
 }

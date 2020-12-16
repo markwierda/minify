@@ -17,7 +17,7 @@ namespace minify.View
         public Register()
         {
             InitializeComponent();
-            _controller = ControllerManager.Get<RegisterController>();
+            _controller = new RegisterController();
         }
 
         private void Register_Button_Click(object sender, RoutedEventArgs e)
