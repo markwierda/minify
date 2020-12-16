@@ -22,5 +22,10 @@ namespace minify.View
         {
             InitializeComponent();
         }
+
+        private void DeleteHitlist_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
