@@ -77,12 +77,12 @@ namespace minify.DAL
             builder.Entity<Message>(message => {
                 message
                     .HasKey(s => s.Id);
-
-                // create a one to one relation from Message.UserId to User
+                
+                // create a one to many relation from Message.UserId to User
                 message
                     .HasOne(m => m.User)
-                    .WithOne()
-                    .HasForeignKey<Message>(u => u.UserId);
+                    .WithMany()
+                    .HasForeignKey(m => m.UserId);
             });
 
             #region Seed
@@ -130,7 +130,8 @@ namespace minify.DAL
 
             Message[] messages = new Message[]
             {
-                new Message { Id = Guid.NewGuid(), StreamroomId = streamrooms[0].Id, UserId = users[0].Id, Text = "Huh naar huis?" },
+                new Message { Id = new Guid("{197a232b-4bb8-4961-9264-81349df9d785}"), StreamroomId = streamrooms[0].Id, UserId = users[0].Id, Text = "Huh naar huis?" },
+                new Message { Id = Guid.NewGuid(), StreamroomId = streamrooms[0].Id, UserId = users[0].Id, Text = "Huh naar huis?2" },
             };
 
             SongVote[] songVotes = new SongVote[]
