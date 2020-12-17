@@ -1,6 +1,5 @@
 ﻿using minify.Controller;
 using minify.DAL.Entities;
-using minify.Managers;
 
 using NUnit.Framework;
 using System;
@@ -20,7 +19,6 @@ namespace UnitTests
             testId = new Guid("{aa5ab627-3b64-4c22-9cc3-cca5fd57c896}");
         }
 
-
         [Test]
         public void GetAll_NotNull()
         {
@@ -39,7 +37,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void Get_By_Id_Rerturn_IsNotNull()
+        public void Get_By_Id_Return_IsNotNull()
         {
             Song song = _controller.Get(testId);
 

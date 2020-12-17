@@ -1,7 +1,4 @@
-﻿using minify.Controller;
-using minify.DAL;
-using minify.Managers;
-using minify.Model;
+﻿using minify.Model;
 using System.Windows;
 
 namespace minify

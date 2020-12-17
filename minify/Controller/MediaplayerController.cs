@@ -14,6 +14,7 @@ namespace minify.Controller
     {
         private static readonly MediaPlayer _mediaPlayer = new MediaPlayer();
         private static Song _currentSong;
+        private static TimeSpan _currentSongPosition;
 
         public static List<Song> Songs { get; private set; }
 
@@ -164,6 +165,15 @@ namespace minify.Controller
         }
 
         /// <summary>
+        /// Returns the mediaplayer's current song's position
+        /// </summary>
+        /// <returns></returns>
+        public static TimeSpan GetCurrentSongPosition()
+        {
+            return _currentSongPosition;
+        }
+
+        /// <summary>
         /// Invoke the event handler for updating the mediaplayer
         /// </summary>
         /// <param name="sender"></param>
@@ -171,6 +181,9 @@ namespace minify.Controller
         private static void Update(object sender, EventArgs e)
         {
             if (_mediaPlayer.NaturalDuration.HasTimeSpan)
+            {
+                _currentSongPosition = _mediaPlayer.Position;
+
                 UpdateMediaplayer?.Invoke(null,
                     new UpdateMediaplayerEventArgs(
                         _currentSong.Name,
@@ -179,6 +192,7 @@ namespace minify.Controller
                         _mediaPlayer.NaturalDuration.TimeSpan
                     )
                 );
+            }
         }
 
         /// <summary>

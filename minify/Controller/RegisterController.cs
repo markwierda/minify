@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace minify.Controller
 {
-    public class RegisterController 
+    public class RegisterController
     {
         private readonly Repository<User> _repository;
 

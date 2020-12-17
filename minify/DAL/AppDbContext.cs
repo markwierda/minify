@@ -1,24 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-
-using minify.Controller;
 using minify.DAL.Entities;
 using minify.Managers;
 
 using System;
-using System.Data.Entity.Core.Objects;
 
 namespace minify.DAL
 {
     public class AppDbContext : DbContext
     {
         public DbSet<Song> Songs { get; set; }
-        public DbSet<Stream> Streams { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Hitlist> Hitlists { get; set; }
         public DbSet<HitlistSong> HitlistSongs { get; set; }
+        public DbSet<Streamroom> Streamrooms { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<SongVote> SongVotes { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -54,6 +54,36 @@ namespace minify.DAL
                     .HasForeignKey(hs => hs.HitlistId)
                     // When the relation is deleted, do not delete the hitlist.
                     .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            builder.Entity<Streamroom>(streamroom =>
+            {
+                streamroom
+                    .HasKey(s => s.Id);
+
+                // create a one to one relation from Streamroom.HitlistId to Hitlist
+                streamroom
+                    .HasOne(r => r.Hitlist)
+                    .WithOne()
+                    .HasForeignKey<Streamroom>(h => h.HitlistId);
+
+                // create a one to one relation from Streamroom.SongId to Song
+                streamroom
+                    .HasOne(r => r.Song)
+                    .WithMany()
+                    .HasForeignKey(s => s.CurrentSongId);
+            });
+
+            builder.Entity<Message>(message =>
+            {
+                message
+                    .HasKey(s => s.Id);
+
+                // create a one to many relation from Message.UserId to User
+                message
+                    .HasOne(m => m.User)
+                    .WithMany()
+                    .HasForeignKey(m => m.UserId);
             });
 
             #region Seed
@@ -94,12 +124,31 @@ namespace minify.DAL
                 new HitlistSong { Id = Guid.NewGuid(), SongId = songs[0].Id, HitlistId = hitlists[1].Id },
             };
 
+            Streamroom[] streamrooms = new Streamroom[]
+            {
+                new Streamroom { Id = new Guid("{197a232b-4bb7-4961-9153-81349df9d785}"), HitlistId = hitlists[0].Id, CurrentSongId = songs[0].Id, CurrentSongPosition = new TimeSpan(0, 0, 0), IsPaused = false },
+            };
+
+            Message[] messages = new Message[]
+            {
+                new Message { Id = new Guid("{197a232b-4bb8-4961-9264-81349df9d785}"), StreamroomId = streamrooms[0].Id, UserId = users[0].Id, Text = "Huh naar huis?" },
+                new Message { Id = Guid.NewGuid(), StreamroomId = streamrooms[0].Id, UserId = users[0].Id, Text = "Huh naar huis?2" },
+            };
+
+            SongVote[] songVotes = new SongVote[]
+            {
+                new SongVote { Id = Guid.NewGuid(), StreamroomId = streamrooms[0].Id, SongId = songs[0].Id, Votes = 1 },
+            };
+
             builder.Entity<Song>().HasData(songs);
             builder.Entity<User>().HasData(users);
             builder.Entity<Hitlist>().HasData(hitlists);
             builder.Entity<HitlistSong>().HasData(hitlistSongs);
+            builder.Entity<Streamroom>().HasData(streamrooms);
+            builder.Entity<Message>().HasData(messages);
+            builder.Entity<SongVote>().HasData(songVotes);
 
             #endregion Seed
         }
-    }    
+    }
 }
