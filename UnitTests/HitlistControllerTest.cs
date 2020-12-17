@@ -1,6 +1,5 @@
 ﻿using minify.Controller;
 using minify.DAL.Entities;
-using minify.Managers;
 
 using NUnit.Framework;
 using System;

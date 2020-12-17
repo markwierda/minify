@@ -12,7 +12,7 @@ using System.Linq;
 namespace minify.Controller
 {
     public class HitlistController
-    { 
+    {
         private readonly Repository<Hitlist> _hitlistRepository;
         private readonly Repository<HitlistSong> _hitlistSongRepository;
 
@@ -136,21 +136,20 @@ namespace minify.Controller
                 Debug.Write(ex);
                 return null;
             }
-
         }
 
         public bool AddSongsToHitlist(Hitlist hitlist, params Song[] songs)
         {
             if (songs == null || songs.Length == 0)
             {
-                return false; 
+                return false;
             }
-                
+
             List<HitlistSong> hitlistSongs = CreateHitlistSongList(hitlist, songs);
 
             try
             {
-                foreach(var hitlistSong in hitlistSongs)
+                foreach (var hitlistSong in hitlistSongs)
                 {
                     _hitlistSongRepository.Add(hitlistSong);
                 }
@@ -159,7 +158,7 @@ namespace minify.Controller
 
                 return ammount > 0;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.Write(ex);
                 return false;
@@ -180,6 +179,7 @@ namespace minify.Controller
 
             return hitlistSongs;
         }
+
         /// <summary>
         /// Creates a list with the hitlist's songs
         /// </summary>

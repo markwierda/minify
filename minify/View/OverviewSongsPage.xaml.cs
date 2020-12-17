@@ -1,14 +1,11 @@
-﻿using minify.View;
-using minify.Controller;
+﻿using minify.Controller;
 using minify.DAL.Entities;
-using minify.Managers;
-
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Controls;
-using System.Windows;
 using System.Diagnostics;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace minify.View
 {
@@ -35,8 +32,6 @@ namespace minify.View
             {
                 if (((Song)item).Equals(song))
                     Songs.SelectedItem = item;
-
-
             }
         }
 
@@ -66,22 +61,21 @@ namespace minify.View
         {
             try
             {
-                Button btn = (Button)sender;           
+                Button btn = (Button)sender;
                 Guid songId = (Guid)btn.CommandParameter;
                 ChooseHitlistDialog choose = new ChooseHitlistDialog(songId, this);
                 choose.IdRetreived += IdRetreived;
                 choose.Show();
                 btn.Visibility = Visibility.Hidden;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 //Handle Exception
             }
-
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -102,7 +96,7 @@ namespace minify.View
                     hitlistController.AddSongsToHitlist(hitlist, song);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 // Handle exception
                 Debug.Write(ex);

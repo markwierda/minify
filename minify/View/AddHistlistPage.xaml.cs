@@ -1,6 +1,5 @@
 ﻿using minify.Controller;
 using minify.DAL.Entities;
-using minify.Managers;
 using minify.Model;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,6 +7,7 @@ using System.Windows.Controls;
 namespace minify.View
 {
     public delegate void HitlistAddedEventHandler(object sender, UpdateHitlistMenuEventArgs e);
+
     /// <summary>
     /// Interaction logic for AddHistlistPage.xaml
     /// </summary>

@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace minify.Controller
 {
-    public class SongController 
+    public class SongController
     {
         private readonly Repository<Song> _repository;
 

@@ -18,14 +18,14 @@
                     <GridViewColumn Header="Add" Width="100">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button 
+                                <Button
                                 Name="AddButton"
-                                Foreground="Green" 
-                                Content="+" 
-                                Margin="0" 
-                                Click="Button_Click"  
+                                Foreground="Green"
+                                Content="+"
+                                Margin="0"
+                                Click="Button_Click"
                                 CommandParameter="{Binding Id}"
-                                Width="59"/>
+                                Width="59" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
