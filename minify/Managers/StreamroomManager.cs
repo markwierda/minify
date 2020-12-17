@@ -5,13 +5,14 @@ using minify.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Timers;
 
 namespace minify.Manager
 {
     public delegate void StreamroomRefreshedEventHandler(object sender, LocalStreamroomUpdatedEventArgs e);
+
     public delegate void StreamroomIsPausedToggledEventHandler(object sender, IsPausedEventArgs e);
+
     public class StreamroomManager
     {
         private const int INTERVAL = 1000;
@@ -59,17 +60,14 @@ namespace minify.Manager
             if (_streamroom.Id == null)
                 throw new ArgumentNullException("id");
 
-
             _streamroom.IsPaused = true;
             Update();
         }
-
 
         public void Play()
         {
             if (_streamroom.Id == null)
                 throw new ArgumentNullException("id");
-
 
             _streamroom.IsPaused = false;
             Update();

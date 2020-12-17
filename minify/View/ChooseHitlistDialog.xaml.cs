@@ -1,7 +1,6 @@
 ﻿using minify.Controller;
 using minify.DAL.Entities;
 using minify.Model;
-using minify.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,14 +22,14 @@ namespace minify.View
     /// </summary>
     public partial class ChooseHitlistDialog : Window
     {
-        private Guid songId; 
+        private Guid songId;
         public List<Hitlist> Hitlists { get; set; }
         public Hitlist hitlist;
         public IdRetreived IdRetreived { get; set; }
         public OverviewSongsPage _page;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="songId"></param>
         public ChooseHitlistDialog(Guid songId, OverviewSongsPage overviewSongsPage)
@@ -47,7 +46,6 @@ namespace minify.View
             var removeHitlists = new List<Hitlist>();
             foreach (Hitlist hitlist in hitlists)
             {
-
                 if (hitlist == null)
                 {
                     continue;
@@ -56,11 +54,10 @@ namespace minify.View
                 if (hitlist.Songs.Any(x => x.SongId == songId))
                 {
                     Hitlists.Remove(hitlist);
-
                 }
-               
             }
         }
+
         private void AddSongToHitlist(object sender, RoutedEventArgs e)
         {
             try
@@ -81,8 +78,7 @@ namespace minify.View
                     MessageBox.Show("Geen hitlijst gekozen");
                 }
             }
-           
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show("Onbekende fout opgetreden.");
             }

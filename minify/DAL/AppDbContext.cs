@@ -16,7 +16,9 @@ namespace minify.DAL
         public DbSet<Message> Messages { get; set; }
         public DbSet<SongVote> SongVotes { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -54,7 +56,8 @@ namespace minify.DAL
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
-            builder.Entity<Streamroom>(streamroom => {
+            builder.Entity<Streamroom>(streamroom =>
+            {
                 streamroom
                     .HasKey(s => s.Id);
 
@@ -71,10 +74,11 @@ namespace minify.DAL
                     .HasForeignKey(s => s.CurrentSongId);
             });
 
-            builder.Entity<Message>(message => {
+            builder.Entity<Message>(message =>
+            {
                 message
                     .HasKey(s => s.Id);
-                
+
                 // create a one to many relation from Message.UserId to User
                 message
                     .HasOne(m => m.User)
@@ -146,5 +150,5 @@ namespace minify.DAL
 
             #endregion Seed
         }
-    }    
+    }
 }

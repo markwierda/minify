@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 
 namespace minify.Controller
 {
@@ -30,7 +29,7 @@ namespace minify.Controller
         }
 
         /// <summary>
-        /// Gets all the messages 
+        /// Gets all the messages
         /// </summary>
         /// <param name="streamroom"></param>
         /// <returns></returns>
@@ -51,7 +50,7 @@ namespace minify.Controller
         {
             Message message = _messageRepository.Find(messageId);
 
-            if(message == null)
+            if (message == null)
             {
                 return null;
             }
@@ -71,22 +70,22 @@ namespace minify.Controller
                 return false;
             }
 
-            if (string.IsNullOrEmpty(message.Text) ||message.Text.Length > 140)
+            if (string.IsNullOrEmpty(message.Text) || message.Text.Length > 140)
             {
                 return false;
             }
 
-            if(message.StreamroomId == new Guid())
+            if (message.StreamroomId == new Guid())
             {
                 return false;
             }
-            
+
             try
             {
                 _messageRepository.Add(message);
                 return SaveChangesSuccesfull();
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex);
                 return false;
@@ -100,7 +99,7 @@ namespace minify.Controller
         /// <returns>True, when the message is deleted successfully, False otherwise</returns>
         public bool DeleteMessage(Message message)
         {
-            if(!BelongsEntityToUser(message.UserId))
+            if (!BelongsEntityToUser(message.UserId))
             {
                 return false;
             }

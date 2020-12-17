@@ -1,12 +1,8 @@
 ﻿using minify.Controller;
-using minify.DAL;
 using minify.DAL.Entities;
-using minify.Managers;
 using minify.Model;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -26,7 +22,7 @@ namespace minify.View
 
         private OverviewStreamroom OverviewStreamroomPage
         {
-            get { return _overviewStreamroomPage;  }
+            get { return _overviewStreamroomPage; }
             set
             {
                 value.MessagesRefreshed += OverviewStreamroom_MessagesRefreshed;
@@ -34,8 +30,8 @@ namespace minify.View
             }
         }
 
-        private AddHistlistPage AddHitlistPage 
-        { 
+        private AddHistlistPage AddHitlistPage
+        {
             get { return _addHitlistPage; }
             set
             {
@@ -43,7 +39,6 @@ namespace minify.View
                 _addHitlistPage = value;
             }
         }
-
 
         private OverviewHitlistPage OverviewHitlistPage
         {
@@ -59,7 +54,6 @@ namespace minify.View
         public Overview()
         {
             MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
-
 
             InitializeComponent();
         }
@@ -175,7 +169,7 @@ namespace minify.View
             else
                 DisplayPlay();
 
-            if (OverviewHitlistPage != null) 
+            if (OverviewHitlistPage != null)
                 OverviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
 
             if (_overviewSongsPage != null)
@@ -242,10 +236,10 @@ namespace minify.View
 
         private void SearchBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            if(Search.Text != "Search..." && Search.Text != "")
+            if (Search.Text != "Search..." && Search.Text != "")
             {
                 var songs = new SongController().Search(Search.Text);
-                if(songs != null && songs.Count > 0)
+                if (songs != null && songs.Count > 0)
                 {
                     OverviewSongsPage overviewSongs = new OverviewSongsPage(songs);
                     contentFrame.Content = overviewSongs;
@@ -263,7 +257,7 @@ namespace minify.View
 
         private void Search_MouseEnter(object sender, MouseEventArgs e)
         {
-            if(Search.Text == "Search...")
+            if (Search.Text == "Search...")
             {
                 Search.Text = "";
             }

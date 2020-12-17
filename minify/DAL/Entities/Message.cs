@@ -1,5 +1,4 @@
-﻿using minify.DAL.Entities;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace minify.DAL.Entities
@@ -16,6 +15,5 @@ namespace minify.DAL.Entities
         public string Text { get; set; }
 
         public User User { get; set; }
-
     }
 }

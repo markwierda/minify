@@ -1,5 +1,4 @@
 ﻿using minify.Controller;
-using minify.Managers;
 
 using System.Windows;
 

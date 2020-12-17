@@ -1,7 +1,6 @@
 ﻿using Castle.Core.Internal;
 using minify.Controller;
 using minify.DAL.Entities;
-using minify.Managers;
 
 using System.Windows;
 

@@ -13,9 +13,9 @@
               IsEditable="True"
               ItemsSource="{Binding Hitlists}"
               DisplayMemberPath="Title"
-              SelectedValuePath="Id" 
+              SelectedValuePath="Id"
               IsSynchronizedWithCurrentItem="True"
-              Width="250"/>
+              Width="250" />
 
             <Button Name="btnAddSong" Click="AddSongToHitlist">Add</Button>
         </StackPanel>

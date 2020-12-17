@@ -1,7 +1,6 @@
 ﻿using Castle.Core.Internal;
 using minify.Controller;
 using minify.DAL.Entities;
-using minify.Managers;
 using minify.Model;
 using System;
 using System.Collections.Generic;
@@ -12,6 +11,7 @@ using System.Windows.Controls;
 namespace minify.View
 {
     public delegate void StreamroomCreatedEventHandler(object sender, CreatedStreamRoomEventArgs e);
+
     public delegate void RefreshHitlistOverview(object sender, EventArgs e);
 
     /// <summary>
@@ -23,6 +23,7 @@ namespace minify.View
         private readonly StreamroomController _streamroomController;
         private readonly Hitlist _hitlist;
         private List<Song> _songs = new List<Song>();
+
         public event RefreshHitlistOverview RefreshHitlistOverview;
 
         public StreamroomCreatedEventHandler StreamroomCreated;
@@ -61,7 +62,7 @@ namespace minify.View
                     }
                 }
 
-                if(_hitlist.UserId == AppData.UserId && !_streamroomController.DoesRoomAlreadyExist(_hitlist.Id))
+                if (_hitlist.UserId == AppData.UserId && !_streamroomController.DoesRoomAlreadyExist(_hitlist.Id))
                 {
                     DeleteHitlist.Visibility = Visibility.Visible;
                 }
@@ -78,8 +79,6 @@ namespace minify.View
             {
                 if (((Song)item).Equals(song))
                     HitlistSongs.SelectedItem = item;
-
-
             }
 
             HitlistSongs.Visibility = Visibility.Visible;

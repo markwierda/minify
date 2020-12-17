@@ -17,8 +17,8 @@ namespace minify.Controller
 
         public static List<Song> Songs { get; private set; }
 
-        public static TimeSpan GetPosition() 
-        { 
+        public static TimeSpan GetPosition()
+        {
             var a = _mediaPlayer.Position;
             return a;
         }

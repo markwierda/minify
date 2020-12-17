@@ -1,16 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using minify.DAL;
-using minify.DAL.Repositories;
 using minify.DAL.Entities;
-using minify.Model;
+using minify.DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Timers;
 
 namespace minify.Controller
 {
-
     public class StreamroomController
     {
         private readonly Repository<Streamroom> _repository;
@@ -129,21 +126,17 @@ namespace minify.Controller
             if (streamroom.Id == null)
                 throw new ArgumentNullException("id");
 
-
             streamroom.IsPaused = true;
             Update(streamroom);
         }
-
 
         public void Play(Streamroom streamroom)
         {
             if (streamroom.Id == null)
                 throw new ArgumentNullException("id");
 
-
             streamroom.IsPaused = false;
             Update(streamroom);
-
         }
 
         public bool IsPaused(Streamroom streamroom)
@@ -152,7 +145,6 @@ namespace minify.Controller
                 throw new ArgumentNullException("id");
 
             return Get(streamroom.Id).IsPaused;
-
         }
 
         /// <summary>
