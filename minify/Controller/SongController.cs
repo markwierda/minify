@@ -2,13 +2,14 @@
 using minify.DAL;
 using minify.DAL.Entities;
 using minify.DAL.Repositories;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace minify.Controller
 {
-    public class SongController
+    public class SongController 
     {
         private readonly Repository<Song> _repository;
 
@@ -17,8 +18,7 @@ namespace minify.Controller
         /// </summary>
         public SongController()
         {
-            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
-            _repository = new Repository<Song>(context);
+            _repository = new Repository<Song>(new AppDbContextFactory().CreateDbContext());
         }
 
         /// <summary>

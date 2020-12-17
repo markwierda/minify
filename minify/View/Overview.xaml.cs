@@ -1,5 +1,7 @@
 ﻿using minify.Controller;
+using minify.DAL;
 using minify.DAL.Entities;
+using minify.Managers;
 using minify.Model;
 using System;
 using System.Collections.Generic;
@@ -16,58 +18,50 @@ namespace minify.View
     /// </summary>
     public partial class Overview : Window
     {
-        private readonly HitlistController _hitlistController;
-        private readonly LoginController _loginController;
-
-        private readonly SongController _songController;
-
         private TimeSpan _positionCache;
 
         private OverviewHitlistPage _overviewHitlistPage;
+        private AddHistlistPage _addHitlistPage;
         private OverviewSongsPage _overviewSongsPage;
 
         public Overview()
         {
-            _hitlistController = new HitlistController();
-            _loginController = new LoginController();
-            _songController = new SongController();
             MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
-            _hitlistController.HitlistAdded += UpdateHitlistMenu;
+
+            _addHitlistPage = new AddHistlistPage();
+            _addHitlistPage.HitlistAdded += UpdateHitlistMenu;
+
             InitializeComponent();
+        }
+
+        public void RefreshHitListMenu(object sender, EventArgs e)
+        {
+            InitializeHitListMenu();
+            HitlistMenu.Items.Refresh();
+
+            OverviewSongsPage overviewSongs = new OverviewSongsPage();
+            contentFrame.Content = overviewSongs;
         }
 
         public void InitializeHitListMenu()
         {
-            List<Hitlist> hitlists = _hitlistController.GetHitlistsByUserId(AppData.UserId);
+            List<Hitlist> hitlists = new HitlistController().GetHitlistsByUserId(AppData.UserId);
             HitlistMenu.ItemsSource = hitlists;
         }
 
         public void UpdateHitlistMenu(object sender, UpdateHitlistMenuEventArgs e)
         {
-            List<Hitlist> hitlists = _hitlistController.GetHitlistsByUserId(AppData.UserId);
-            HitlistMenu.ItemsSource = hitlists;
+            InitializeHitListMenu();
             HitlistMenu.Items.Refresh();
 
             //display current hitlist
-            _overviewHitlistPage = new OverviewHitlistPage(e.Id);
-
-            // set the new item as selected
-            foreach (var item in HitlistMenu.Items)
-            {
-                // cast ListViewItem to Hitlist and check if the id equals the eventargs id
-                if (((Hitlist)item).Id.Equals(e.Id))
-                {
-                    HitlistMenu.SelectedItem = item;
-                }
-            }
-
-            contentFrame.Content = _overviewHitlistPage;
+            OverviewHitlistPage overview = new OverviewHitlistPage(e.Id);
+            contentFrame.Content = overview;
         }
 
         private void Btn_Add_Hitlist(object sender, RoutedEventArgs e)
         {
-            InitializeHitListMenu();
-            AddHistlistPage addHitlistPage = new AddHistlistPage(_hitlistController);
+            AddHistlistPage addHitlistPage = _addHitlistPage;
             contentFrame.Content = addHitlistPage;
         }
 
@@ -76,7 +70,7 @@ namespace minify.View
             if (e.AddedItems.Count > 0)
             {
                 Hitlist selected = (Hitlist)e.AddedItems[0];
-                _overviewHitlistPage = new OverviewHitlistPage(selected.Id);
+                _overviewHitlistPage = CreateOverviewHitlistPage(selected.Id);
                 contentFrame.Content = _overviewHitlistPage;
             }
         }
@@ -192,7 +186,8 @@ namespace minify.View
 
         private void Btn_Logout(object sender, RoutedEventArgs e)
         {
-            _loginController.Logout();
+            new LoginController().Logout();
+            MediaplayerController.Close();
             Login login = new Login();
             login.Show();
             Close();
@@ -202,7 +197,7 @@ namespace minify.View
         {
             if(Search.Text != "Search..." && Search.Text != "")
             {
-                var songs = _songController.Search(Search.Text);
+                var songs = new SongController().Search(Search.Text);
                 if(songs != null && songs.Count > 0)
                 {
                     OverviewSongsPage overviewSongs = new OverviewSongsPage(songs);
@@ -223,6 +218,14 @@ namespace minify.View
             {
                 Search.Text = "";
             }
+        }
+
+        private OverviewHitlistPage CreateOverviewHitlistPage(Guid id)
+        {
+            _overviewHitlistPage = new OverviewHitlistPage(id);
+            _overviewHitlistPage.RefreshHitlistOverview += RefreshHitListMenu;
+
+            return _overviewHitlistPage;
         }
     }
 }
