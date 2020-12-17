@@ -11,7 +11,7 @@
     <Grid>
         <Button Name="DeleteHitlist" Content="Delete Hitlist"
                 Command="{Binding Path=DataContext.RemoveSubjectCommand}"
-                HorizontalAlignment="Left" Width="150" Margin="609,28,0,0" VerticalAlignment="Top" Height="34" Click="btn_delete_click" Visibility="Hidden" />
+                HorizontalAlignment="Left" Width="150" Margin="609,28,0,0" VerticalAlignment="Top" Height="34" Click="Btn_delete_click" Visibility="Hidden" />
         <Button Name="CreateStreamroom" Content="Create Streamroom"
                 HorizontalAlignment="Left" Width="155" Margin="440,28,0,0" VerticalAlignment="Top" Height="34" Click="CreateStreamroom_Click" Visibility="Hidden" />
         <Label Name="HitlistTitle" Content="Playlist title" HorizontalAlignment="Left" Margin="80,65,0,0" VerticalAlignment="Top" />

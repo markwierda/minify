@@ -21,7 +21,7 @@ namespace minify.View
     {
         private readonly HitlistController _hitlistController;
         private readonly StreamroomController _streamroomController;
-        private Hitlist _hitlist;
+        private readonly Hitlist _hitlist;
         private List<Song> _songs = new List<Song>();
         public event RefreshHitlistOverview RefreshHitlistOverview;
 
@@ -61,7 +61,7 @@ namespace minify.View
                     }
                 }
 
-                if(_hitlist.UserId == AppData.UserId)
+                if(_hitlist.UserId == AppData.UserId && !_streamroomController.DoesRoomAlreadyExist(_hitlist.Id))
                 {
                     DeleteHitlist.Visibility = Visibility.Visible;
                 }
@@ -103,7 +103,7 @@ namespace minify.View
             }
         }
 
-        private void btn_delete_click(object sender, RoutedEventArgs e)
+        private void Btn_delete_click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Are you sure?",
                                              "Confirmation",
@@ -114,7 +114,7 @@ namespace minify.View
                 HitlistController hitlistController = new HitlistController();
                 hitlistController.Delete(_hitlist);
                 MessageBox.Show("Hitlist Deleted", "Success");
-                RefreshHitlistOverview.Invoke(this, new EventArgs());
+                RefreshHitlistOverview?.Invoke(this, new EventArgs());
             }
         }
 

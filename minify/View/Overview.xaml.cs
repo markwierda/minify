@@ -19,20 +19,18 @@ namespace minify.View
     public partial class Overview : Window
     {
         private TimeSpan _positionCache;
-
-        private OverviewHitlistPage _overviewHitlistPage;
         private OverviewSongsPage _overviewSongsPage;
-        private OverviewHitlistPage hitlistPage;
-        private OverviewStreamroom overviewStreamroomPage;
+        private OverviewHitlistPage _hitlistPage;
+        private OverviewStreamroom _overviewStreamroomPage;
         private AddHistlistPage _addHitlistPage;
 
         private OverviewStreamroom OverviewStreamroomPage
         {
-            get { return overviewStreamroomPage;  }
+            get { return _overviewStreamroomPage;  }
             set
             {
                 value.MessagesRefreshed += OverviewStreamroom_MessagesRefreshed;
-                overviewStreamroomPage = value;
+                _overviewStreamroomPage = value;
             }
         }
 
@@ -49,11 +47,12 @@ namespace minify.View
 
         private OverviewHitlistPage OverviewHitlistPage
         {
-            get { return hitlistPage; }
+            get { return _hitlistPage; }
             set
             {
                 value.StreamroomCreated += OpenStreamroom;
-                hitlistPage = value;
+                value.RefreshHitlistOverview += RefreshHitListMenu;
+                _hitlistPage = value;
             }
         }
 
@@ -161,6 +160,9 @@ namespace minify.View
 
             if (_overviewSongsPage != null)
                 _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
+
+            if (_overviewStreamroomPage != null)
+                _overviewStreamroomPage.Refresh(MediaplayerController.GetCurrentSong());
         }
 
         private void OnMouseDownNext(object sender, MouseButtonEventArgs e)
@@ -178,6 +180,9 @@ namespace minify.View
 
             if (_overviewSongsPage != null)
                 _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
+
+            if (_overviewStreamroomPage != null)
+                _overviewStreamroomPage.Refresh(MediaplayerController.GetCurrentSong());
         }
 
         private void UpdateMediaplayer(object sender, UpdateMediaplayerEventArgs e)
@@ -247,8 +252,10 @@ namespace minify.View
                 }
                 else
                 {
-                    Label label = new Label();
-                    label.Content = "No songs could be found";
+                    Label label = new Label
+                    {
+                        Content = "No songs could be found"
+                    };
                     contentFrame.Content = label;
                 }
             }
