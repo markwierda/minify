@@ -53,7 +53,11 @@ namespace minify.Controller
             {
                 query = query
                     .Include(s => s.Song)
-                    .Include(s => s.Hitlist);
+                    .Include(s => s.Hitlist)
+                        .ThenInclude(h => h.User)
+                    .Include(s => s.Hitlist)
+                        .ThenInclude(h => h.Songs)
+                            .ThenInclude(hs => hs.Song);
             }
 
             return query.Where(x => x.Id == id).FirstOrDefault();
