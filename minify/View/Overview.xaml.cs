@@ -24,6 +24,7 @@ namespace minify.View
         private OverviewSongsPage _overviewSongsPage;
         private OverviewHitlistPage hitlistPage;
         private OverviewStreamroom overviewStreamroomPage;
+        private AddHistlistPage _addHitlistPage;
 
         private OverviewStreamroom OverviewStreamroomPage
         {
@@ -34,6 +35,17 @@ namespace minify.View
                 overviewStreamroomPage = value;
             }
         }
+
+        private AddHistlistPage AddHitlistPage 
+        { 
+            get { return _addHitlistPage; }
+            set
+            {
+                value.HitlistAdded += UpdateHitlistMenu;
+                _addHitlistPage = value;
+            }
+        }
+
 
         private OverviewHitlistPage OverviewHitlistPage
         {
@@ -49,8 +61,6 @@ namespace minify.View
         {
             MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
 
-            _addHitlistPage = new AddHistlistPage();
-            _addHitlistPage.HitlistAdded += UpdateHitlistMenu;
 
             InitializeComponent();
         }
@@ -93,8 +103,8 @@ namespace minify.View
 
         private void Btn_Add_Hitlist(object sender, RoutedEventArgs e)
         {
-            AddHistlistPage addHitlistPage = _addHitlistPage;
-            contentFrame.Content = addHitlistPage;
+            AddHitlistPage = new AddHistlistPage();
+            contentFrame.Content = AddHitlistPage;
         }
 
         private void HitlistMenu_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)

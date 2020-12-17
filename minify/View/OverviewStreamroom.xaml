@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="OverviewStreamroom">
-
+    <Grid>
         <Label Name="StreamroomTitle" Content="Playlist title" HorizontalAlignment="Left" Margin="80,65,0,0" VerticalAlignment="Top" />
         <Label Name="HitlistDescription" Content="Playlist descriptionn" HorizontalAlignment="Left" Margin="80,94,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
         <Label Name="HitlistInfo" Content="Playlist info" HorizontalAlignment="Left" Margin="80,123,0,0" VerticalAlignment="Top" />

@@ -39,51 +39,26 @@ namespace minify.View
             _manager.StreamroomRefreshed += UpdateLocalStreamroom;
             InitializeComponent();
 
-            _streamroomcontroller = new StreamroomController();
-            _hitlistcontroller = new HitlistController();
-            _streamroom = _streamroomcontroller.Get(id, true);
+            HitlistController hitlistcontroller = new HitlistController();
+            _streamroom = new StreamroomController().Get(streamroomId, true);
 
             if (_streamroom.Hitlist != null)
             {
                 StreamroomTitle.Content = _streamroom.Hitlist.Title;
-                if (!_streamroom.Hitlist.Description.IsNullOrEmpty())
+                if (!string.IsNullOrEmpty(_streamroom.Hitlist.Description))
                 {
                     HitlistDescription.Content = _streamroom.Hitlist.Description;
                     HitlistDescription.Visibility = Visibility.Visible;
                 }
-                HitlistInfo.Content = _hitlistcontroller.GetHitlistInfo(_streamroom.Hitlist);
+                HitlistInfo.Content = hitlistcontroller.GetHitlistInfo(_streamroom.Hitlist);
 
                 if (_streamroom.Hitlist.Songs != null && _streamroom.Hitlist.Songs.Count > 0)
                 {
-                    var songs = _hitlistcontroller.GetSongs(_streamroom.Hitlist.Songs);
+                    var songs = hitlistcontroller.GetSongs(_streamroom.Hitlist.Songs);
                     HitlistSongs.ItemsSource = songs;
                     HitlistSongs.Visibility = Visibility.Visible;
                 }
             }
-                /*// create instance of controller and get the hitlist by id
-                _hitlistcontroller = new HitlistController();
-                _hitlistSongController = new HitlistSongController();
-                _hitlist = _hitlistcontroller.Get(id, true);
-
-                // check if hitlist is not null
-                if (_hitlist != null)
-                {
-                    // set the title, description and the info in the overview
-                    HitlistTitle.Content = _hitlist.Title;
-                    if (!_hitlist.Description.IsNullOrEmpty())
-                    {
-                        HitlistDescription.Content = _hitlist.Description;
-                        HitlistDescription.Visibility = Visibility.Visible;
-                    }
-                    HitlistInfo.Content = _hitlistcontroller.GetHitlistInfo(_hitlist);
-
-                    // if there are songs, display the listview
-                    if (_hitlist.Songs != null && _hitlist.Songs.Count > 0)
-                    {
-                        HitlistSongs.ItemsSource = _hitlistcontroller.GetSongs(_hitlist.Songs);
-                        HitlistSongs.Visibility = Visibility.Visible;
-                    }
-                }*/
         }
 
         private void UpdateLocalStreamroom(object sender, LocalStreamroomUpdatedEventArgs e)
