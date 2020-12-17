@@ -1,12 +1,12 @@
-﻿using mini_spotify.DAL.Entities;
-using mini_spotify.Model;
+﻿using minify.DAL.Entities;
+using minify.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace mini_spotify.Controller
+namespace minify.Controller
 {
     public delegate void UpdateMediaplayerEventHandler(object sender, UpdateMediaplayerEventArgs e);
 
@@ -29,16 +29,12 @@ namespace mini_spotify.Controller
         }
 
         /// <summary>
-        /// Starts playing a song in the mediaplayer
+        /// Opens a song in the mediaplayer
         /// </summary>
         /// <param name="song"></param>
-        public static void Play(Song song = null)
+        public static void Open(Song song)
         {
-            if (song == null)
-            {
-                _mediaPlayer.Play();
-            }
-            else
+            if (song != null)
             {
                 _currentSong = song;
 
@@ -54,6 +50,22 @@ namespace mini_spotify.Controller
                 timer.Tick += Update;
                 timer.Start();
             }
+            else
+            {
+                _currentSong = null;
+            }
+        }
+
+        /// <summary>
+        /// Starts playing a song in the mediaplayer
+        /// </summary>
+        /// <param name="song"></param>
+        public static void Play()
+        {
+            if (GetSource() == null && _currentSong != null)
+                Open(_currentSong);
+
+            _mediaPlayer.Play();
         }
 
         /// <summary>
@@ -80,7 +92,8 @@ namespace mini_spotify.Controller
 
                 int index = Songs.FindIndex(x => x == _currentSong);
                 _currentSong = Songs[index + 1];
-                Play(_currentSong);
+                Open(_currentSong);
+                Play();
                 return true;
             }
             else
@@ -105,7 +118,8 @@ namespace mini_spotify.Controller
 
                 int index = Songs.FindIndex(x => x == _currentSong);
                 _currentSong = Songs[index - 1];
-                Play(_currentSong);
+                Open(_currentSong);
+                Play();
                 return true;
             }
             else
@@ -138,6 +152,15 @@ namespace mini_spotify.Controller
         public static Uri GetSource()
         {
             return _mediaPlayer.Source;
+        }
+
+        /// <summary>
+        /// Returns the mediaplayer's current song
+        /// </summary>
+        /// <returns>Mediaplayer's song</returns>
+        public static Song GetCurrentSong()
+        {
+            return _currentSong;
         }
 
         /// <summary>

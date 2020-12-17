@@ -1,7 +1,7 @@
-﻿using mini_spotify.Controller;
+﻿using minify.Controller;
 using System.Windows;
 
-namespace mini_spotify.View
+namespace minify.View
 {
     /// <summary>
     /// Interaction logic for Login.xaml
@@ -32,7 +32,6 @@ namespace mini_spotify.View
             // try to login with the values
             if (_controller.TryLogin(username, password))
             {
-                // TODO: Display overview
                 Overview overview = new Overview();
                 overview.Show();
                 Close();

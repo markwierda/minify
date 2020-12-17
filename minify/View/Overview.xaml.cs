@@ -1,13 +1,15 @@
-﻿using mini_spotify.Controller;
-using mini_spotify.DAL.Entities;
-using mini_spotify.Model;
+﻿using minify.Controller;
+using minify.DAL.Entities;
+using minify.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace mini_spotify.View
+namespace minify.View
 {
     /// <summary>
     /// Interaction logic for Overview.xaml
@@ -17,16 +19,24 @@ namespace mini_spotify.View
         private readonly HitlistController _hitlistController;
         private readonly LoginController _loginController;
 
+        private readonly SongController _songController;
+
+        private TimeSpan _positionCache;
+
+        private OverviewHitlistPage _overviewHitlistPage;
+        private OverviewSongsPage _overviewSongsPage;
+
         public Overview()
         {
             _hitlistController = new HitlistController();
             _loginController = new LoginController();
+            _songController = new SongController();
             MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
             _hitlistController.HitlistAdded += UpdateHitlistMenu;
             InitializeComponent();
         }
 
-        public void GetAllHitList()
+        public void InitializeHitListMenu()
         {
             List<Hitlist> hitlists = _hitlistController.GetHitlistsByUserId(AppData.UserId);
             HitlistMenu.ItemsSource = hitlists;
@@ -39,7 +49,7 @@ namespace mini_spotify.View
             HitlistMenu.Items.Refresh();
 
             //display current hitlist
-            OverviewHitlistPage overview = new OverviewHitlistPage(e.Id);
+            _overviewHitlistPage = new OverviewHitlistPage(e.Id);
 
             // set the new item as selected
             foreach (var item in HitlistMenu.Items)
@@ -51,11 +61,12 @@ namespace mini_spotify.View
                 }
             }
 
-            contentFrame.Content = overview;
+            contentFrame.Content = _overviewHitlistPage;
         }
 
         private void Btn_Add_Hitlist(object sender, RoutedEventArgs e)
         {
+            InitializeHitListMenu();
             AddHistlistPage addHitlistPage = new AddHistlistPage(_hitlistController);
             contentFrame.Content = addHitlistPage;
         }
@@ -65,8 +76,8 @@ namespace mini_spotify.View
             if (e.AddedItems.Count > 0)
             {
                 Hitlist selected = (Hitlist)e.AddedItems[0];
-                OverviewHitlistPage overviewHitlistpage = new OverviewHitlistPage(selected.Id);
-                contentFrame.Content = overviewHitlistpage;
+                _overviewHitlistPage = new OverviewHitlistPage(selected.Id);
+                contentFrame.Content = _overviewHitlistPage;
             }
         }
 
@@ -84,23 +95,8 @@ namespace mini_spotify.View
 
         private void OnMouseDownPlay(object sender, MouseButtonEventArgs e)
         {
-            if (MediaplayerController.GetSource() == null)
-            {
-                Hitlist hitlist = _hitlistController.Get(new Guid("aa4cb653-3c62-5e22-5cc3-cca5fd57c846"), true);
-                List<Song> songs = _hitlistController.GetSongs(hitlist.Songs);
-
-                if (hitlist.Songs != null)
-                {
-                    MediaplayerController.Initialize(songs);
-                    MediaplayerController.Play(songs.First());
-                    DisplayPause();
-                }
-            }
-            else
-            {
-                MediaplayerController.Play();
-                DisplayPause();
-            }
+            MediaplayerController.Play();
+            DisplayPause();
         }
 
         private void OnMouseDownPause(object sender, MouseButtonEventArgs e)
@@ -123,6 +119,12 @@ namespace mini_spotify.View
                 else
                     DisplayPlay();
             }
+
+            if (_overviewHitlistPage != null)
+                _overviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
+
+            if (_overviewSongsPage != null)
+                _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
         }
 
         private void OnMouseDownNext(object sender, MouseButtonEventArgs e)
@@ -134,12 +136,22 @@ namespace mini_spotify.View
                 DisplayPause();
             else
                 DisplayPlay();
+
+            if (_overviewHitlistPage != null) 
+                _overviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
+
+            if (_overviewSongsPage != null)
+                _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
         }
 
         private void UpdateMediaplayer(object sender, UpdateMediaplayerEventArgs e)
         {
-            if (e.SongName == null)
+            if (e.Position > _positionCache)
+                DisplayPause();
+            else
                 DisplayPlay();
+
+            _positionCache = e.Position;
 
             lbl_Song_Name.Content = e.SongName;
             lbl_Artist.Content = e.Artist;
@@ -147,6 +159,15 @@ namespace mini_spotify.View
             lbl_Song_Duration.Content = e.Duration.ToString(@"mm\:ss");
             Song_Progressbar.Maximum = e.Duration.TotalMilliseconds;
             Song_Progressbar.Value = e.Position.TotalMilliseconds;
+
+            if (e.SongName == null)
+            {
+                if (_overviewHitlistPage != null)
+                    _overviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
+
+                if (_overviewSongsPage != null)
+                    _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
+            }
         }
 
         private void Btn_home(object sender, RoutedEventArgs e)
@@ -158,13 +179,14 @@ namespace mini_spotify.View
 
         private void Btn_songs(object sender, RoutedEventArgs e)
         {
-            OverviewSongsPage overviewSongs = new OverviewSongsPage();
-            contentFrame.Content = overviewSongs;
+            InitializeHitListMenu();
+            _overviewSongsPage = new OverviewSongsPage();
+            contentFrame.Content = _overviewSongsPage;
         }
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            GetAllHitList();
+            InitializeHitListMenu();
             label_Username.Content = AppData.UserName;
         }
 
@@ -174,6 +196,33 @@ namespace mini_spotify.View
             Login login = new Login();
             login.Show();
             Close();
+        }
+
+        private void SearchBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if(Search.Text != "Search..." && Search.Text != "")
+            {
+                var songs = _songController.Search(Search.Text);
+                if(songs != null && songs.Count > 0)
+                {
+                    OverviewSongsPage overviewSongs = new OverviewSongsPage(songs);
+                    contentFrame.Content = overviewSongs;
+                }
+                else
+                {
+                    Label label = new Label();
+                    label.Content = "No songs could be found";
+                    contentFrame.Content = label;
+                }
+            }
+        }
+
+        private void Search_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if(Search.Text == "Search...")
+            {
+                Search.Text = "";
+            }
         }
     }
 }
