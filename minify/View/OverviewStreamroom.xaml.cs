@@ -1,6 +1,8 @@
-﻿using Castle.Core.Internal;
-using minify.Controller;
+﻿using minify.Controller;
 using minify.DAL.Entities;
+using minify.Manager;
+using minify.Model;
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,18 +17,26 @@ using System.Windows.Shapes;
 
 namespace minify.View
 {
+
     /// <summary>
     /// Interaction logic for OverviewStreamroom.xaml
     /// </summary>
-    public partial class OverviewStreamroom : Window
+    public partial class OverviewStreamroom : Page
     {
-        private readonly StreamroomController _streamroomcontroller;
-        private readonly Streamroom _streamroom;
-        private readonly HitlistController _hitlistcontroller;
-        
-        public OverviewStreamroom() : this(new Guid("{197a232b-4bb7-4961-9153-81349df9d785}")) {}
-        public OverviewStreamroom(Guid id)
+        private readonly Guid _streamroomId;
+        private Streamroom _streamroom;
+        private List<Message> _messages;
+        private StreamroomManager _manager;
+
+        public event StreamroomRefreshedEventHandler MessagesRefreshed;
+
+        //event for invoking messages to overview
+
+        public OverviewStreamroom(Guid streamroomId)
         {
+            _streamroomId = streamroomId;
+            _manager = new StreamroomManager(streamroomId);
+            _manager.StreamroomRefreshed += UpdateLocalStreamroom;
             InitializeComponent();
 
             _streamroomcontroller = new StreamroomController();
@@ -74,6 +84,25 @@ namespace minify.View
                         HitlistSongs.Visibility = Visibility.Visible;
                     }
                 }*/
+        }
+
+        private void UpdateLocalStreamroom(object sender, LocalStreamroomUpdatedEventArgs e)
+        {
+            // Get data from the updates per second from the manager.
+            _streamroom = e.Streamroom;
+            _messages = e.Messages;
+
+            //TODO: set all changes to screen
+
+            //invoken naar overview
+            MessagesRefreshed?.Invoke(this, e);
+        }
+
+        public override void EndInit()
+        {
+            base.EndInit();
+            // start with reloading the data.
+            _manager.Start();
         }
     }
 }

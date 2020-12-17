@@ -39,7 +39,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void Get_By_Id_Rerturn_IsNotNull()
+        public void Get_By_Id_Return_IsNotNull()
         {
             Song song = _controller.Get(testId);
 

@@ -11,6 +11,7 @@ using System.Windows.Controls;
 
 namespace minify.View
 {
+    public delegate void StreamroomCreatedEventHandler(object sender, CreatedStreamRoomEventArgs e);
     public delegate void RefreshHitlistOverview(object sender, EventArgs e);
 
     /// <summary>
@@ -23,6 +24,9 @@ namespace minify.View
         private Hitlist _hitlist;
         private List<Song> _songs = new List<Song>();
         public event RefreshHitlistOverview RefreshHitlistOverview;
+
+        public StreamroomCreatedEventHandler StreamroomCreated;
+
         public OverviewHitlistPage(Guid id)
         {
             InitializeComponent();
@@ -69,7 +73,7 @@ namespace minify.View
             HitlistController hitlistController = new HitlistController();
             _songs = hitlistController.GetSongs(_hitlist.Songs);
             HitlistSongs.ItemsSource = _songs;
-            
+
             foreach (var item in HitlistSongs.Items)
             {
                 if (((Song)item).Equals(song))
@@ -123,7 +127,7 @@ namespace minify.View
         {
             Streamroom streamroom = new Streamroom(_hitlist.Id, _songs.First().Id);
             _streamroomController.Add(streamroom);
-            MessageBox.Show("TODO: Open streamroom");
+            StreamroomCreated?.Invoke(this, new CreatedStreamRoomEventArgs { Streamroom = streamroom });
         }
     }
 }

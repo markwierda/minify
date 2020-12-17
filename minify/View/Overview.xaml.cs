@@ -21,8 +21,29 @@ namespace minify.View
         private TimeSpan _positionCache;
 
         private OverviewHitlistPage _overviewHitlistPage;
-        private AddHistlistPage _addHitlistPage;
         private OverviewSongsPage _overviewSongsPage;
+        private OverviewHitlistPage hitlistPage;
+        private OverviewStreamroom overviewStreamroomPage;
+
+        private OverviewStreamroom OverviewStreamroomPage
+        {
+            get { return overviewStreamroomPage;  }
+            set
+            {
+                value.MessagesRefreshed += OverviewStreamroom_MessagesRefreshed;
+                overviewStreamroomPage = value;
+            }
+        }
+
+        private OverviewHitlistPage OverviewHitlistPage
+        {
+            get { return hitlistPage; }
+            set
+            {
+                value.StreamroomCreated += OpenStreamroom;
+                hitlistPage = value;
+            }
+        }
 
         public Overview()
         {
@@ -55,8 +76,19 @@ namespace minify.View
             HitlistMenu.Items.Refresh();
 
             //display current hitlist
-            OverviewHitlistPage overview = new OverviewHitlistPage(e.Id);
-            contentFrame.Content = overview;
+            OverviewHitlistPage = new OverviewHitlistPage(e.Id);
+
+            // set the new item as selected
+            foreach (var item in HitlistMenu.Items)
+            {
+                // cast ListViewItem to Hitlist and check if the id equals the eventargs id
+                if (((Hitlist)item).Id.Equals(e.Id))
+                {
+                    HitlistMenu.SelectedItem = item;
+                }
+            }
+
+            contentFrame.Content = OverviewHitlistPage;
         }
 
         private void Btn_Add_Hitlist(object sender, RoutedEventArgs e)
@@ -70,8 +102,8 @@ namespace minify.View
             if (e.AddedItems.Count > 0)
             {
                 Hitlist selected = (Hitlist)e.AddedItems[0];
-                _overviewHitlistPage = CreateOverviewHitlistPage(selected.Id);
-                contentFrame.Content = _overviewHitlistPage;
+                OverviewHitlistPage = new OverviewHitlistPage(selected.Id);
+                contentFrame.Content = OverviewHitlistPage;
             }
         }
 
@@ -114,8 +146,8 @@ namespace minify.View
                     DisplayPlay();
             }
 
-            if (_overviewHitlistPage != null)
-                _overviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
+            if (OverviewHitlistPage != null)
+                OverviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
 
             if (_overviewSongsPage != null)
                 _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
@@ -131,8 +163,8 @@ namespace minify.View
             else
                 DisplayPlay();
 
-            if (_overviewHitlistPage != null) 
-                _overviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
+            if (OverviewHitlistPage != null) 
+                OverviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
 
             if (_overviewSongsPage != null)
                 _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
@@ -156,8 +188,8 @@ namespace minify.View
 
             if (e.SongName == null)
             {
-                if (_overviewHitlistPage != null)
-                    _overviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
+                if (OverviewHitlistPage != null)
+                    OverviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
 
                 if (_overviewSongsPage != null)
                     _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
@@ -220,12 +252,15 @@ namespace minify.View
             }
         }
 
-        private OverviewHitlistPage CreateOverviewHitlistPage(Guid id)
+        private void OpenStreamroom(object sender, CreatedStreamRoomEventArgs e)
         {
-            _overviewHitlistPage = new OverviewHitlistPage(id);
-            _overviewHitlistPage.RefreshHitlistOverview += RefreshHitListMenu;
+            OverviewStreamroomPage = new OverviewStreamroom(e.Streamroom.Id);
+            contentFrame.Content = OverviewStreamroomPage;
+        }
 
-            return _overviewHitlistPage;
+        private void OverviewStreamroom_MessagesRefreshed(object sender, LocalStreamroomUpdatedEventArgs e)
+        {
+            // e.Messages to your beautiful chat view
         }
     }
 }
