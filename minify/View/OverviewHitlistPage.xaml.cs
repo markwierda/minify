@@ -20,8 +20,8 @@ namespace minify.View
     {
         private readonly HitlistController _hitlistController;
         private readonly StreamroomController _streamroomController;
-        private readonly Hitlist _hitlist;
-        private readonly List<Song> _songs = new List<Song>();
+        private Hitlist _hitlist;
+        private List<Song> _songs = new List<Song>();
         public event RefreshHitlistOverview RefreshHitlistOverview;
         public OverviewHitlistPage(Guid id)
         {
@@ -41,7 +41,7 @@ namespace minify.View
                     HitlistDescription.Content = _hitlist.Description;
                     HitlistDescription.Visibility = Visibility.Visible;
                 }
-                HitlistInfo.Content = hitlistController.GetHitlistInfo(_hitlist);
+                HitlistInfo.Content = _hitlistController.GetHitlistInfo(_hitlist);
 
                 // if there are songs, display the listview
                 if (_hitlist.Songs != null && _hitlist.Songs.Count > 0)
