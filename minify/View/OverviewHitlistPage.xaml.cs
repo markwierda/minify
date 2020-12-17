@@ -102,7 +102,7 @@ namespace minify.View
         {
             Streamroom streamroom = new Streamroom(_hitlist.Id, _songs.First().Id);
             _streamroomController.Add(streamroom);
-            StreamroomCreated.Invoke(this, new CreatedStreamRoomEventArgs { Streamroom = streamroom });
+            StreamroomCreated?.Invoke(this, new CreatedStreamRoomEventArgs { Streamroom = streamroom });
         }
     }
 }

@@ -4,6 +4,7 @@ using minify.Model;
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Timers;
 
@@ -86,9 +87,9 @@ namespace minify.Manager
 
         private void UpdateData()
         {
-            if (_streamroom.Hitlist.UserId == AppData.UserId)
+            if (_streamroom.Hitlist.UserId == AppData.UserId && MediaplayerController.CheckAccess())
             {
-                _streamroom.CurrentSongPosition = MediaplayerController.Position;
+                _streamroom.CurrentSongPosition = MediaplayerController.GetPosition();
                 _streamroom.CurrentSongId = MediaplayerController.GetCurrentSong().Id;
                 Update();
             }
@@ -96,8 +97,11 @@ namespace minify.Manager
 
         private void LoadData()
         {
-            _streamroom = new StreamroomController().Get(_streamroomId);
+            _streamroom = new StreamroomController().Get(_streamroomId, true);
             _messages = new MessageController().GetMessages(_streamroom);
+
+            Debug.WriteLine($"Position song: {_streamroom.CurrentSongPosition}");
+            Debug.WriteLine($"amount of messages: {_messages.Count}");
         }
     }
 }

@@ -23,9 +23,20 @@ namespace minify.View
 
         private TimeSpan _positionCache;
 
-        private OverviewHitlistPage _overviewHitlistPage;
         private OverviewSongsPage _overviewSongsPage;
         private OverviewHitlistPage hitlistPage;
+        private OverviewStreamroom overviewStreamroomPage;
+
+        private OverviewStreamroom OverviewStreamroomPage
+        {
+            get { return overviewStreamroomPage;  }
+            set
+            {
+                value.MessagesRefreshed += OverviewStreamroom_MessagesRefreshed;
+                overviewStreamroomPage = value;
+            }
+        }
+
         private OverviewHitlistPage OverviewHitlistPage
         {
             get { return hitlistPage; }
@@ -59,7 +70,7 @@ namespace minify.View
             HitlistMenu.Items.Refresh();
 
             //display current hitlist
-            _overviewHitlistPage = new OverviewHitlistPage(e.Id);
+            OverviewHitlistPage = new OverviewHitlistPage(e.Id);
 
             // set the new item as selected
             foreach (var item in HitlistMenu.Items)
@@ -71,7 +82,7 @@ namespace minify.View
                 }
             }
 
-            contentFrame.Content = _overviewHitlistPage;
+            contentFrame.Content = OverviewHitlistPage;
         }
 
         private void Btn_Add_Hitlist(object sender, RoutedEventArgs e)
@@ -86,8 +97,8 @@ namespace minify.View
             if (e.AddedItems.Count > 0)
             {
                 Hitlist selected = (Hitlist)e.AddedItems[0];
-                _overviewHitlistPage = new OverviewHitlistPage(selected.Id);
-                contentFrame.Content = _overviewHitlistPage;
+                OverviewHitlistPage = new OverviewHitlistPage(selected.Id);
+                contentFrame.Content = OverviewHitlistPage;
             }
         }
 
@@ -130,8 +141,8 @@ namespace minify.View
                     DisplayPlay();
             }
 
-            if (_overviewHitlistPage != null)
-                _overviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
+            if (OverviewHitlistPage != null)
+                OverviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
 
             if (_overviewSongsPage != null)
                 _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
@@ -147,8 +158,8 @@ namespace minify.View
             else
                 DisplayPlay();
 
-            if (_overviewHitlistPage != null) 
-                _overviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
+            if (OverviewHitlistPage != null) 
+                OverviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
 
             if (_overviewSongsPage != null)
                 _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
@@ -172,8 +183,8 @@ namespace minify.View
 
             if (e.SongName == null)
             {
-                if (_overviewHitlistPage != null)
-                    _overviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
+                if (OverviewHitlistPage != null)
+                    OverviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
 
                 if (_overviewSongsPage != null)
                     _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
@@ -237,9 +248,8 @@ namespace minify.View
 
         private void OpenStreamroom(object sender, CreatedStreamRoomEventArgs e)
         {
-            OverviewStreamroom overviewStreamroom = new OverviewStreamroom(e.Streamroom.Id);
-            overviewStreamroom.MessagesRefreshed += OverviewStreamroom_MessagesRefreshed;
-            contentFrame.Content = overviewStreamroom;
+            OverviewStreamroomPage = new OverviewStreamroom(e.Streamroom.Id);
+            contentFrame.Content = OverviewStreamroomPage;
         }
 
         private void OverviewStreamroom_MessagesRefreshed(object sender, LocalStreamroomUpdatedEventArgs e)

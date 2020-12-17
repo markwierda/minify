@@ -70,8 +70,8 @@ namespace minify.DAL
                 // create a one to one relation from Streamroom.SongId to Song
                 streamroom
                     .HasOne(r => r.Song)
-                    .WithOne()
-                    .HasForeignKey<Streamroom>(s => s.CurrentSongId);
+                    .WithMany()
+                    .HasForeignKey(s => s.CurrentSongId);
             });
 
             builder.Entity<Message>(message => {
