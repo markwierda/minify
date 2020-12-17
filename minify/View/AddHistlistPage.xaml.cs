@@ -44,6 +44,9 @@ namespace minify.View
                 HitlistAdded.Invoke(this, new UpdateHitlistMenuEventArgs(hitlist.Id));
                 //OverviewHitlist overviewHitlist = new OverviewHitlist(hitlist.Id);
                 //overviewHitlist.Show();
+
+                TitleText.Text = string.Empty;
+                DescriptionText.Text = string.Empty;
             }
         }
     }
