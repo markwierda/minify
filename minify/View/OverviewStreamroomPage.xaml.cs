@@ -5,6 +5,7 @@ using minify.Model;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -48,8 +49,11 @@ namespace minify.View
                 if (_streamroom.Hitlist.Songs != null && _streamroom.Hitlist.Songs.Count > 0)
                 {
                     _songs = hitlistcontroller.GetSongs(_streamroom.Hitlist.Songs);
+                    MediaplayerController.Open(_songs.First());
+                    MediaplayerController.Play();
                     StreamroomSongs.ItemsSource = _songs;
                     StreamroomSongs.Visibility = Visibility.Visible;
+                    Refresh(_songs.First());
                 }
             }
         }
