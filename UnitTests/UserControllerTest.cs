@@ -1,4 +1,5 @@
-﻿using minify.Controller;
+﻿using minify.Managers;
+
 using NUnit.Framework;
 
 namespace UnitTests
@@ -11,7 +12,7 @@ namespace UnitTests
         [Test]
         public void HashPassword_Return_NotNull()
         {
-            string hash = UserController.HashPassword(testPassword);
+            string hash = PasswordManager.HashPassword(testPassword);
 
             Assert.NotNull(hash);
         }
@@ -19,7 +20,7 @@ namespace UnitTests
         [Test]
         public void ValidatePassword_Return_True()
         {
-            bool hash = UserController.ValidatePassword(testPassword, testPasswordHashed);
+            bool hash = PasswordManager.ValidatePassword(testPassword, testPasswordHashed);
 
             Assert.IsTrue(hash);
         }
@@ -27,7 +28,7 @@ namespace UnitTests
         [Test]
         public void ValidatePassword_Return_False()
         {
-            bool hash = UserController.ValidatePassword("AnderWachtwoord:)", testPasswordHashed);
+            bool hash = PasswordManager.ValidatePassword("AnderWachtwoord:)", testPasswordHashed);
 
             Assert.IsFalse(hash);
         }

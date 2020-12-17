@@ -1,6 +1,8 @@
 ﻿using minify.DAL;
 using minify.DAL.Entities;
 using minify.DAL.Repositories;
+using minify.Managers;
+
 using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -16,8 +18,7 @@ namespace minify.Controller
         /// </summary>
         public RegisterController()
         {
-            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
-            _repository = new Repository<User>(context);
+            _repository = new Repository<User>(new AppDbContextFactory().CreateDbContext());
         }
 
         /// <summary>
@@ -29,7 +30,7 @@ namespace minify.Controller
             if (user.Id == null)
                 throw new ArgumentNullException("id");
 
-            user.PassWord = UserController.HashPassword(user.PassWord);
+            user.PassWord = PasswordManager.HashPassword(user.PassWord);
 
             _repository.Add(user);
             _repository.SaveChanges();

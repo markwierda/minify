@@ -5,17 +5,30 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:minify.View"
       mc:Ignorable="d"
-      d:DesignHeight="450" d:DesignWidth="800"
       Title="OverviewSongsPage">
 
     <Grid>
-        <ListView Name="Songs" Margin="0,94,0,99" Background="White">
+        <ListView Name="Songs" Margin="0,94,0,99" Background="White" SelectionChanged="Songs_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}" />
                     <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Artist}" />
                     <GridViewColumn Header="Genre" Width="200" DisplayMemberBinding="{Binding Genre}" />
                     <GridViewColumn Header="Duration" Width="200" DisplayMemberBinding="{Binding Duration}" />
+                    <GridViewColumn Header="Add" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                Name="AddButton"
+                                Foreground="Green"
+                                Content="+"
+                                Margin="0"
+                                Click="Button_Click"
+                                CommandParameter="{Binding Id}"
+                                Width="59" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

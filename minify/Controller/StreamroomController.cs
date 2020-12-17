@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using minify.DAL;
-using minify.DAL.Repositories;
 using minify.DAL.Entities;
+using minify.DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,21 +17,7 @@ namespace minify.Controller
         /// </summary>
         public StreamroomController()
         {
-            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
-            _repository = new Repository<Streamroom>(context);
-        }
-
-        /// <summary>
-        /// Adds a streamroom to the database
-        /// </summary>
-        /// <param name="streamroom"></param>
-        public void Add(Streamroom streamroom)
-        {
-            if (streamroom.Id == null)
-                throw new ArgumentNullException("id");
-
-            _repository.Add(streamroom);
-            _repository.SaveChanges();
+            _repository = new Repository<Streamroom>(new AppDbContextFactory().CreateDbContext());
         }
 
         /// <summary>
@@ -53,7 +39,11 @@ namespace minify.Controller
             {
                 query = query
                     .Include(s => s.Song)
-                    .Include(s => s.Hitlist);
+                    .Include(s => s.Hitlist)
+                        .ThenInclude(h => h.User)
+                    .Include(s => s.Hitlist)
+                        .ThenInclude(h => h.Songs)
+                            .ThenInclude(hs => hs.Song);
             }
 
             return query.Where(x => x.Id == id).FirstOrDefault();
@@ -103,6 +93,58 @@ namespace minify.Controller
             }
 
             return query.Where(x => x.HitlistId == hitlistId).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Adds a streamroom to the database
+        /// </summary>
+        /// <param name="streamroom"></param>
+        public void Add(Streamroom streamroom)
+        {
+            if (streamroom.Id == null)
+                throw new ArgumentNullException("id");
+
+            _repository.Add(streamroom);
+            _repository.SaveChanges();
+        }
+
+        /// <summary>
+        /// Adds a streamroom to the database
+        /// </summary>
+        /// <param name="streamroom"></param>
+        public void Update(Streamroom streamroom)
+        {
+            if (streamroom.Id == null)
+                throw new ArgumentNullException("id");
+
+            _repository.Update(streamroom);
+            _repository.SaveChanges();
+        }
+
+        public void Pause(Streamroom streamroom)
+        {
+            if (streamroom.Id == null)
+                throw new ArgumentNullException("id");
+
+            streamroom.IsPaused = true;
+            Update(streamroom);
+        }
+
+        public void Play(Streamroom streamroom)
+        {
+            if (streamroom.Id == null)
+                throw new ArgumentNullException("id");
+
+            streamroom.IsPaused = false;
+            Update(streamroom);
+        }
+
+        public bool IsPaused(Streamroom streamroom)
+        {
+            if (streamroom.Id == null)
+                throw new ArgumentNullException("id");
+
+            return Get(streamroom.Id).IsPaused;
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using minify.Controller;
+
 using System.Windows;
 
 namespace minify.View
@@ -8,12 +9,9 @@ namespace minify.View
     /// </summary>
     public partial class Login : Window
     {
-        private readonly LoginController _controller;
-
         public Login()
         {
             InitializeComponent();
-            _controller = new LoginController();
         }
 
         private void Create_Account_Button_click(object sender, RoutedEventArgs e)
@@ -29,10 +27,10 @@ namespace minify.View
             string username = Username.Text;
             string password = Password.Password;
 
+            LoginController controller = new LoginController();
             // try to login with the values
-            if (_controller.TryLogin(username, password))
+            if (controller.TryLogin(username, password))
             {
-                // TODO: Display overview
                 Overview overview = new Overview();
                 overview.Show();
                 Close();

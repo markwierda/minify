@@ -1,5 +1,4 @@
-﻿using minify.DAL.Entities;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace minify.DAL.Entities
