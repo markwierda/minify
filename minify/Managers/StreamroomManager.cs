@@ -85,10 +85,11 @@ namespace minify.Manager
 
         private void UpdateData()
         {
-            if (_streamroom.Hitlist.UserId == AppData.UserId && MediaplayerController.CheckAccess())
+            if (_streamroom.Hitlist.UserId == AppData.UserId)
             {
-                _streamroom.CurrentSongPosition = MediaplayerController.GetPosition();
-                _streamroom.CurrentSongId = MediaplayerController.GetCurrentSong().Id;
+                _streamroom.CurrentSongPosition = MediaplayerController.GetCurrentSongPosition();
+                Song current = MediaplayerController.GetCurrentSong();
+                _streamroom.CurrentSongId = current.Id;
                 Update();
             }
         }
