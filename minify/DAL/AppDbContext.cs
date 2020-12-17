@@ -1,7 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+
 using minify.Controller;
 using minify.DAL.Entities;
+using minify.Managers;
+
 using System;
+using System.Data.Entity.Core.Objects;
 
 namespace minify.DAL
 {
@@ -14,11 +19,7 @@ namespace minify.DAL
         public DbSet<Streamroom> Streamrooms { get; set; }
         public DbSet<Message> Messages { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
-        }
-
-        #region Required
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -89,20 +90,29 @@ namespace minify.DAL
             Song[] songs = new Song[]
             {
                 new Song() { Id = new Guid("{aa5ab627-3b64-4c22-9cc3-cca5fd57c896}"), Artist = "G-Eazy & Halsey", Name = "Him & I", Duration = new TimeSpan(0, 0, 4, 40), Genre = "Rap", Path = "Music/G-Eazy & Halsey - Him & I.mp3" },
-                new Song() { Id = new Guid("{aa5ab677-3b64-4c22-9cc3-cca5fd57c896}"), Artist = "James Arthur", Name = "Say You Wont Let Go", Duration = new TimeSpan(0, 0, 3, 30), Genre = "Pop", Path = "Music/James Arthur - Say You Wont Let Go.mp3" }
+                new Song() { Id = new Guid("{aa5ab677-3b64-4c22-9cc3-cca5fd57c896}"), Artist = "James Arthur", Name = "Say You Wont Let Go", Duration = new TimeSpan(0, 0, 3, 30), Genre = "Pop", Path = "Music/James Arthur - Say You Wont Let Go.mp3" },
+                new Song() { Id = Guid.NewGuid(), Artist = "AVILA", Name = "FUEGO", Duration = new TimeSpan(0, 0, 2, 47), Genre = "Trap", Path = "Music/AVILA - FUEGO.mp3" },
+                new Song() { Id = Guid.NewGuid(), Artist = "Charlie Puth", Name = "Attention", Duration = new TimeSpan(0, 0, 3, 51), Genre = "Pop", Path = "Music/Charlie Puth - Attention.mp3" },
+                new Song() { Id = Guid.NewGuid(), Artist = "Echosmith", Name = "Cool Kids", Duration = new TimeSpan(0, 0, 4, 48), Genre = "EDM", Path = "Music/Echosmith - Cool Kids.mp3" },
+                new Song() { Id = Guid.NewGuid(), Artist = "Ed Sheeran", Name = "Thinking Out Loud", Duration = new TimeSpan(0, 0, 4, 56), Genre = "Pop", Path = "Music/Ed Sheeran - Thinking Out Loud.mp3" },
+                new Song() { Id = Guid.NewGuid(), Artist = "Lukrative", Name = "Anthem", Duration = new TimeSpan(0, 0, 6, 0), Genre = "Trap", Path = "Music/Lukrative - Anthem.mp3" },
+                new Song() { Id = Guid.NewGuid(), Artist = "Shawn Mendes", Name = "Stitches", Duration = new TimeSpan(0, 0, 3, 39), Genre = "Pop", Path = "Music/Shawn Mendes & Hailee Steinfeld - Stitches.mp3" },
+                new Song() { Id = Guid.NewGuid(), Artist = "Simple Plan", Name = "Summer Paradise", Duration = new TimeSpan(0, 0, 3, 55), Genre = "Pop", Path = "Music/Simple Plan - Summer Paradise.mp3" },
+                new Song() { Id = Guid.NewGuid(), Artist = "The Chainsmokers", Name = "Closer", Duration = new TimeSpan(0, 0, 4, 21), Genre = "Pop", Path = "Music/The Chainsmokers - Closer.mp3" },
+                new Song() { Id = Guid.NewGuid(), Artist = "Zara Larsson", Name = "Ain't My Fault", Duration = new TimeSpan(0, 0, 2, 39), Genre = "EDM", Path = "Music/Zara larsson - Ain't My Fault.mp3" },
             };
 
             User[] users = new User[]
             {
-                new User() { Id = new Guid("{aa5ab627-3b64-5d22-8cc3-cca5fd57c896}"), Email = "s1140207@student.windesheim.nl", FirstName = "Ronald", LastName="Haan", PassWord=UserController.HashPassword("Test123"), UserName="1140207" },
-                new User() { Id = new Guid("{aa5ab653-3b62-5e22-5cc3-cca5fd57c846}"), Email = "s1121300@student.windesheim.nl", FirstName = "Ali", LastName="Alkhalil", PassWord=UserController.HashPassword("Password"), UserName="1121300" },
-                new User() { Id = Guid.NewGuid(), Email="Test@user.com", FirstName = "test", LastName = "User", PassWord = UserController.HashPassword("Test123"), UserName = "testuser" }
+                new User() { Id = new Guid("{aa5ab627-3b64-5d22-8cc3-cca5fd57c896}"), Email = "s1140207@student.windesheim.nl", FirstName = "Ronald", LastName="Haan", PassWord=PasswordManager.HashPassword("Test123"), UserName="1140207" },
+                new User() { Id = new Guid("{aa5ab653-3b62-5e22-5cc3-cca5fd57c846}"), Email = "s1121300@student.windesheim.nl", FirstName = "Ali", LastName="Alkhalil", PassWord=PasswordManager.HashPassword("Password"), UserName="1121300" },
+                new User() { Id = Guid.NewGuid(), Email="Test@user.com", FirstName = "test", LastName = "User", PassWord = PasswordManager.HashPassword("Test123"), UserName = "testuser" }
             };
 
             Hitlist[] hitlists = new Hitlist[]
             {
                 new Hitlist() { Id = new Guid("{aa4cb653-3c62-5e22-5cc3-cca5fd57c846}"), Title = "Unieke playlist1", UserId = users[0].Id, Description = "Description"},
-                new Hitlist() { Id = new Guid("{aa3cb653-3c62-5e22-5cc3-cca5fd57c846}"), Title = "Unieke playlist2", UserId = users[1].Id,  Description = "Description" },
+                new Hitlist() { Id = new Guid("{aa3cb653-3c62-5e22-5cc3-cca5fd57c846}"), Title = "Unieke playlist2", UserId = users[0].Id,  Description = "Description" },
                 new Hitlist() { Id = new Guid("{aa4cb653-3c62-5522-5cc3-cca5fd57c846}"), Title = "HUH", UserId = users[2].Id, Description = "HUH"},
             };
 
@@ -138,7 +148,5 @@ namespace minify.DAL
 
             #endregion Seed
         }
-
-        #endregion Required
-    }
+    }    
 }

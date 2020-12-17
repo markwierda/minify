@@ -1,5 +1,7 @@
 ﻿using minify.Controller;
 using minify.DAL.Entities;
+using minify.Managers;
+
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,7 @@ namespace UnitTests
             _controller = new SongController();
             testId = new Guid("{aa5ab627-3b64-4c22-9cc3-cca5fd57c896}");
         }
+
 
         [Test]
         public void GetAll_NotNull()
@@ -41,6 +44,20 @@ namespace UnitTests
             Song song = _controller.Get(testId);
 
             Assert.IsNotNull(song);
+        }
+
+        [Test]
+        public void Search_Succesful()
+        {
+            List<Song> songs = _controller.Search("him");
+            Assert.IsNotNull(songs);
+        }
+
+        [Test]
+        public void Search_Fail()
+        {
+            List<Song> songs = _controller.Search("xxxxx");
+            Assert.IsEmpty(songs);
         }
     }
 }

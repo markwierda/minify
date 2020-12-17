@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Overview" Initialized="Window_Initialized"  Height="450" Width="800" WindowState="Maximized" WindowStartupLocation="CenterScreen">
     <Grid Background="#FF774AC7">
-
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="9*" />
@@ -20,6 +20,10 @@
             <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
 
+        <StackPanel Grid.Row="0" Grid.Column="1" Background="#FF774AC7">
+            <TextBox Text="Search..." TextChanged="SearchBox_TextChanged" MouseEnter="Search_MouseEnter" MaxLength="30" x:Name="Search" Margin="5" Style="{StaticResource MaterialDesignTextBox}" Background="Transparent" Width="160" Height="30" HorizontalAlignment="Left"/>
+        </StackPanel>
+        
         <StackPanel Grid.Row="0" Grid.Column="0" Background="#FF774AC7">
             <!--placeholder for buttons-->
             <Button Height="50" Click="Btn_home">Home</Button>
@@ -29,7 +33,7 @@
         <StackPanel Grid.Row="1" Grid.Column="0" Background="#FF774AC7">
             <ScrollViewer VerticalScrollBarVisibility="auto">
                 <StackPanel>
-                    <ListView Name="HitlistMenu"  HorizontalAlignment="Stretch" SelectionChanged="HitlistMenu_SelectionChanged">
+                    <ListView Name="HitlistMenu"  HorizontalAlignment="Stretch"  SelectionChanged="HitlistMenu_SelectionChanged">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Hitlists" DisplayMemberBinding="{Binding Title}" />
@@ -58,7 +62,7 @@
 
         <StackPanel Grid.Row="2" Grid.Column="1" Background="#FF774AC7">
             <StackPanel Background="#FF774AC7">
-                <MediaElement x:Name="mediaplayer" />
+                <MediaElement x:Name="mediaplayer" UnloadedBehavior="Manual"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="#FF774AC7">
                 <Image Name="btn_Back" Source="/ImageResources\back.png" MouseDown="OnMouseDownBack" Height="50" Width="50" Margin="5, 0 , 5, 0" />

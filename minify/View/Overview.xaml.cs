@@ -1,10 +1,14 @@
 ﻿using minify.Controller;
+using minify.DAL;
 using minify.DAL.Entities;
+using minify.Managers;
 using minify.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace minify.View
@@ -14,49 +18,50 @@ namespace minify.View
     /// </summary>
     public partial class Overview : Window
     {
-        private readonly HitlistController _hitlistController;
-        private readonly LoginController _loginController;
+        private TimeSpan _positionCache;
+
+        private OverviewHitlistPage _overviewHitlistPage;
+        private AddHistlistPage _addHitlistPage;
+        private OverviewSongsPage _overviewSongsPage;
 
         public Overview()
         {
-            _hitlistController = new HitlistController();
-            _loginController = new LoginController();
             MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
-            _hitlistController.HitlistAdded += UpdateHitlistMenu;
+
+            _addHitlistPage = new AddHistlistPage();
+            _addHitlistPage.HitlistAdded += UpdateHitlistMenu;
+
             InitializeComponent();
         }
 
-        public void GetAllHitList()
+        public void RefreshHitListMenu(object sender, EventArgs e)
         {
-            List<Hitlist> hitlists = _hitlistController.GetHitlistsByUserId(AppData.UserId);
+            InitializeHitListMenu();
+            HitlistMenu.Items.Refresh();
+
+            OverviewSongsPage overviewSongs = new OverviewSongsPage();
+            contentFrame.Content = overviewSongs;
+        }
+
+        public void InitializeHitListMenu()
+        {
+            List<Hitlist> hitlists = new HitlistController().GetHitlistsByUserId(AppData.UserId);
             HitlistMenu.ItemsSource = hitlists;
         }
 
         public void UpdateHitlistMenu(object sender, UpdateHitlistMenuEventArgs e)
         {
-            List<Hitlist> hitlists = _hitlistController.GetHitlistsByUserId(AppData.UserId);
-            HitlistMenu.ItemsSource = hitlists;
+            InitializeHitListMenu();
             HitlistMenu.Items.Refresh();
 
             //display current hitlist
             OverviewHitlistPage overview = new OverviewHitlistPage(e.Id);
-
-            // set the new item as selected
-            foreach (var item in HitlistMenu.Items)
-            {
-                // cast ListViewItem to Hitlist and check if the id equals the eventargs id
-                if (((Hitlist)item).Id.Equals(e.Id))
-                {
-                    HitlistMenu.SelectedItem = item;
-                }
-            }
-
             contentFrame.Content = overview;
         }
 
         private void Btn_Add_Hitlist(object sender, RoutedEventArgs e)
         {
-            AddHistlistPage addHitlistPage = new AddHistlistPage(_hitlistController);
+            AddHistlistPage addHitlistPage = _addHitlistPage;
             contentFrame.Content = addHitlistPage;
         }
 
@@ -65,8 +70,8 @@ namespace minify.View
             if (e.AddedItems.Count > 0)
             {
                 Hitlist selected = (Hitlist)e.AddedItems[0];
-                OverviewHitlistPage overviewHitlistpage = new OverviewHitlistPage(selected.Id);
-                contentFrame.Content = overviewHitlistpage;
+                _overviewHitlistPage = CreateOverviewHitlistPage(selected.Id);
+                contentFrame.Content = _overviewHitlistPage;
             }
         }
 
@@ -84,23 +89,8 @@ namespace minify.View
 
         private void OnMouseDownPlay(object sender, MouseButtonEventArgs e)
         {
-            if (MediaplayerController.GetSource() == null)
-            {
-                Hitlist hitlist = _hitlistController.Get(new Guid("aa4cb653-3c62-5e22-5cc3-cca5fd57c846"), true);
-                List<Song> songs = _hitlistController.GetSongs(hitlist.Songs);
-
-                if (hitlist.Songs != null)
-                {
-                    MediaplayerController.Initialize(songs);
-                    MediaplayerController.Play(songs.First());
-                    DisplayPause();
-                }
-            }
-            else
-            {
-                MediaplayerController.Play();
-                DisplayPause();
-            }
+            MediaplayerController.Play();
+            DisplayPause();
         }
 
         private void OnMouseDownPause(object sender, MouseButtonEventArgs e)
@@ -123,6 +113,12 @@ namespace minify.View
                 else
                     DisplayPlay();
             }
+
+            if (_overviewHitlistPage != null)
+                _overviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
+
+            if (_overviewSongsPage != null)
+                _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
         }
 
         private void OnMouseDownNext(object sender, MouseButtonEventArgs e)
@@ -134,12 +130,22 @@ namespace minify.View
                 DisplayPause();
             else
                 DisplayPlay();
+
+            if (_overviewHitlistPage != null) 
+                _overviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
+
+            if (_overviewSongsPage != null)
+                _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
         }
 
         private void UpdateMediaplayer(object sender, UpdateMediaplayerEventArgs e)
         {
-            if (e.SongName == null)
+            if (e.Position > _positionCache)
+                DisplayPause();
+            else
                 DisplayPlay();
+
+            _positionCache = e.Position;
 
             lbl_Song_Name.Content = e.SongName;
             lbl_Artist.Content = e.Artist;
@@ -147,6 +153,15 @@ namespace minify.View
             lbl_Song_Duration.Content = e.Duration.ToString(@"mm\:ss");
             Song_Progressbar.Maximum = e.Duration.TotalMilliseconds;
             Song_Progressbar.Value = e.Position.TotalMilliseconds;
+
+            if (e.SongName == null)
+            {
+                if (_overviewHitlistPage != null)
+                    _overviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
+
+                if (_overviewSongsPage != null)
+                    _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
+            }
         }
 
         private void Btn_home(object sender, RoutedEventArgs e)
@@ -158,22 +173,59 @@ namespace minify.View
 
         private void Btn_songs(object sender, RoutedEventArgs e)
         {
-            OverviewSongsPage overviewSongs = new OverviewSongsPage();
-            contentFrame.Content = overviewSongs;
+            InitializeHitListMenu();
+            _overviewSongsPage = new OverviewSongsPage();
+            contentFrame.Content = _overviewSongsPage;
         }
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            GetAllHitList();
+            InitializeHitListMenu();
             label_Username.Content = AppData.UserName;
         }
 
         private void Btn_Logout(object sender, RoutedEventArgs e)
         {
-            _loginController.Logout();
+            new LoginController().Logout();
+            MediaplayerController.Close();
             Login login = new Login();
             login.Show();
             Close();
+        }
+
+        private void SearchBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if(Search.Text != "Search..." && Search.Text != "")
+            {
+                var songs = new SongController().Search(Search.Text);
+                if(songs != null && songs.Count > 0)
+                {
+                    OverviewSongsPage overviewSongs = new OverviewSongsPage(songs);
+                    contentFrame.Content = overviewSongs;
+                }
+                else
+                {
+                    Label label = new Label();
+                    label.Content = "No songs could be found";
+                    contentFrame.Content = label;
+                }
+            }
+        }
+
+        private void Search_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if(Search.Text == "Search...")
+            {
+                Search.Text = "";
+            }
+        }
+
+        private OverviewHitlistPage CreateOverviewHitlistPage(Guid id)
+        {
+            _overviewHitlistPage = new OverviewHitlistPage(id);
+            _overviewHitlistPage.RefreshHitlistOverview += RefreshHitListMenu;
+
+            return _overviewHitlistPage;
         }
     }
 }

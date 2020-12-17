@@ -2,13 +2,14 @@
 using minify.DAL;
 using minify.DAL.Entities;
 using minify.DAL.Repositories;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace minify.Controller
 {
-    public class SongController
+    public class SongController 
     {
         private readonly Repository<Song> _repository;
 
@@ -17,8 +18,7 @@ namespace minify.Controller
         /// </summary>
         public SongController()
         {
-            AppDbContext context = new AppDbContextFactory().CreateDbContext(null);
-            _repository = new Repository<Song>(context);
+            _repository = new Repository<Song>(new AppDbContextFactory().CreateDbContext());
         }
 
         /// <summary>
@@ -28,6 +28,25 @@ namespace minify.Controller
         public List<Song> GetAll()
         {
             var query = _repository.GetAll().AsNoTracking();
+            return query.ToList();
+        }
+
+        /// <summary>
+        /// Gets all songs by name, artist or genre
+        /// </summary>
+        /// <returns></returns>
+        public List<Song> Search(string searchquery)
+        {
+            var query = _repository.GetAll();
+
+            var likeSearch = $"%{searchquery}%";
+
+            query = query.Where(s =>
+                EF.Functions.Like(s.Name.ToUpper(), likeSearch.ToUpper()) ||
+                EF.Functions.Like(s.Artist.ToUpper(), likeSearch.ToUpper()) ||
+                EF.Functions.Like(s.Genre.ToUpper(), likeSearch.ToUpper())
+            );
+
             return query.ToList();
         }
 
