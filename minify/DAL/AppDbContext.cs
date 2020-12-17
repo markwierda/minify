@@ -1,12 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-
-using minify.Controller;
 using minify.DAL.Entities;
 using minify.Managers;
 
 using System;
-using System.Data.Entity.Core.Objects;
 
 namespace minify.DAL
 {
