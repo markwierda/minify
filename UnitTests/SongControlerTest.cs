@@ -1,5 +1,7 @@
 ﻿using minify.Controller;
 using minify.DAL.Entities;
+using minify.Managers;
+
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,7 @@ namespace UnitTests
             _controller = new SongController();
             testId = new Guid("{aa5ab627-3b64-4c22-9cc3-cca5fd57c896}");
         }
+
 
         [Test]
         public void GetAll_NotNull()

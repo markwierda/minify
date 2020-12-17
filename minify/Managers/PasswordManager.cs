@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace minify.Controller
+namespace minify.Managers
 {
-    public class UserController
+    public class PasswordManager
     {
         /// <summary>
         /// Hashes a password

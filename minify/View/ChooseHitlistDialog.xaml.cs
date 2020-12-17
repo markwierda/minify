@@ -23,7 +23,6 @@ namespace minify.View
     /// </summary>
     public partial class ChooseHitlistDialog : Window
     {
-        private HitlistController _hitlistController;
         private Guid songId; 
         public List<Hitlist> Hitlists { get; set; }
         public Hitlist hitlist;
@@ -41,8 +40,8 @@ namespace minify.View
             this.songId = songId;
             InitializeComponent();
             DataContext = this;
-            _hitlistController = new HitlistController();
-            var hitlists = _hitlistController.GetHitlistsByUserId(AppData.UserId, true);
+            HitlistController hitlistController = new HitlistController();
+            var hitlists = hitlistController.GetHitlistsByUserId(AppData.UserId, true);
             Hitlists = new List<Hitlist>(hitlists);
 
             var removeHitlists = new List<Hitlist>();

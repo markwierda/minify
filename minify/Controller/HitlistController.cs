@@ -11,15 +11,10 @@ using System.Linq;
 
 namespace minify.Controller
 {
-    public delegate void HitlistAddedEventHandler(object sender, UpdateHitlistMenuEventArgs e);
-
     public class HitlistController
-    {
+    { 
         private readonly Repository<Hitlist> _hitlistRepository;
         private readonly Repository<HitlistSong> _hitlistSongRepository;
-
-
-        public event HitlistAddedEventHandler HitlistAdded;
 
         /// <summary>
         /// Create a hitlist repository with the context
@@ -109,7 +104,7 @@ namespace minify.Controller
         /// Adds a hitlist to the database
         /// </summary>
         /// <param name="hitlist"></param>
-        public void Add(Hitlist hitlist, List<Song> songs = null)
+        public Hitlist Add(Hitlist hitlist, List<Song> songs = null)
         {
             if (hitlist.Id == null)
             {
@@ -133,11 +128,13 @@ namespace minify.Controller
             {
                 _hitlistRepository.Add(hitlist);
                 _hitlistRepository.SaveChanges();
-                HitlistAdded?.Invoke(this, new UpdateHitlistMenuEventArgs(hitlist.Id));
+
+                return hitlist;
             }
             catch (Exception ex)
             {
                 Debug.Write(ex);
+                return null;
             }
 
         }

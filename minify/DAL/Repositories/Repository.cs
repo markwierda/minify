@@ -14,7 +14,8 @@ namespace minify.DAL.Repositories
     public class Repository<T> : IRepository<T> where T : class, IEntity
     {
         protected readonly DbContext Context;
-        protected DbSet<T> DbSet;
+        private DbSet<T> DbSet;
+        protected IQueryable<T> DbSetNoTracking { get => DbSet.AsNoTracking(); }
 
         /// <summary>
         /// Initializes a new instance of this generic <see cref="Repository{T}"/> to interact with an entity.
@@ -42,7 +43,7 @@ namespace minify.DAL.Repositories
         /// <returns>The entity based on the Expression</returns>
         public virtual T FindOneBy(Expression<Func<T, bool>> predicate)
         {
-            return DbSet.FirstOrDefault(predicate);
+            return DbSetNoTracking.FirstOrDefault(predicate);
         }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace minify.DAL.Repositories
         /// <returns>An <see cref="IQueryable{T}"/> of The entities based on the Expression</returns>
         public virtual IQueryable<T> FindBy(Expression<Func<T, bool>> predicate)
         {
-            return DbSet.Where(predicate);
+            return DbSetNoTracking.Where(predicate);
         }
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace minify.DAL.Repositories
         /// <returns>true, if any elements in the source sequence pass the test in the specified predicate, false otherwise.</returns>
         public virtual bool Any(Expression<Func<T, bool>> predicate)
         {
-            return DbSet.Any(predicate);
+            return DbSetNoTracking.Any(predicate);
         }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace minify.DAL.Repositories
         /// <returns>An <see cref="IQueryable{T}"/> with all the entities.</returns>
         public virtual IQueryable<T> GetAll()
         {
-            return DbSet;
+            return DbSetNoTracking;
         }
 
         /// <summary>
