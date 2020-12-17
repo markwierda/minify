@@ -10,6 +10,7 @@ using System.Timers;
 namespace minify.Manager
 {
     public delegate void StreamroomRefreshedEventHandler(object sender, LocalStreamroomUpdatedEventArgs e);
+    public delegate void StreamroomIsPausedToggledEventHandler(object sender, IsPausedEventArgs e);
     public class StreamroomManager
     {
         private const int INTERVAL = 1000;
@@ -19,9 +20,11 @@ namespace minify.Manager
         private List<Message> _messages;
 
         public StreamroomRefreshedEventHandler StreamroomRefreshed;
+        public StreamroomIsPausedToggledEventHandler IsPausedToggled;
 
         public StreamroomManager(Guid streamroomId)
         {
+            _messages = new List<Message>();
             _streamroomId = streamroomId;
             LoadData();
 
@@ -32,8 +35,12 @@ namespace minify.Manager
 
         public void OnTimedEvent(object obj, ElapsedEventArgs e)
         {
+            if (_streamroom.Hitlist.UserId == AppData.UserId)
+            {
+                UpdateData();
+            }
             LoadData();
-            StreamroomRefreshed.Invoke(this, new LocalStreamroomUpdatedEventArgs(_streamroom, _messages));
+            StreamroomRefreshed?.Invoke(this, new LocalStreamroomUpdatedEventArgs(_streamroom, _messages));
         }
 
         public void Start()
@@ -75,6 +82,16 @@ namespace minify.Manager
         private void Update()
         {
             new StreamroomController().Update(_streamroom);
+        }
+
+        private void UpdateData()
+        {
+            if (_streamroom.Hitlist.UserId == AppData.UserId)
+            {
+                _streamroom.CurrentSongPosition = MediaplayerController.Position;
+                _streamroom.CurrentSongId = MediaplayerController.GetCurrentSong().Id;
+                Update();
+            }
         }
 
         private void LoadData()

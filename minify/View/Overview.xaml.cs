@@ -234,9 +234,17 @@ namespace minify.View
                 Search.Text = "";
             }
         }
+
         private void OpenStreamroom(object sender, CreatedStreamRoomEventArgs e)
         {
-            contentFrame.Content = new OverviewStreamroom(e.Streamroom.Id);
+            OverviewStreamroom overviewStreamroom = new OverviewStreamroom(e.Streamroom.Id);
+            overviewStreamroom.MessagesRefreshed += OverviewStreamroom_MessagesRefreshed;
+            contentFrame.Content = overviewStreamroom;
+        }
+
+        private void OverviewStreamroom_MessagesRefreshed(object sender, LocalStreamroomUpdatedEventArgs e)
+        {
+            // e.Messages to your beautiful chat view
         }
     }
 }

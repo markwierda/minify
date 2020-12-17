@@ -29,13 +29,16 @@ namespace minify.View
         private List<Message> _messages;
         private StreamroomManager _manager;
 
+        public event StreamroomRefreshedEventHandler MessagesRefreshed;
+
+        //event for invoking messages to overview
+
         public OverviewStreamroom(Guid streamroomId)
         {
             _streamroomId = streamroomId;
             _manager = new StreamroomManager(streamroomId);
             _manager.StreamroomRefreshed += UpdateLocalStreamroom;
             InitializeComponent();
-
         }
 
         private void UpdateLocalStreamroom(object sender, LocalStreamroomUpdatedEventArgs e)
@@ -45,6 +48,9 @@ namespace minify.View
             _messages = e.Messages;
 
             //TODO: set all changes to screen
+
+            //invoken naar overview
+            MessagesRefreshed?.Invoke(this, e);
         }
 
         public override void EndInit()
