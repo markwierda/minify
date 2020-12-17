@@ -1,4 +1,4 @@
-﻿using mini_spotify.DAL.Entities;
+﻿using minify.DAL.Entities;
 using System;
 using System.ComponentModel.DataAnnotations;
 

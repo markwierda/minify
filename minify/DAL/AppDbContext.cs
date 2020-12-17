@@ -18,6 +18,7 @@ namespace minify.DAL
         public DbSet<HitlistSong> HitlistSongs { get; set; }
         public DbSet<Streamroom> Streamrooms { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<SongVote> SongVotes { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
