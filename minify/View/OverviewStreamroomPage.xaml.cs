@@ -20,7 +20,7 @@ namespace minify.View
         private Streamroom _streamroom;
         private List<Message> _messages;
         private List<Song> _songs;
-        private StreamroomManager _manager;
+        public StreamroomManager Manager { get; set; }
 
         public event StreamroomRefreshedEventHandler MessagesRefreshed;
 
@@ -29,8 +29,8 @@ namespace minify.View
         public OverviewStreamroomPage(Guid streamroomId)
         {
             _streamroomId = streamroomId;
-            _manager = new StreamroomManager(streamroomId);
-            _manager.StreamroomRefreshed += UpdateLocalStreamroom;
+            Manager = new StreamroomManager(streamroomId);
+            Manager.StreamroomRefreshed += UpdateLocalStreamroom;
             InitializeComponent();
 
             HitlistController hitlistcontroller = new HitlistController();
@@ -49,8 +49,8 @@ namespace minify.View
                 if (_streamroom.Hitlist.Songs != null && _streamroom.Hitlist.Songs.Count > 0)
                 {
                     _songs = hitlistcontroller.GetSongs(_streamroom.Hitlist.Songs);
-                    MediaplayerController.Open(_songs.First());
-                    MediaplayerController.Play();
+                    MediaplayerController.Open(_songs.FirstOrDefault(s => s.Id.Equals(_streamroom.CurrentSongId)));
+                    MediaplayerController.UpdatePosition(_streamroom.CurrentSongPosition);
                     StreamroomSongs.ItemsSource = _songs;
                     StreamroomSongs.Visibility = Visibility.Visible;
                     Refresh(_songs.First());
@@ -78,6 +78,16 @@ namespace minify.View
             _messages = e.Messages;
 
             //TODO: set all changes to screen
+            MediaplayerController.UpdatePosition(_streamroom.CurrentSongPosition);
+            
+            if (_streamroom.IsPaused)
+            {
+                MediaplayerController.Pause();
+            }
+            else
+            {
+                MediaplayerController.Play();
+            }
 
             //invoken naar overview
             MessagesRefreshed?.Invoke(this, e);
@@ -87,7 +97,7 @@ namespace minify.View
         {
             base.EndInit();
             // start with reloading the data.
-            _manager.Start();
+            Manager.Start();
         }
 
         private void StreamroomSongs_SelectionChanged(object sender, SelectionChangedEventArgs e)

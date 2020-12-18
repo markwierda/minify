@@ -20,7 +20,7 @@ namespace minify.View
         private OverviewStreamroomPage _overviewStreamroomPage;
         private AddHistlistPage _addHitlistPage;
 
-        private MessageController _messageController;
+        private readonly MessageController _messageController;
         private OverviewStreamroomPage OverviewStreamroomPage
         {
             get { return _overviewStreamroomPage; }
@@ -58,27 +58,27 @@ namespace minify.View
             MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
 
             InitializeComponent();
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
-            chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
+            Chatmessage(" Hallo");
 
         }
 
@@ -127,6 +127,10 @@ namespace minify.View
 
         private void Btn_Add_Hitlist(object sender, RoutedEventArgs e)
         {
+            // Reset selected items
+            InitializeHitListMenu();
+            InitializeStreamroomMenu();
+
             AddHitlistPage = new AddHistlistPage();
             contentFrame.Content = AddHitlistPage;
         }
@@ -155,12 +159,14 @@ namespace minify.View
 
         private void OnMouseDownPlay(object sender, MouseButtonEventArgs e)
         {
+            _overviewStreamroomPage.Manager.Play();
             MediaplayerController.Play();
             DisplayPause();
         }
 
         private void OnMouseDownPause(object sender, MouseButtonEventArgs e)
         {
+            _overviewStreamroomPage.Manager.Pause();
             MediaplayerController.Pause();
             DisplayPlay();
         }
@@ -245,8 +251,10 @@ namespace minify.View
 
         private void Btn_songs(object sender, RoutedEventArgs e)
         {
+            // Reset selected items
             InitializeHitListMenu();
             InitializeStreamroomMenu();
+
             _overviewSongsPage = new OverviewSongsPage();
             contentFrame.Content = _overviewSongsPage;
         }
@@ -311,10 +319,12 @@ namespace minify.View
         /// Sends chat message into the chatbox
         /// </summary>
         /// <param name="message"></param>
-        public void chatmessage(string messages)
+        public void Chatmessage(string messages)
         {
-            StackPanel stackPanel = new StackPanel();
-            stackPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
+            StackPanel stackPanel = new StackPanel
+            {
+                HorizontalAlignment = HorizontalAlignment.Stretch
+            };
 
             Label user = new Label();
             Label message = new Label();

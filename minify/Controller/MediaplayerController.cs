@@ -27,6 +27,7 @@ namespace minify.Controller
         public static void Initialize(List<Song> songs)
         {
             Songs = songs;
+            _mediaPlayer.Volume = 0;
         }
 
         /// <summary>
@@ -40,6 +41,7 @@ namespace minify.Controller
                 _currentSong = song;
 
                 _mediaPlayer.Open(new Uri(_currentSong.Path, UriKind.RelativeOrAbsolute));
+                _mediaPlayer.MediaOpened += MediaOpened;
                 _mediaPlayer.MediaEnded += MediaEnded;
                 _mediaPlayer.Play();
 
@@ -101,6 +103,15 @@ namespace minify.Controller
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Updates the current position variable
+        /// </summary>
+        /// <param name="currentSongPosition"></param>
+        public static void UpdatePosition(TimeSpan currentSongPosition)
+        {
+            _currentSongPosition = currentSongPosition;
         }
 
         /// <summary>
@@ -183,6 +194,28 @@ namespace minify.Controller
             if (_mediaPlayer.NaturalDuration.HasTimeSpan)
             {
                 _currentSongPosition = _mediaPlayer.Position;
+
+                UpdateMediaplayer?.Invoke(null,
+                    new UpdateMediaplayerEventArgs(
+                        _currentSong.Name,
+                        _currentSong.Artist,
+                        _mediaPlayer.Position,
+                        _mediaPlayer.NaturalDuration.TimeSpan
+                    )
+                );
+            }
+        }
+
+        /// <summary>
+        /// Event handler when media is opened
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void MediaOpened(object sender, EventArgs e)
+        {
+            if (_mediaPlayer.NaturalDuration.HasTimeSpan)
+            {
+                _mediaPlayer.Position = _currentSongPosition;
 
                 UpdateMediaplayer?.Invoke(null,
                     new UpdateMediaplayerEventArgs(
