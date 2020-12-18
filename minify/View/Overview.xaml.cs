@@ -20,6 +20,7 @@ namespace minify.View
         private OverviewStreamroom _overviewStreamroomPage;
         private AddHistlistPage _addHitlistPage;
 
+        private MessageController _messageController;
         private OverviewStreamroom OverviewStreamroomPage
         {
             get { return _overviewStreamroomPage; }
@@ -53,9 +54,32 @@ namespace minify.View
 
         public Overview()
         {
+            _messageController = new MessageController();
             MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
 
             InitializeComponent();
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+            chatmessage(" Hallo");
+
         }
 
         public void RefreshHitListMenu(object sender, EventArgs e)
@@ -272,6 +296,55 @@ namespace minify.View
         private void OverviewStreamroom_MessagesRefreshed(object sender, LocalStreamroomUpdatedEventArgs e)
         {
             // e.Messages to your beautiful chat view
+        }
+
+        /// <summary>
+        /// Sends chat message into the chatbox
+        /// </summary>
+        /// <param name="message"></param>
+        public void chatmessage(string messages)
+        {
+            StackPanel stackPanel = new StackPanel();
+            stackPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
+
+            Label user = new Label();
+            Label message = new Label();
+            user.Content = "some username";
+            user.FontWeight = FontWeights.Bold;
+            message.Content = messages;
+            stackPanel.Children.Add(user);
+            stackPanel.Children.Add(message);
+
+            scrollviewMessages.Children.Add(stackPanel);
+        }
+
+        private bool _autoScroll = true;
+
+        private void ScrollViewer_ScrollChanged(object sender, System.Windows.Controls.ScrollChangedEventArgs e)
+        {
+            if (e.ExtentHeightChange == 0)
+            {
+                _autoScroll = ScrollViewer.VerticalOffset == ScrollViewer.ScrollableHeight;
+            }
+            if (_autoScroll && e.ExtentHeightChange != 0)
+            {
+                ScrollViewer.ScrollToVerticalOffset(ScrollViewer.ExtentHeight);
+            }
+        }
+
+        private void Chat_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Message message = new Message
+                {
+                    Text = Chat.Text,
+                    UserId = AppData.UserId,
+                    StreamroomId = new Guid("{197a232b-4bb7-4961-9153-81349df9d785}")
+                };
+                _messageController.CreateMessage(message);
+                Chat.Text = "";
+            }
         }
     }
 }
