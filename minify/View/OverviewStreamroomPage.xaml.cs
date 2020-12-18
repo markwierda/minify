@@ -14,7 +14,7 @@ namespace minify.View
     /// <summary>
     /// Interaction logic for OverviewStreamroom.xaml
     /// </summary>
-    public partial class OverviewStreamroom : Page
+    public partial class OverviewStreamroomPage : Page
     {
         private readonly Guid _streamroomId;
         private Streamroom _streamroom;
@@ -26,7 +26,7 @@ namespace minify.View
 
         //event for invoking messages to overview
 
-        public OverviewStreamroom(Guid streamroomId)
+        public OverviewStreamroomPage(Guid streamroomId)
         {
             _streamroomId = streamroomId;
             _manager = new StreamroomManager(streamroomId);

@@ -17,11 +17,11 @@ namespace minify.View
         private TimeSpan _positionCache;
         private OverviewSongsPage _overviewSongsPage;
         private OverviewHitlistPage _hitlistPage;
-        private OverviewStreamroom _overviewStreamroomPage;
+        private OverviewStreamroomPage _overviewStreamroomPage;
         private AddHistlistPage _addHitlistPage;
 
         private MessageController _messageController;
-        private OverviewStreamroom OverviewStreamroomPage
+        private OverviewStreamroomPage OverviewStreamroomPage
         {
             get { return _overviewStreamroomPage; }
             set
@@ -95,6 +95,13 @@ namespace minify.View
         {
             List<Hitlist> hitlists = new HitlistController().GetHitlistsByUserId(AppData.UserId);
             HitlistMenu.ItemsSource = hitlists;
+        }
+
+
+        public void InitializeStreamroomMenu()
+        {
+            List<Streamroom> streamroom = new StreamroomController().GetAll(true);
+            streamrooms.ItemsSource = streamroom;
         }
 
         public void UpdateHitlistMenu(object sender, UpdateHitlistMenuEventArgs e)
@@ -239,6 +246,7 @@ namespace minify.View
         private void Btn_songs(object sender, RoutedEventArgs e)
         {
             InitializeHitListMenu();
+            InitializeStreamroomMenu();
             _overviewSongsPage = new OverviewSongsPage();
             contentFrame.Content = _overviewSongsPage;
         }
@@ -246,6 +254,7 @@ namespace minify.View
         private void Window_Initialized(object sender, EventArgs e)
         {
             InitializeHitListMenu();
+            InitializeStreamroomMenu();
             label_Username.Content = AppData.UserName;
         }
 
@@ -289,8 +298,8 @@ namespace minify.View
 
         private void OpenStreamroom(object sender, CreatedStreamRoomEventArgs e)
         {
-            OverviewStreamroomPage = new OverviewStreamroom(e.Streamroom.Id);
-            contentFrame.Content = OverviewStreamroomPage;
+            _overviewStreamroomPage = new OverviewStreamroomPage(e.Streamroom.Id);
+            contentFrame.Content = _overviewStreamroomPage;
         }
 
         private void OverviewStreamroom_MessagesRefreshed(object sender, LocalStreamroomUpdatedEventArgs e)
@@ -344,6 +353,16 @@ namespace minify.View
                 };
                 _messageController.CreateMessage(message);
                 Chat.Text = "";
+            }
+        }
+
+        private void Streamroom_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                Streamroom selected = (Streamroom)e.AddedItems[0];
+                _overviewStreamroomPage = new OverviewStreamroomPage(selected.Id);
+                contentFrame.Content = _overviewStreamroomPage;
             }
         }
     }
