@@ -5,6 +5,7 @@ using minify.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Timers;
 
 namespace minify.Manager
@@ -20,6 +21,7 @@ namespace minify.Manager
         private readonly Guid _streamroomId;
         private Streamroom _streamroom;
         private List<Message> _messages;
+        private readonly DateTime timeJoined;
 
         public StreamroomRefreshedEventHandler StreamroomRefreshed;
         public StreamroomIsPausedToggledEventHandler IsPausedToggled;
@@ -28,7 +30,9 @@ namespace minify.Manager
         {
             _messages = new List<Message>();
             _streamroomId = streamroomId;
+            timeJoined = DateTime.Now;
             LoadData();
+
 
             _timer = new Timer(INTERVAL);
             _timer.Enabled = true;
@@ -105,7 +109,9 @@ namespace minify.Manager
         private void LoadData()
         {
             _streamroom = new StreamroomController().Get(_streamroomId, true);
-            _messages = new MessageController().GetMessages(_streamroom);
+            _messages = new MessageController().GetMessages(_streamroom)
+                .Where(m => m.CreatedAt > timeJoined)
+                .ToList();
 
             Debug.WriteLine($"Position song: {_streamroom.CurrentSongPosition}");
             Debug.WriteLine($"amount of messages: {_messages.Count}");

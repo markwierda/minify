@@ -333,19 +333,11 @@ namespace minify.View
         {
             
             StackPanel stackPanel = new StackPanel();
-
-            if(message.UserId != AppData.UserId)
-            {
-                stackPanel.HorizontalAlignment = HorizontalAlignment.Right;
-            }
-            else
-            {
-                stackPanel.HorizontalAlignment = HorizontalAlignment.Left;
-            }
+            stackPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
 
             Label user = new Label();
             Label lblmessage = new Label();
-            user.Content = $"{message.User.FirstName} {message.User.LastName}";
+            user.Content = $"{message.User.FirstName} {message.User.LastName} - {message.CreatedAt:t}";
             user.FontWeight = FontWeights.Bold;
             lblmessage.Content = message.Text;
             stackPanel.Children.Add(user);

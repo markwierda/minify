@@ -18,7 +18,6 @@ namespace minify.View
     {
         private readonly Guid _streamroomId;
         private Streamroom _streamroom;
-        private List<Message> _messages;
         private List<Song> _songs;
         public StreamroomManager Manager { get; set; }
 
@@ -34,8 +33,16 @@ namespace minify.View
             Manager.StreamroomRefreshed += UpdateLocalStreamroom;
             InitializeComponent();
 
+
             HitlistController hitlistcontroller = new HitlistController();
             _streamroom = new StreamroomController().Get(streamroomId, true);
+
+            new MessageController().CreateMessage(new Message
+            {
+                StreamroomId = streamroomId,
+                Text = $"{AppData.UserName} neemt nu deel aan de stream!",
+                UserId = AppData.UserId
+            });
 
             // check if hitlist available
             if (_streamroom.Hitlist != null)
@@ -154,6 +161,13 @@ namespace minify.View
         public void Close()
         {
             Manager?.Close();
+
+            new MessageController().CreateMessage(new Message
+            {
+                StreamroomId = _streamroomId,
+                Text = $"{AppData.UserName} heeft de stream verlaten!",
+                UserId = AppData.UserId
+            });
         }
     }
 }

@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1" Grid.Column="2">
             <TextBox x:Name="Chat" KeyDown="Chat_KeyDown"/>
-            <ScrollViewer ScrollChanged="ScrollViewer_ScrollChanged" VerticalScrollBarVisibility="auto" x:Name="ScrollViewer" Background="#FF774AC7">
+            <ScrollViewer ScrollChanged="ScrollViewer_ScrollChanged" VerticalScrollBarVisibility="auto" x:Name="ScrollViewer" Height="500" Background="#FF774AC7">
                 <StackPanel Name="scrollviewMessages">
                 </StackPanel>
             </ScrollViewer>
