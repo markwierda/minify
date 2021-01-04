@@ -147,14 +147,14 @@ namespace minify.View
 
         private void OnMouseDownPlay(object sender, MouseButtonEventArgs e)
         {
-            OverviewStreamroomPage.Manager.Play();
+            OverviewStreamroomPage?.Manager.Play();
             MediaplayerController.Play();
             DisplayPause();
         }
 
         private void OnMouseDownPause(object sender, MouseButtonEventArgs e)
         {
-            OverviewStreamroomPage.Manager.Pause();
+            OverviewStreamroomPage?.Manager.Pause();
             MediaplayerController.Pause();
             DisplayPlay();
         }

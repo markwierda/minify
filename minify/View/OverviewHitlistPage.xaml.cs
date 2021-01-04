@@ -95,7 +95,7 @@ namespace minify.View
                 MediaplayerController.Initialize(_songs);
 
                 // Open song
-                MediaplayerController.Open(selectedSong);
+                MediaplayerController.Open(selectedSong, TimeSpan.Zero);
 
                 // Play song
                 MediaplayerController.Play();

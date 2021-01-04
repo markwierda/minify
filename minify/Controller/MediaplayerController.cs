@@ -34,7 +34,7 @@ namespace minify.Controller
         /// Opens a song in the mediaplayer
         /// </summary>
         /// <param name="song"></param>
-        public static void Open(Song song, TimeSpan currentPosition = new TimeSpan())
+        public static void Open(Song song, TimeSpan currentPosition)
         {
             if (song != null)
             {
@@ -42,11 +42,8 @@ namespace minify.Controller
 
                 _mediaPlayer.Open(new Uri(_currentSong.Path, UriKind.RelativeOrAbsolute));
 
-                if (currentPosition > TimeSpan.Zero)
-                {
-                    _currentSongPosition = currentPosition;
-                    _mediaPlayer.Position = _currentSongPosition;
-                }
+                _currentSongPosition = currentPosition;
+                _mediaPlayer.Position = _currentSongPosition;
 
                 _mediaPlayer.MediaOpened += MediaOpened;
                 _mediaPlayer.MediaEnded += MediaEnded;
@@ -70,7 +67,7 @@ namespace minify.Controller
         public static void Play()
         {
             if (!_mediaPlayer.HasAudio && _currentSong != null)
-                Open(_currentSong);
+                Open(_currentSong, TimeSpan.Zero);
 
             _mediaPlayer.Play();
         }
@@ -99,7 +96,7 @@ namespace minify.Controller
 
                 int index = Songs.FindIndex(x => x == _currentSong);
                 _currentSong = Songs[index + 1];
-                Open(_currentSong);
+                Open(_currentSong, TimeSpan.Zero);
                 Play();
                 return true;
             }
@@ -134,7 +131,7 @@ namespace minify.Controller
 
                 int index = Songs.FindIndex(x => x == _currentSong);
                 _currentSong = Songs[index - 1];
-                Open(_currentSong);
+                Open(_currentSong, TimeSpan.Zero);
                 Play();
                 return true;
             }

@@ -101,6 +101,11 @@ namespace minify.View
         {
             // Get data from the updates per second from the manager.
             _streamroom = e.Streamroom;
+
+            if(MediaplayerController.GetCurrentSong().Id != _streamroom.Song.Id)
+            {
+                MediaplayerController.Close();
+            }
             //MediaplayerController.Open(_streamroom.Song, _streamroom.CurrentSongPosition);
             _messages = e.Messages;
 
@@ -140,7 +145,7 @@ namespace minify.View
                 MediaplayerController.Initialize(_songs);
 
                 // Open song
-                MediaplayerController.Open(selectedSong);
+                MediaplayerController.Open(selectedSong, TimeSpan.Zero);
 
                 // Play song
                 MediaplayerController.Play();
