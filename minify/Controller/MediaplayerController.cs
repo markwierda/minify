@@ -27,21 +27,30 @@ namespace minify.Controller
         public static void Initialize(List<Song> songs)
         {
             Songs = songs;
+            _mediaPlayer.Volume = 0;
         }
 
         /// <summary>
         /// Opens a song in the mediaplayer
         /// </summary>
         /// <param name="song"></param>
-        public static void Open(Song song)
+        public static void Open(Song song, TimeSpan currentPosition = new TimeSpan())
         {
             if (song != null)
             {
                 _currentSong = song;
 
                 _mediaPlayer.Open(new Uri(_currentSong.Path, UriKind.RelativeOrAbsolute));
+
+                if (currentPosition > TimeSpan.Zero)
+                {
+                    _currentSongPosition = currentPosition;
+                    _mediaPlayer.Position = _currentSongPosition;
+                }
+
                 _mediaPlayer.MediaOpened += MediaOpened;
                 _mediaPlayer.MediaEnded += MediaEnded;
+
                 _mediaPlayer.Play();
 
                 DispatcherTimer timer = new DispatcherTimer()
@@ -104,10 +113,10 @@ namespace minify.Controller
         /// Updates the current position variable
         /// </summary>
         /// <param name="currentSongPosition"></param>
-        public static void UpdatePosition(TimeSpan currentSongPosition)
-        {
-            _currentSongPosition = currentSongPosition;
-        }
+        //public static void UpdatePosition(TimeSpan currentSongPosition)
+        //{
+        //    _currentSongPosition = currentSongPosition;
+        //}
 
         /// <summary>
         /// Starts playing the previous song in the mediaplayer
@@ -151,6 +160,14 @@ namespace minify.Controller
         {
             _mediaPlayer.Close();
             _currentSong = null;
+            _currentSongPosition = TimeSpan.Zero;
+            _mediaPlayer.MediaOpened -= MediaOpened;
+            _mediaPlayer.MediaEnded -= MediaEnded;
+            Songs = null;
+
+            UpdateMediaplayer?.Invoke(null,
+                new UpdateMediaplayerEventArgs()
+            );
         }
 
         /// <summary>

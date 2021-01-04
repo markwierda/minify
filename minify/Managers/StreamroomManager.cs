@@ -86,11 +86,17 @@ namespace minify.Manager
         private void UpdateData()
         {
             Song current = MediaplayerController.GetCurrentSong();
-            _streamroom.CurrentSongPosition = MediaplayerController.GetCurrentSongPosition();
+            TimeSpan currentTime = MediaplayerController.GetCurrentSongPosition();
+
 
             if (current != null)
             {
                 _streamroom.CurrentSongId = current.Id;
+            }
+
+            if (currentTime != _streamroom.CurrentSongPosition)
+            {
+                _streamroom.CurrentSongPosition = currentTime;
             }
 
             Update();
@@ -103,6 +109,12 @@ namespace minify.Manager
 
             Debug.WriteLine($"Position song: {_streamroom.CurrentSongPosition}");
             Debug.WriteLine($"amount of messages: {_messages.Count}");
+        }
+
+        public void Close()
+        {
+            IsPausedToggled = null;
+            StreamroomRefreshed = null;
         }
     }
 }

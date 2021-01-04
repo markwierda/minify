@@ -30,25 +30,25 @@ namespace UnitTests
             Assert.NotNull(MediaplayerController.Songs);
         }
 
-        [Test]
-        public void Play_ValidSong_ShouldOpen()
-        {
-            MediaplayerController.Close();
-            Song song = _songController.Get(new Guid("aa5ab627-3b64-4c22-9cc3-cca5fd57c896"));
-            MediaplayerController.Open(song);
-            MediaplayerController.Play();
-            Assert.IsTrue(MediaplayerController.GetSource() != null);
-        }
+        //[Test]
+        //public void Play_ValidSong_ShouldOpen()
+        //{
+        //    MediaplayerController.Close();
+        //    Song song = _songController.Get(new Guid("aa5ab627-3b64-4c22-9cc3-cca5fd57c896"));
+        //    MediaplayerController.Open(song);
+        //    MediaplayerController.Play();
+        //    Assert.IsTrue(MediaplayerController.GetSource() != null);
+        //}
 
-        [Test]
-        public void Play_InvalidSong_ShouldNotOpen()
-        {
-            MediaplayerController.Close();
-            Song song = _songController.Get(new Guid("12345678-1234-1234-1234-123456789012"));
-            MediaplayerController.Open(song);
-            MediaplayerController.Play();
-            Assert.IsTrue(MediaplayerController.GetSource() == null);
-        }
+        //[Test]
+        //public void Play_InvalidSong_ShouldNotOpen()
+        //{
+        //    MediaplayerController.Close();
+        //    Song song = _songController.Get(new Guid("12345678-1234-1234-1234-123456789012"));
+        //    MediaplayerController.Open(song);
+        //    MediaplayerController.Play();
+        //    Assert.IsTrue(MediaplayerController.GetSource() == null);
+        //}
 
         [Test]
         public void Next_SongsEmpty_IsFalse()
