@@ -147,8 +147,8 @@ namespace minify.View
         {
             Dispatcher.Invoke(() =>
             {
-                btn_Pause.Visibility = Visibility.Visible;
                 btn_Play.Visibility = Visibility.Collapsed;
+                btn_Pause.Visibility = Visibility.Visible;
             });
         }
 
@@ -213,30 +213,30 @@ namespace minify.View
 
         private void UpdateMediaplayer(object sender, UpdateMediaplayerEventArgs e)
         {
+            if (e.Position > _positionCache)
+                DisplayPause();
+            else
+                DisplayPlay();
+
+            _positionCache = e.Position;
+
             Dispatcher.Invoke(() => {
-                if (e.Position > _positionCache)
-                    DisplayPause();
-                else
-                    DisplayPlay();
-
-                _positionCache = e.Position;
-
                 lbl_Song_Name.Content = e.SongName;
                 lbl_Artist.Content = e.Artist;
                 lbl_Current_Time.Content = e.Position.ToString(@"mm\:ss");
                 lbl_Song_Duration.Content = e.Duration.ToString(@"mm\:ss");
                 Song_Progressbar.Maximum = e.Duration.TotalMilliseconds;
                 Song_Progressbar.Value = e.Position.TotalMilliseconds;
-
-                if (e.SongName == null)
-                {
-                    if (OverviewHitlistPage != null)
-                        OverviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
-
-                    if (_overviewSongsPage != null)
-                        _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
-                }
             });
+
+            if (e.SongName == null)
+            {
+                if (OverviewHitlistPage != null)
+                    OverviewHitlistPage.Refresh(MediaplayerController.GetCurrentSong());
+
+                if (_overviewSongsPage != null)
+                    _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
+            }
         }
 
         private void Btn_home(object sender, RoutedEventArgs e)
