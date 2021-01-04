@@ -3,6 +3,7 @@ using minify.DAL.Entities;
 using minify.Model;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -64,7 +65,6 @@ namespace minify.View
             MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
 
             InitializeComponent();
-            Chatmessage(" Hallo");
         }
 
         public void RefreshHitListMenu(object sender, EventArgs e)
@@ -305,31 +305,56 @@ namespace minify.View
         private void OverviewStreamroom_MessagesRefreshed(object sender, LocalStreamroomUpdatedEventArgs e)
         {
             // e.Messages to your beautiful chat view
+
+            var messages = e.Messages;
+
+            Dispatcher.BeginInvoke(new ThreadStart(() => scrollviewMessages.Children.Clear()));
+
+            Dispatcher.BeginInvoke(new ThreadStart(() => LoadMessages(messages)));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="messages"></param>
+        public void LoadMessages(List<Message> messages)
+        {
+            foreach (Message message in messages)
+            {
+                Chatmessage(message);
+            }
         }
 
         /// <summary>
         /// Sends chat message into the chatbox
         /// </summary>
         /// <param name="message"></param>
-        public void Chatmessage(string messages)
+        public void Chatmessage(Message message)
         {
-            StackPanel stackPanel = new StackPanel
+            
+            StackPanel stackPanel = new StackPanel();
+
+            if(message.UserId != AppData.UserId)
             {
-                HorizontalAlignment = HorizontalAlignment.Stretch
-            };
+                stackPanel.HorizontalAlignment = HorizontalAlignment.Right;
+            }
+            else
+            {
+                stackPanel.HorizontalAlignment = HorizontalAlignment.Left;
+            }
 
             Label user = new Label();
-            Label message = new Label();
-            user.Content = "some username";
+            Label lblmessage = new Label();
+            user.Content = $"{message.User.FirstName} {message.User.LastName}";
             user.FontWeight = FontWeights.Bold;
-            message.Content = messages;
+            lblmessage.Content = message.Text;
             stackPanel.Children.Add(user);
-            stackPanel.Children.Add(message);
+            stackPanel.Children.Add(lblmessage);
 
             scrollviewMessages.Children.Add(stackPanel);
         }
 
-        private void ScrollViewer_ScrollChanged(object sender, System.Windows.Controls.ScrollChangedEventArgs e)
+        private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             if (e.ExtentHeightChange == 0)
             {

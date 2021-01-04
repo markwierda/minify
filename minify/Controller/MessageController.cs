@@ -1,4 +1,6 @@
-﻿using minify.DAL;
+﻿using Microsoft.EntityFrameworkCore;
+
+using minify.DAL;
 using minify.DAL.Entities;
 using minify.DAL.Repositories;
 using minify.Model;
@@ -37,7 +39,9 @@ namespace minify.Controller
         {
             return _messageRepository
                             .GetAll()
-                                .Where(message => message.StreamroomId == streamroom.Id)
+                            .Include(m => m.User)
+                            .OrderBy(m => m.CreatedAt)
+                                .Where(message => message.StreamroomId == streamroom.Id)                                
                                 .ToList();
         }
 

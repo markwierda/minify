@@ -107,7 +107,6 @@ namespace minify.View
                 MediaplayerController.Close();
             }
             //MediaplayerController.Open(_streamroom.Song, _streamroom.CurrentSongPosition);
-            _messages = e.Messages;
 
             //TODO: set all changes to screen
             //MediaplayerController.UpdatePosition(_streamroom.CurrentSongPosition);
