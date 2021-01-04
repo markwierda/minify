@@ -149,7 +149,8 @@ namespace minify.Controller
         /// </summary>
         public static void Close()
         {
-            _mediaPlayer.Dispatcher.Invoke(() => {
+            _mediaPlayer.Dispatcher.Invoke(() =>
+            {
                 _mediaPlayer.Close();
                 _mediaPlayer.MediaOpened -= MediaOpened;
                 _mediaPlayer.MediaEnded -= MediaEnded;

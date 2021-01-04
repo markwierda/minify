@@ -82,7 +82,6 @@ namespace minify.View
             HitlistMenu.ItemsSource = hitlists;
         }
 
-
         public void InitializeStreamroomMenu()
         {
             List<Streamroom> streamroom = new StreamroomController().GetAll(true);
@@ -318,7 +317,7 @@ namespace minify.View
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="messages"></param>
         public void LoadMessages(List<Message> messages)
@@ -335,9 +334,10 @@ namespace minify.View
         /// <param name="message"></param>
         public void Chatmessage(Message message)
         {
-            
-            StackPanel stackPanel = new StackPanel();
-            stackPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
+            StackPanel stackPanel = new StackPanel
+            {
+                HorizontalAlignment = HorizontalAlignment.Stretch
+            };
 
             Label user = new Label();
             Label lblmessage = new Label();

@@ -33,9 +33,10 @@ namespace minify.Manager
             timeJoined = DateTime.Now;
             LoadData();
 
-
-            _timer = new Timer(INTERVAL);
-            _timer.Enabled = true;
+            _timer = new Timer(INTERVAL)
+            {
+                Enabled = true
+            };
             _timer.Elapsed += OnTimedEvent;
         }
 
@@ -91,7 +92,6 @@ namespace minify.Manager
         {
             Song current = MediaplayerController.GetCurrentSong();
             TimeSpan currentTime = MediaplayerController.GetCurrentSongPosition();
-
 
             if (current != null)
             {

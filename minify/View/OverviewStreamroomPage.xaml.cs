@@ -5,7 +5,6 @@ using minify.Model;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -18,7 +17,7 @@ namespace minify.View
     {
         private readonly Guid _streamroomId;
         private Streamroom _streamroom;
-        private List<Song> _songs;
+        private readonly List<Song> _songs;
         public StreamroomManager Manager { get; set; }
 
         public event StreamroomRefreshedEventHandler MessagesRefreshed;
@@ -32,7 +31,6 @@ namespace minify.View
             Manager = new StreamroomManager(streamroomId);
             Manager.StreamroomRefreshed += UpdateLocalStreamroom;
             InitializeComponent();
-
 
             HitlistController hitlistcontroller = new HitlistController();
             _streamroom = new StreamroomController().Get(streamroomId, true);
@@ -110,7 +108,7 @@ namespace minify.View
             // Get data from the updates per second from the manager.
             _streamroom = e.Streamroom;
 
-            if(MediaplayerController.GetCurrentSong()?.Id != _streamroom.Song.Id)
+            if (MediaplayerController.GetCurrentSong()?.Id != _streamroom.Song.Id)
             {
                 MediaplayerController.Close();
             }
@@ -118,7 +116,7 @@ namespace minify.View
 
             //TODO: set all changes to screen
             //MediaplayerController.UpdatePosition(_streamroom.CurrentSongPosition);
-            
+
             //if (_streamroom.IsPaused)
             //{
             //    MediaplayerController.Pause();
