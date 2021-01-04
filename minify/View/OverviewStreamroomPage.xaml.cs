@@ -22,8 +22,6 @@ namespace minify.View
 
         public event StreamroomRefreshedEventHandler MessagesRefreshed;
 
-        //event for invoking messages to overview
-
         public OverviewStreamroomPage(Guid streamroomId)
         {
             // initialize
@@ -63,14 +61,7 @@ namespace minify.View
                     {
                         MediaplayerController.Initialize(_songs);
                         MediaplayerController.Open(_streamroom.Song, _streamroom.CurrentSongPosition);
-                        //MediaplayerController.UpdatePosition(_streamroom.CurrentSongPosition);
                     }
-                    // use the first song
-                    //else
-                    //{
-                    //    _currentSong = _songs.FirstOrDefault();
-                    //    MediaplayerController.Open(_currentSong);
-                    //}
 
                     // set the itemsource of the songs listview
                     StreamroomSongs.ItemsSource = _songs;
@@ -112,19 +103,6 @@ namespace minify.View
             {
                 MediaplayerController.Close();
             }
-            //MediaplayerController.Open(_streamroom.Song, _streamroom.CurrentSongPosition);
-
-            //TODO: set all changes to screen
-            //MediaplayerController.UpdatePosition(_streamroom.CurrentSongPosition);
-
-            //if (_streamroom.IsPaused)
-            //{
-            //    MediaplayerController.Pause();
-            //}
-            //else
-            //{
-            //    MediaplayerController.Play();
-            //}
 
             //invoken naar overview
             MessagesRefreshed?.Invoke(this, e);
