@@ -19,7 +19,7 @@
             <RowDefinition Height="9*" />
             <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="1" Grid.Column="2">
+        <StackPanel Name="MessagePanel" Grid.Row="1" Grid.Column="2" Visibility="Hidden">
             <TextBox x:Name="Chat" KeyDown="Chat_KeyDown"/>
             <ScrollViewer ScrollChanged="ScrollViewer_ScrollChanged" VerticalScrollBarVisibility="auto" x:Name="ScrollViewer" Height="500" Background="#FF774AC7">
                 <StackPanel Name="scrollviewMessages">

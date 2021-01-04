@@ -122,12 +122,14 @@ namespace minify.View
 
         private void HitlistMenu_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
+            InitializeStreamroomMenu();
             OverviewStreamroomPage?.Close();
             MediaplayerController.Close();
 
             if (e.AddedItems.Count > 0)
             {
                 Hitlist selected = (Hitlist)e.AddedItems[0];
+                HitlistMenu.SelectedItem = selected;
                 OverviewHitlistPage = new OverviewHitlistPage(selected.Id);
                 contentFrame.Content = OverviewHitlistPage;
             }
@@ -298,6 +300,8 @@ namespace minify.View
             OverviewStreamroomPage?.Close();
             MediaplayerController.Close();
 
+            MessagePanel.Visibility = Visibility.Visible;
+
             OverviewStreamroomPage = new OverviewStreamroomPage(e.Streamroom.Id);
             contentFrame.Content = OverviewStreamroomPage;
         }
@@ -366,7 +370,8 @@ namespace minify.View
                 {
                     Text = Chat.Text,
                     UserId = AppData.UserId,
-                    StreamroomId = new Guid("{197a232b-4bb7-4961-9153-81349df9d785}")
+                    //StreamroomId = new Guid("{197a232b-4bb7-4961-9153-81349df9d785}")
+                    StreamroomId = OverviewStreamroomPage.GetStreamroomId()
                 };
                 _messageController.CreateMessage(message);
                 Chat.Text = "";
@@ -375,13 +380,17 @@ namespace minify.View
 
         private void Streamroom_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            InitializeHitListMenu();
+            MessagePanel.Visibility = Visibility.Hidden;
             OverviewStreamroomPage?.Close();
             MediaplayerController.Close();
 
             if (e.AddedItems.Count > 0)
             {
                 Streamroom selected = (Streamroom)e.AddedItems[0];
+                streamrooms.SelectedItem = selected;
                 OverviewStreamroomPage = new OverviewStreamroomPage(selected.Id);
+                MessagePanel.Visibility = Visibility.Visible;
                 contentFrame.Content = OverviewStreamroomPage;
             }
         }

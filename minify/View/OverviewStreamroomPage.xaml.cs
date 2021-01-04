@@ -37,13 +37,6 @@ namespace minify.View
             HitlistController hitlistcontroller = new HitlistController();
             _streamroom = new StreamroomController().Get(streamroomId, true);
 
-            new MessageController().CreateMessage(new Message
-            {
-                StreamroomId = streamroomId,
-                Text = $"{AppData.UserName} neemt nu deel aan de stream!",
-                UserId = AppData.UserId
-            });
-
             // check if hitlist available
             if (_streamroom.Hitlist != null)
             {
@@ -87,6 +80,14 @@ namespace minify.View
 
                     // highlight the current song by refreshing the listview
                     Refresh(_streamroom.Song);
+
+                    // send join messege
+                    new MessageController().CreateMessage(new Message
+                    {
+                        StreamroomId = streamroomId,
+                        Text = $"{AppData.UserName} neemt nu deel aan de stream!",
+                        UserId = AppData.UserId
+                    });
                 }
             }
         }
@@ -109,7 +110,7 @@ namespace minify.View
             // Get data from the updates per second from the manager.
             _streamroom = e.Streamroom;
 
-            if(MediaplayerController.GetCurrentSong().Id != _streamroom.Song.Id)
+            if(MediaplayerController.GetCurrentSong()?.Id != _streamroom.Song.Id)
             {
                 MediaplayerController.Close();
             }
@@ -168,6 +169,11 @@ namespace minify.View
                 Text = $"{AppData.UserName} heeft de stream verlaten!",
                 UserId = AppData.UserId
             });
+        }
+
+        public Guid GetStreamroomId()
+        {
+            return _streamroomId;
         }
     }
 }

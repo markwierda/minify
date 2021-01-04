@@ -82,7 +82,7 @@ namespace UnitTests
         {
             List<Song> songs = _hitlistController.GetSongs(_hitlist.Songs);
             MediaplayerController.Initialize(songs);
-            MediaplayerController.Open(songs.First());
+            MediaplayerController.Open(songs.First(), TimeSpan.Zero);
             MediaplayerController.Play();
             MediaplayerController.Next();
             Assert.IsTrue(MediaplayerController.Previous());
@@ -93,7 +93,7 @@ namespace UnitTests
         {
             List<Song> songs = _hitlistController.GetSongs(_hitlist.Songs);
             MediaplayerController.Initialize(songs);
-            MediaplayerController.Open(songs.First());
+            MediaplayerController.Open(songs.First(), TimeSpan.Zero);
             MediaplayerController.Play();
             Assert.IsFalse(MediaplayerController.Previous());
         }
@@ -103,14 +103,14 @@ namespace UnitTests
         {
             List<Song> songs = _hitlistController.GetSongs(_hitlist.Songs);
             MediaplayerController.Initialize(songs);
-            MediaplayerController.Open(songs.First());
+            MediaplayerController.Open(songs.First(), TimeSpan.Zero);
             MediaplayerController.Play(); Assert.IsNotNull(MediaplayerController.GetCurrentSong());
         }
 
         [Test]
         public void GetCurrentSong_SongUnavailable_IsNull()
         {
-            MediaplayerController.Open(null);
+            MediaplayerController.Open(null, TimeSpan.Zero);
             Assert.IsNull(MediaplayerController.GetCurrentSong());
         }
     }

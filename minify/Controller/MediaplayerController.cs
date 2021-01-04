@@ -27,7 +27,6 @@ namespace minify.Controller
         public static void Initialize(List<Song> songs)
         {
             Songs = songs;
-            _mediaPlayer.Volume = 0;
         }
 
         /// <summary>
@@ -57,6 +56,10 @@ namespace minify.Controller
 
                 timer.Tick += Update;
                 timer.Start();
+            }
+            else
+            {
+                _currentSong = null;
             }
         }
 
@@ -107,15 +110,6 @@ namespace minify.Controller
         }
 
         /// <summary>
-        /// Updates the current position variable
-        /// </summary>
-        /// <param name="currentSongPosition"></param>
-        //public static void UpdatePosition(TimeSpan currentSongPosition)
-        //{
-        //    _currentSongPosition = currentSongPosition;
-        //}
-
-        /// <summary>
         /// Starts playing the previous song in the mediaplayer
         /// </summary>
         /// <returns>Returns true if there is a previous song and false if there is no previous song</returns>
@@ -155,26 +149,20 @@ namespace minify.Controller
         /// </summary>
         public static void Close()
         {
-            _mediaPlayer.Close();
+            _mediaPlayer.Dispatcher.Invoke(() => {
+                _mediaPlayer.Close();
+                _mediaPlayer.MediaOpened -= MediaOpened;
+                _mediaPlayer.MediaEnded -= MediaEnded;
+            });
+            Songs = null;
+
             _currentSong = null;
             _currentSongPosition = TimeSpan.Zero;
-            _mediaPlayer.MediaOpened -= MediaOpened;
-            _mediaPlayer.MediaEnded -= MediaEnded;
-            Songs = null;
 
             UpdateMediaplayer?.Invoke(null,
                 new UpdateMediaplayerEventArgs()
             );
         }
-
-        /// <summary>
-        /// Returns the mediaplayer's current source
-        /// </summary>
-        /// <returns>Mediaplayer's source</returns>
-        //public static Uri GetSource()
-        //{
-        //    return _mediaPlayer.Source;
-        //}
 
         /// <summary>
         /// Returns the mediaplayer's current song

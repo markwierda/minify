@@ -109,8 +109,11 @@ namespace minify.Manager
         private void LoadData()
         {
             _streamroom = new StreamroomController().Get(_streamroomId, true);
-            _messages = new MessageController().GetMessages(_streamroom)
+            _messages = new MessageController().GetMessages(_streamroom);
+
+            _messages = _messages
                 .Where(m => m.CreatedAt > timeJoined)
+                .Distinct()
                 .ToList();
 
             Debug.WriteLine($"Position song: {_streamroom.CurrentSongPosition}");

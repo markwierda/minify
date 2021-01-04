@@ -37,15 +37,12 @@ namespace minify.Controller
         /// <returns></returns>
         public List<Message> GetMessages(Streamroom streamroom)
         {
-            var query = _messageRepository
+            return _messageRepository
                             .GetAll()
                             .Include(m => m.User)
-                            .OrderBy(m => m.CreatedAt);
-                               
-
-            return query
-                    .Where(message => message.StreamroomId == streamroom.Id)
-                    .ToList();
+                            .OrderBy(m => m.CreatedAt)
+                            .Where(message => message.StreamroomId == streamroom.Id)
+                            .ToList();
         }
 
         /// <summary>
