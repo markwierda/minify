@@ -27,7 +27,6 @@ namespace minify.Controller
         public static void Initialize(List<Song> songs)
         {
             Songs = songs;
-            _mediaPlayer.Volume = 0;
         }
 
         /// <summary>
@@ -53,10 +52,6 @@ namespace minify.Controller
                 timer.Tick += Update;
                 timer.Start();
             }
-            else
-            {
-                _currentSong = null;
-            }
         }
 
         /// <summary>
@@ -65,7 +60,7 @@ namespace minify.Controller
         /// <param name="song"></param>
         public static void Play()
         {
-            if (GetSource() == null && _currentSong != null)
+            if (!_mediaPlayer.HasAudio && _currentSong != null)
                 Open(_currentSong);
 
             _mediaPlayer.Play();
@@ -155,16 +150,17 @@ namespace minify.Controller
         public static void Close()
         {
             _mediaPlayer.Close();
+            _currentSong = null;
         }
 
         /// <summary>
         /// Returns the mediaplayer's current source
         /// </summary>
         /// <returns>Mediaplayer's source</returns>
-        public static Uri GetSource()
-        {
-            return _mediaPlayer.Source;
-        }
+        //public static Uri GetSource()
+        //{
+        //    return _mediaPlayer.Source;
+        //}
 
         /// <summary>
         /// Returns the mediaplayer's current song

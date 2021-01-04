@@ -20,6 +20,7 @@ namespace minify.View
         private Streamroom _streamroom;
         private List<Message> _messages;
         private List<Song> _songs;
+        private Song _currentSong;
         public StreamroomManager Manager { get; set; }
 
         public event StreamroomRefreshedEventHandler MessagesRefreshed;
@@ -28,32 +29,59 @@ namespace minify.View
 
         public OverviewStreamroomPage(Guid streamroomId)
         {
+            // initialize
             _streamroomId = streamroomId;
             Manager = new StreamroomManager(streamroomId);
-            Manager.StreamroomRefreshed += UpdateLocalStreamroom;
+            //Manager.StreamroomRefreshed += UpdateLocalStreamroom;
             InitializeComponent();
 
             HitlistController hitlistcontroller = new HitlistController();
             _streamroom = new StreamroomController().Get(streamroomId, true);
 
+            // check if hitlist available
             if (_streamroom.Hitlist != null)
             {
+                // set streamroom title, using hitlist title
                 StreamroomTitle.Content = _streamroom.Hitlist.Title;
+
+                // check if hitlist description is not null or empty
                 if (!string.IsNullOrEmpty(_streamroom.Hitlist.Description))
                 {
+                    // set streamroom description
                     StreamroomDescription.Content = _streamroom.Hitlist.Description;
                     StreamroomDescription.Visibility = Visibility.Visible;
                 }
+
+                // sets the hitlists information in the streamroom
                 StreamroomInfo.Content = hitlistcontroller.GetHitlistInfo(_streamroom.Hitlist);
 
+                // check if songs available
                 if (_streamroom.Hitlist.Songs != null && _streamroom.Hitlist.Songs.Count > 0)
                 {
+                    // get songs
                     _songs = hitlistcontroller.GetSongs(_streamroom.Hitlist.Songs);
-                    MediaplayerController.Open(_songs.FirstOrDefault(s => s.Id.Equals(_streamroom.CurrentSongId)));
-                    MediaplayerController.UpdatePosition(_streamroom.CurrentSongPosition);
+
+                    // check if the streamroom have a current song
+                    if (_streamroom.CurrentSongId != null)
+                    {
+                        _currentSong = _songs.FirstOrDefault(s => s.Id.Equals(_streamroom.CurrentSongId));
+                        MediaplayerController.Open(_currentSong);
+                        MediaplayerController.UpdatePosition(_streamroom.CurrentSongPosition);
+                    }
+                    // use the first song
+                    else
+                    {
+                        _currentSong = _songs.FirstOrDefault();
+                        MediaplayerController.Open(_currentSong);
+                        MediaplayerController.UpdatePosition(_streamroom.CurrentSongPosition);
+                    }
+
+                    // set the itemsource of the songs listview
                     StreamroomSongs.ItemsSource = _songs;
                     StreamroomSongs.Visibility = Visibility.Visible;
-                    Refresh(_songs.First());
+
+                    // highlight the current song by refreshing the listview
+                    Refresh(_currentSong);
                 }
             }
         }
