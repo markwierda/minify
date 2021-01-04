@@ -1,5 +1,6 @@
-﻿using mini_spotify.Controller;
-using mini_spotify.DAL.Entities;
+﻿using minify.Controller;
+using minify.DAL.Entities;
+
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -36,11 +37,25 @@ namespace UnitTests
         }
 
         [Test]
-        public void Get_By_Id_Rerturn_IsNotNull()
+        public void Get_By_Id_Return_IsNotNull()
         {
             Song song = _controller.Get(testId);
 
             Assert.IsNotNull(song);
+        }
+
+        [Test]
+        public void Search_Succesful()
+        {
+            List<Song> songs = _controller.Search("him");
+            Assert.IsNotNull(songs);
+        }
+
+        [Test]
+        public void Search_Fail()
+        {
+            List<Song> songs = _controller.Search("xxxxx");
+            Assert.IsEmpty(songs);
         }
     }
 }
