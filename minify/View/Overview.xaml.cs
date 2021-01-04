@@ -3,6 +3,7 @@ using minify.DAL.Entities;
 using minify.Model;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,10 +18,17 @@ namespace minify.View
         private TimeSpan _positionCache;
         private OverviewSongsPage _overviewSongsPage;
         private OverviewHitlistPage _hitlistPage;
-        private OverviewStreamroom _overviewStreamroomPage;
+        private OverviewStreamroomPage _overviewStreamroomPage;
         private AddHistlistPage _addHitlistPage;
+        private bool _autoScroll = true;
 
-        private OverviewStreamroom OverviewStreamroomPage
+        private readonly MessageController _messageController;
+
+        //private ContentControl Content
+        //{
+        //    get { return contentFrame.Content; }
+        //}
+        private OverviewStreamroomPage OverviewStreamroomPage
         {
             get { return _overviewStreamroomPage; }
             set
@@ -53,6 +61,7 @@ namespace minify.View
 
         public Overview()
         {
+            _messageController = new MessageController();
             MediaplayerController.UpdateMediaplayer += UpdateMediaplayer;
 
             InitializeComponent();
@@ -71,6 +80,12 @@ namespace minify.View
         {
             List<Hitlist> hitlists = new HitlistController().GetHitlistsByUserId(AppData.UserId);
             HitlistMenu.ItemsSource = hitlists;
+        }
+
+        public void InitializeStreamroomMenu()
+        {
+            List<Streamroom> streamroom = new StreamroomController().GetAll(true);
+            streamrooms.ItemsSource = streamroom;
         }
 
         public void UpdateHitlistMenu(object sender, UpdateHitlistMenuEventArgs e)
@@ -96,15 +111,24 @@ namespace minify.View
 
         private void Btn_Add_Hitlist(object sender, RoutedEventArgs e)
         {
+            // Reset selected items
+            InitializeHitListMenu();
+            InitializeStreamroomMenu();
+
             AddHitlistPage = new AddHistlistPage();
             contentFrame.Content = AddHitlistPage;
         }
 
         private void HitlistMenu_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
+            InitializeStreamroomMenu();
+            OverviewStreamroomPage?.Close();
+            MediaplayerController.Close();
+
             if (e.AddedItems.Count > 0)
             {
                 Hitlist selected = (Hitlist)e.AddedItems[0];
+                HitlistMenu.SelectedItem = selected;
                 OverviewHitlistPage = new OverviewHitlistPage(selected.Id);
                 contentFrame.Content = OverviewHitlistPage;
             }
@@ -112,24 +136,32 @@ namespace minify.View
 
         private void DisplayPlay()
         {
-            btn_Pause.Visibility = Visibility.Collapsed;
-            btn_Play.Visibility = Visibility.Visible;
+            Dispatcher.Invoke(() =>
+            {
+                btn_Pause.Visibility = Visibility.Collapsed;
+                btn_Play.Visibility = Visibility.Visible;
+            });
         }
 
         private void DisplayPause()
         {
-            btn_Play.Visibility = Visibility.Collapsed;
-            btn_Pause.Visibility = Visibility.Visible;
+            Dispatcher.Invoke(() =>
+            {
+                btn_Play.Visibility = Visibility.Collapsed;
+                btn_Pause.Visibility = Visibility.Visible;
+            });
         }
 
         private void OnMouseDownPlay(object sender, MouseButtonEventArgs e)
         {
+            OverviewStreamroomPage?.Manager.Play();
             MediaplayerController.Play();
             DisplayPause();
         }
 
         private void OnMouseDownPause(object sender, MouseButtonEventArgs e)
         {
+            OverviewStreamroomPage?.Manager.Pause();
             MediaplayerController.Pause();
             DisplayPlay();
         }
@@ -155,8 +187,8 @@ namespace minify.View
             if (_overviewSongsPage != null)
                 _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
 
-            if (_overviewStreamroomPage != null)
-                _overviewStreamroomPage.Refresh(MediaplayerController.GetCurrentSong());
+            if (OverviewStreamroomPage != null)
+                OverviewStreamroomPage.Refresh(MediaplayerController.GetCurrentSong());
         }
 
         private void OnMouseDownNext(object sender, MouseButtonEventArgs e)
@@ -175,8 +207,8 @@ namespace minify.View
             if (_overviewSongsPage != null)
                 _overviewSongsPage.Refresh(MediaplayerController.GetCurrentSong());
 
-            if (_overviewStreamroomPage != null)
-                _overviewStreamroomPage.Refresh(MediaplayerController.GetCurrentSong());
+            if (OverviewStreamroomPage != null)
+                OverviewStreamroomPage.Refresh(MediaplayerController.GetCurrentSong());
         }
 
         private void UpdateMediaplayer(object sender, UpdateMediaplayerEventArgs e)
@@ -188,12 +220,14 @@ namespace minify.View
 
             _positionCache = e.Position;
 
-            lbl_Song_Name.Content = e.SongName;
-            lbl_Artist.Content = e.Artist;
-            lbl_Current_Time.Content = e.Position.ToString(@"mm\:ss");
-            lbl_Song_Duration.Content = e.Duration.ToString(@"mm\:ss");
-            Song_Progressbar.Maximum = e.Duration.TotalMilliseconds;
-            Song_Progressbar.Value = e.Position.TotalMilliseconds;
+            Dispatcher.Invoke(() => {
+                lbl_Song_Name.Content = e.SongName;
+                lbl_Artist.Content = e.Artist;
+                lbl_Current_Time.Content = e.Position.ToString(@"mm\:ss");
+                lbl_Song_Duration.Content = e.Duration.ToString(@"mm\:ss");
+                Song_Progressbar.Maximum = e.Duration.TotalMilliseconds;
+                Song_Progressbar.Value = e.Position.TotalMilliseconds;
+            });
 
             if (e.SongName == null)
             {
@@ -214,7 +248,10 @@ namespace minify.View
 
         private void Btn_songs(object sender, RoutedEventArgs e)
         {
+            // Reset selected items
             InitializeHitListMenu();
+            InitializeStreamroomMenu();
+
             _overviewSongsPage = new OverviewSongsPage();
             contentFrame.Content = _overviewSongsPage;
         }
@@ -222,12 +259,14 @@ namespace minify.View
         private void Window_Initialized(object sender, EventArgs e)
         {
             InitializeHitListMenu();
+            InitializeStreamroomMenu();
             label_Username.Content = AppData.UserName;
         }
 
         private void Btn_Logout(object sender, RoutedEventArgs e)
         {
             new LoginController().Logout();
+            OverviewStreamroomPage?.Close();
             MediaplayerController.Close();
             Login login = new Login();
             login.Show();
@@ -265,13 +304,103 @@ namespace minify.View
 
         private void OpenStreamroom(object sender, CreatedStreamRoomEventArgs e)
         {
-            OverviewStreamroomPage = new OverviewStreamroom(e.Streamroom.Id);
+            OverviewStreamroomPage?.Close();
+            MediaplayerController.Close();
+
+            MessagePanel.Visibility = Visibility.Visible;
+
+            OverviewStreamroomPage = new OverviewStreamroomPage(e.Streamroom.Id);
             contentFrame.Content = OverviewStreamroomPage;
         }
 
         private void OverviewStreamroom_MessagesRefreshed(object sender, LocalStreamroomUpdatedEventArgs e)
         {
             // e.Messages to your beautiful chat view
+
+            var messages = e.Messages;
+
+            Dispatcher.BeginInvoke(new ThreadStart(() => scrollviewMessages.Children.Clear()));
+
+            Dispatcher.BeginInvoke(new ThreadStart(() => LoadMessages(messages)));
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="messages"></param>
+        public void LoadMessages(List<Message> messages)
+        {
+            foreach (Message message in messages)
+            {
+                Chatmessage(message);
+            }
+        }
+
+        /// <summary>
+        /// Sends chat message into the chatbox
+        /// </summary>
+        /// <param name="message"></param>
+        public void Chatmessage(Message message)
+        {
+            StackPanel stackPanel = new StackPanel
+            {
+                HorizontalAlignment = HorizontalAlignment.Stretch
+            };
+
+            Label user = new Label();
+            Label lblmessage = new Label();
+            user.Content = $"{message.User.FirstName} {message.User.LastName} - {message.CreatedAt:t}";
+            user.FontWeight = FontWeights.Bold;
+            lblmessage.Content = message.Text;
+            stackPanel.Children.Add(user);
+            stackPanel.Children.Add(lblmessage);
+
+            scrollviewMessages.Children.Add(stackPanel);
+        }
+
+        private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (e.ExtentHeightChange == 0)
+            {
+                _autoScroll = ScrollViewer.VerticalOffset == ScrollViewer.ScrollableHeight;
+            }
+            if (_autoScroll && e.ExtentHeightChange != 0)
+            {
+                ScrollViewer.ScrollToVerticalOffset(ScrollViewer.ExtentHeight);
+            }
+        }
+
+        private void Chat_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Message message = new Message
+                {
+                    Text = Chat.Text,
+                    UserId = AppData.UserId,
+                    //StreamroomId = new Guid("{197a232b-4bb7-4961-9153-81349df9d785}")
+                    StreamroomId = OverviewStreamroomPage.GetStreamroomId()
+                };
+                _messageController.CreateMessage(message);
+                Chat.Text = "";
+            }
+        }
+
+        private void Streamroom_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            InitializeHitListMenu();
+            MessagePanel.Visibility = Visibility.Hidden;
+            OverviewStreamroomPage?.Close();
+            MediaplayerController.Close();
+
+            if (e.AddedItems.Count > 0)
+            {
+                Streamroom selected = (Streamroom)e.AddedItems[0];
+                streamrooms.SelectedItem = selected;
+                OverviewStreamroomPage = new OverviewStreamroomPage(selected.Id);
+                MessagePanel.Visibility = Visibility.Visible;
+                contentFrame.Content = OverviewStreamroomPage;
+            }
         }
     }
 }

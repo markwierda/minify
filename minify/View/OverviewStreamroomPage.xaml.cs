@@ -5,7 +5,6 @@ using minify.Model;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,46 +13,70 @@ namespace minify.View
     /// <summary>
     /// Interaction logic for OverviewStreamroom.xaml
     /// </summary>
-    public partial class OverviewStreamroom : Page
+    public partial class OverviewStreamroomPage : Page
     {
         private readonly Guid _streamroomId;
         private Streamroom _streamroom;
-        private List<Message> _messages;
-        private List<Song> _songs;
-        private StreamroomManager _manager;
+        private readonly List<Song> _songs;
+        public StreamroomManager Manager { get; set; }
 
         public event StreamroomRefreshedEventHandler MessagesRefreshed;
 
-        //event for invoking messages to overview
-
-        public OverviewStreamroom(Guid streamroomId)
+        public OverviewStreamroomPage(Guid streamroomId)
         {
+            // initialize
             _streamroomId = streamroomId;
-            _manager = new StreamroomManager(streamroomId);
-            _manager.StreamroomRefreshed += UpdateLocalStreamroom;
+            Manager = new StreamroomManager(streamroomId);
+            Manager.StreamroomRefreshed += UpdateLocalStreamroom;
             InitializeComponent();
 
             HitlistController hitlistcontroller = new HitlistController();
             _streamroom = new StreamroomController().Get(streamroomId, true);
 
+            // check if hitlist available
             if (_streamroom.Hitlist != null)
             {
+                // set streamroom title, using hitlist title
                 StreamroomTitle.Content = _streamroom.Hitlist.Title;
+
+                // check if hitlist description is not null or empty
                 if (!string.IsNullOrEmpty(_streamroom.Hitlist.Description))
                 {
+                    // set streamroom description
                     StreamroomDescription.Content = _streamroom.Hitlist.Description;
                     StreamroomDescription.Visibility = Visibility.Visible;
                 }
+
+                // sets the hitlists information in the streamroom
                 StreamroomInfo.Content = hitlistcontroller.GetHitlistInfo(_streamroom.Hitlist);
 
+                // check if songs available
                 if (_streamroom.Hitlist.Songs != null && _streamroom.Hitlist.Songs.Count > 0)
                 {
+                    // get songs
                     _songs = hitlistcontroller.GetSongs(_streamroom.Hitlist.Songs);
-                    MediaplayerController.Open(_songs.First());
-                    MediaplayerController.Play();
+
+                    // check if the streamroom have a current song
+                    if (_streamroom.CurrentSongId != null)
+                    {
+                        MediaplayerController.Initialize(_songs);
+                        MediaplayerController.Open(_streamroom.Song, _streamroom.CurrentSongPosition);
+                    }
+
+                    // set the itemsource of the songs listview
                     StreamroomSongs.ItemsSource = _songs;
                     StreamroomSongs.Visibility = Visibility.Visible;
-                    Refresh(_songs.First());
+
+                    // highlight the current song by refreshing the listview
+                    Refresh(_streamroom.Song);
+
+                    // send join messege
+                    new MessageController().CreateMessage(new Message
+                    {
+                        StreamroomId = streamroomId,
+                        Text = $"{AppData.UserName} neemt nu deel aan de stream!",
+                        UserId = AppData.UserId
+                    });
                 }
             }
         }
@@ -75,9 +98,11 @@ namespace minify.View
         {
             // Get data from the updates per second from the manager.
             _streamroom = e.Streamroom;
-            _messages = e.Messages;
 
-            //TODO: set all changes to screen
+            if (MediaplayerController.GetCurrentSong()?.Id != _streamroom.Song.Id)
+            {
+                MediaplayerController.Close();
+            }
 
             //invoken naar overview
             MessagesRefreshed?.Invoke(this, e);
@@ -87,11 +112,13 @@ namespace minify.View
         {
             base.EndInit();
             // start with reloading the data.
-            _manager.Start();
+            Manager.Start();
         }
 
         private void StreamroomSongs_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            MediaplayerController.Close();
+
             if (e.AddedItems.Count > 0)
             {
                 // Get song
@@ -101,11 +128,28 @@ namespace minify.View
                 MediaplayerController.Initialize(_songs);
 
                 // Open song
-                MediaplayerController.Open(selectedSong);
+                MediaplayerController.Open(selectedSong, TimeSpan.Zero);
 
                 // Play song
                 MediaplayerController.Play();
             }
+        }
+
+        public void Close()
+        {
+            Manager?.Close();
+
+            new MessageController().CreateMessage(new Message
+            {
+                StreamroomId = _streamroomId,
+                Text = $"{AppData.UserName} heeft de stream verlaten!",
+                UserId = AppData.UserId
+            });
+        }
+
+        public Guid GetStreamroomId()
+        {
+            return _streamroomId;
         }
     }
 }

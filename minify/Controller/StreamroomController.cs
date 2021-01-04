@@ -61,8 +61,12 @@ namespace minify.Controller
             if (withRelations)
             {
                 query = query
-                    .Include(x => x.Song)
-                    .Include(x => x.Hitlist);
+                    .Include(s => s.Song)
+                    .Include(s => s.Hitlist)
+                        .ThenInclude(h => h.User)
+                    .Include(s => s.Hitlist)
+                        .ThenInclude(h => h.Songs)
+                            .ThenInclude(hs => hs.Song);
             }
 
             return query.ToList();

@@ -33,14 +33,20 @@ namespace minify.Controller
         /// Opens a song in the mediaplayer
         /// </summary>
         /// <param name="song"></param>
-        public static void Open(Song song)
+        public static void Open(Song song, TimeSpan currentPosition)
         {
             if (song != null)
             {
                 _currentSong = song;
 
                 _mediaPlayer.Open(new Uri(_currentSong.Path, UriKind.RelativeOrAbsolute));
+
+                _currentSongPosition = currentPosition;
+                _mediaPlayer.Position = _currentSongPosition;
+
+                _mediaPlayer.MediaOpened += MediaOpened;
                 _mediaPlayer.MediaEnded += MediaEnded;
+
                 _mediaPlayer.Play();
 
                 DispatcherTimer timer = new DispatcherTimer()
@@ -63,8 +69,8 @@ namespace minify.Controller
         /// <param name="song"></param>
         public static void Play()
         {
-            if (GetSource() == null && _currentSong != null)
-                Open(_currentSong);
+            if (!_mediaPlayer.HasAudio && _currentSong != null)
+                Open(_currentSong, TimeSpan.Zero);
 
             _mediaPlayer.Play();
         }
@@ -93,7 +99,7 @@ namespace minify.Controller
 
                 int index = Songs.FindIndex(x => x == _currentSong);
                 _currentSong = Songs[index + 1];
-                Open(_currentSong);
+                Open(_currentSong, TimeSpan.Zero);
                 Play();
                 return true;
             }
@@ -119,7 +125,7 @@ namespace minify.Controller
 
                 int index = Songs.FindIndex(x => x == _currentSong);
                 _currentSong = Songs[index - 1];
-                Open(_currentSong);
+                Open(_currentSong, TimeSpan.Zero);
                 Play();
                 return true;
             }
@@ -143,16 +149,20 @@ namespace minify.Controller
         /// </summary>
         public static void Close()
         {
-            _mediaPlayer.Close();
-        }
+            _mediaPlayer.Dispatcher.Invoke(() =>
+            {
+                _mediaPlayer.Close();
+                _mediaPlayer.MediaOpened -= MediaOpened;
+                _mediaPlayer.MediaEnded -= MediaEnded;
+            });
+            Songs = null;
 
-        /// <summary>
-        /// Returns the mediaplayer's current source
-        /// </summary>
-        /// <returns>Mediaplayer's source</returns>
-        public static Uri GetSource()
-        {
-            return _mediaPlayer.Source;
+            _currentSong = null;
+            _currentSongPosition = TimeSpan.Zero;
+
+            UpdateMediaplayer?.Invoke(null,
+                new UpdateMediaplayerEventArgs()
+            );
         }
 
         /// <summary>
@@ -183,6 +193,28 @@ namespace minify.Controller
             if (_mediaPlayer.NaturalDuration.HasTimeSpan)
             {
                 _currentSongPosition = _mediaPlayer.Position;
+
+                UpdateMediaplayer?.Invoke(null,
+                    new UpdateMediaplayerEventArgs(
+                        _currentSong.Name,
+                        _currentSong.Artist,
+                        _mediaPlayer.Position,
+                        _mediaPlayer.NaturalDuration.TimeSpan
+                    )
+                );
+            }
+        }
+
+        /// <summary>
+        /// Event handler when media is opened
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void MediaOpened(object sender, EventArgs e)
+        {
+            if (_mediaPlayer.NaturalDuration.HasTimeSpan)
+            {
+                _mediaPlayer.Position = _currentSongPosition;
 
                 UpdateMediaplayer?.Invoke(null,
                     new UpdateMediaplayerEventArgs(

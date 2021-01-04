@@ -19,6 +19,13 @@
             <RowDefinition Height="9*" />
             <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
+        <StackPanel Name="MessagePanel" Grid.Row="1" Grid.Column="2" Visibility="Hidden">
+            <TextBox x:Name="Chat" KeyDown="Chat_KeyDown" />
+            <ScrollViewer ScrollChanged="ScrollViewer_ScrollChanged" VerticalScrollBarVisibility="auto" x:Name="ScrollViewer" Height="500" Background="#FF774AC7">
+                <StackPanel Name="scrollviewMessages">
+                </StackPanel>
+            </ScrollViewer>
+        </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="1" Background="#FF774AC7">
             <TextBox Text="Search..." TextChanged="SearchBox_TextChanged" MouseEnter="Search_MouseEnter" MaxLength="30" x:Name="Search" Margin="5" Style="{StaticResource MaterialDesignTextBox}" Background="Transparent" Width="160" Height="30" HorizontalAlignment="Left" />
@@ -37,6 +44,13 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Hitlists" DisplayMemberBinding="{Binding Title}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ListView Name="streamrooms"  HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectionChanged="Streamroom_SelectionChanged">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Streamrooms" DisplayMemberBinding="{Binding Hitlist.Title}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
